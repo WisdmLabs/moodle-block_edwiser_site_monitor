@@ -25,10 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-define("EDWISER_PLUGINS_LIST", "http://l/plugins.json");
+define("EDWISER_PLUGINS_LIST", "https://edwiser.org/edwiserupdates.json");
 define("EDWISER_PRIVACY_POLICY_LINK", "https://edwiser.org/privacy-policy/");
-// define("EDWISER_SUPPORT_EMAIL", "edwiser@wisdmlabs.com");
-define("EDWISER_SUPPORT_EMAIL", "yogesh.shirsath@wisdmlabs.com");
+define("EDWISER_SUPPORT_EMAIL", "edwiser@wisdmlabs.com");
 
 /**
  * Return server's cpu usage

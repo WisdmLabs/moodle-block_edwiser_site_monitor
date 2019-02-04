@@ -26,35 +26,14 @@ require([
     'core/ajax',
     'core/notification',
     'core/modal_factory',
-    'block_edwiser_server_monitor/heatmap',
     'core/chartjs'
 ], function(
     $,
     ajax,
     notification,
-    ModalFactory,
-    HeatmapFactory
+    ModalFactory
 ) {
     var init = function() {
-        $('body').prepend('<div id="heatmapContainerWrapper">'+
-      '<div id="heatmapContainer">'+
-      '</div>'+
-    '</div>');
-        var heatmap = HeatmapFactory.create({
-            container: document.getElementById('heatmapContainer'),
-            maxOpacity: .6,
-            radius: 50,
-            blur: .90,
-            // backgroundColor with alpha so you can see through it
-            backgroundColor: 'rgba(0, 0, 58, 0.96)'
-        });
-        var heatmapContainer = document.getElementById('heatmapContainerWrapper');
-
-        heatmapContainer.onclick = function(e) {
-            var x = e.layerX;
-            var y = e.layerY;
-            heatmap.addData({ x: x, y: y, value: 1 });
-        };
         var liveusage = "";
         var chart = null;
         var fetchtingstatus = fetchtinglastusage = fetchtingplugins = sendingemail = false;

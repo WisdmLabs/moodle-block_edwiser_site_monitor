@@ -320,6 +320,25 @@ class block_edwiser_server_monitor_plugins {
     }
 
     /**
+     * Explain why {@link core_plugin_manager::is_remote_plugin_installable()} returned false.
+     *
+     * @param string $reason the reason code as returned by the plugin manager
+     * @return string
+     */
+    private function info_remote_plugin_not_installable($reason) {
+        global $OUTPUT;
+        if ($reason === 'notwritableplugintype' or $reason === 'notwritableplugin') {
+            return $OUTPUT->help_icon('notwritable', 'core_plugin', get_string('notwritable', 'core_plugin'));
+        }
+
+        if ($reason === 'remoteunavailable') {
+            return $OUTPUT->help_icon('notdownloadable', 'core_plugin', get_string('notdownloadable', 'core_plugin'));
+        }
+
+        return false;
+    }
+
+    /**
      * Get update information ouput for plugin
      *
      * @param object  $pluginman  plugin manager object
@@ -412,7 +431,7 @@ class block_edwiser_server_monitor_plugins {
                 );
                 $box .= str_replace('form method="post"', 'form target="_blank" method="post"', $button);
             } else {
-                $reasonhelp = $OUTPUT->info_remote_plugin_not_installable($reason);
+                $reasonhelp = $this->info_remote_plugin_not_installable($reason);
                 if ($reasonhelp) {
                     $box .= html_writer::div($reasonhelp, 'reasonhelp updateavailableinstall');
                 }

@@ -1,0 +1,79 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+<div class="server_live_status">
+    <div class="legends">
+        <div class="low-usage legend">
+            <div class="color bg-success"></div>
+            <label>{{#str}}lowusage, block_edwiser_server_monitor{{/str}}</label>
+        </div>
+        <div class="moderate-usage legend">
+            <div class="color bg-warning"></div>
+            <label>{{#str}}moderateusage, block_edwiser_server_monitor{{/str}}</label>
+        </div>
+        <div class="high-usage legend">
+            <div class="color bg-danger"></div>
+            <label>{{#str}}highusage, block_edwiser_server_monitor{{/str}}</label>
+        </div>
+    </div>
+    <div class="progress-row pb-2">
+        <label class="progress-name h4"><i class="fa fa-server mr-10" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_server_monitor {{/str}}:</label>
+        <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
+        <div class="progress-wrap progress">
+            <div class="progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
+        </div>
+    </div>
+    <div class="progress-row pb-2">
+        <label class="progress-name h4"><i class="fa fa-microchip mr-10" aria-hidden="true"></i>{{#str}} memory, block_edwiser_server_monitor {{/str}}:</label>
+        <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
+        <div class="progress-wrap progress">
+            <div class="progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
+        </div>
+    </div>
+    <div class="progress-row pb-2">
+        <label class="progress-name h4"><i class="fa fa-hdd-o mr-10" aria-hidden="true"></i>{{#str}} storage, block_edwiser_server_monitor {{/str}}:</label>
+        <label class="progress-label" id="esm_storage_usage_label">{{storage}}% ({{storagevalues}})</label>
+        <div class="progress-wrap progress">
+            <div class="progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
+        </div>
+    </div>
+    <div class="pb-2">
+        <label class="h4"><i class="fa fa-users mr-10" aria-hidden="true"></i>{{#str}} users, block_edwiser_server_monitor {{/str}}:</label>
+        <div class="legends">
+            <div class="activeusers legend">
+                <div class="color bg-success"></div>
+                <label>{{#str}} activeusers, block_edwiser_server_monitor {{/str}}({{active}})</label>
+            </div>
+            <div class="suspendedusers legend">
+                <div class="color bg-warning"></div>
+                <label>{{#str}} suspendedusers, block_edwiser_server_monitor {{/str}}({{suspended}})</label>
+            </div>
+            <div class="deletedusers legend">
+                <div class="color bg-danger"></div>
+                <label>{{#str}} deletedusers, block_edwiser_server_monitor {{/str}}({{deleted}})</label>
+            </div>
+        </div>
+        <div class="progress-wrap progress">
+            <div class="progress-bar bg-success" role="progressbar" id="esm_users_active_bar" style="width: {{activepercentage}}%;"></div>
+            <div class="progress-bar bg-warning" role="progressbar" id="esm_users_suspended_bar" style="width: {{suspendedpercentage}}%;"></div>
+            <div class="progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
+        </div>
+    </div>
+    <div class="h4 pb-2">
+        <label class="h4"><i class="fa fa-user-circle mr-10" aria-hidden="true"></i>{{#str}} liveusers, block_edwiser_server_monitor {{/str}}:</label>
+        <label id="esm_live_users_label">{{liveusers}}</label>
+    </div>
+</div>

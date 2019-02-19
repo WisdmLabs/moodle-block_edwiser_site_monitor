@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Local class of edwiser_server_monitor_usage_warning
+ * Local class of edwiser_site_monitor_usage_warning
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -25,11 +25,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 /**
- * This class implements services for block_edwiser_server_monitor
+ * This class implements services for block_edwiser_site_monitor
  */
-class block_edwiser_server_monitor_usage_warning {
+class block_edwiser_site_monitor_usage_warning {
 
     /**
      * Check if server usage is less/more than threshold limit
@@ -44,7 +44,7 @@ class block_edwiser_server_monitor_usage_warning {
         $this->cpu = $cpu;
         $this->memory = $memory;
         $this->storage = $storage;
-        $this->lastmail = get_config('block_edwiser_server_monitor', 'lastthresholdmail');
+        $this->lastmail = get_config('block_edwiser_site_monitor', 'lastthresholdmail');
         $this->today = strtotime(date('d-m-Y', time()));
         $this->check_usage_thresholds();
     }
@@ -83,12 +83,12 @@ class block_edwiser_server_monitor_usage_warning {
      * @return [type]
      */
     private function get_usage_threshold_email_content($type, $usage, $expected, $threshold) {
-        $lastusage = get_config('block_edwiser_server_monitor', $type.$threshold);
+        $lastusage = get_config('block_edwiser_site_monitor', $type.$threshold);
         if ($this->warn_usage($lastusage, $usage, $threshold)) {
-            set_config($type.$threshold, $usage, 'block_edwiser_server_monitor');
+            set_config($type.$threshold, $usage, 'block_edwiser_site_monitor');
             return array(
-                get_string($type.'usage', 'block_edwiser_server_monitor'),
-                get_string($threshold, 'block_edwiser_server_monitor'),
+                get_string($type.'usage', 'block_edwiser_site_monitor'),
+                get_string($threshold, 'block_edwiser_site_monitor'),
                 $expected,
                 $usage
             );
@@ -140,19 +140,19 @@ class block_edwiser_server_monitor_usage_warning {
         if (count($thresholds) == 0) {
             return;
         }
-        set_config('lastthresholdmail', $this->today, 'block_edwiser_server_monitor');
+        set_config('lastthresholdmail', $this->today, 'block_edwiser_site_monitor');
         $data = new stdClass;
         $data->header = array(
-            get_string('header-type', 'block_edwiser_server_monitor'),
-            get_string('hader-threshold', 'block_edwiser_server_monitor'),
-            get_string('header-expected', 'block_edwiser_server_monitor'),
-            get_string('header-current', 'block_edwiser_server_monitor')
+            get_string('header-type', 'block_edwiser_site_monitor'),
+            get_string('hader-threshold', 'block_edwiser_site_monitor'),
+            get_string('header-expected', 'block_edwiser_site_monitor'),
+            get_string('header-current', 'block_edwiser_site_monitor')
         );
         $data->warnings = $thresholds;
         global $PAGE, $COURSE;
         $PAGE->set_context(context_system::instance());
-        $email = $PAGE->get_renderer('block_edwiser_server_monitor')->render_from_template('block_edwiser_server_monitor/usage_warning_email', $data);
+        $email = $PAGE->get_renderer('block_edwiser_site_monitor')->render_from_template('block_edwiser_site_monitor/usage_warning_email', $data);
         $admin = get_admin();
-        edwiser_server_monitor_send_email($admin, $admin, get_string('usageemailsubject', 'block_edwiser_server_monitor', $COURSE->fullname), $email);
+        edwiser_site_monitor_send_email($admin, $admin, get_string('usageemailsubject', 'block_edwiser_site_monitor', $COURSE->fullname), $email);
     }
 }

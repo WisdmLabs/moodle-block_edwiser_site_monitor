@@ -17,7 +17,7 @@
 /**
  * Global search block.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -25,13 +25,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
 /**
  * This class implements methods to send curl request easily
  * and get response.
  */
-class edwiser_server_monitor_curl {
+class edwiser_site_monitor_curl {
 
     /**
      * Url to send curl request

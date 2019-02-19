@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Local class of edwiser_server_monitor
+ * Local class of edwiser_site_monitor
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -28,8 +28,8 @@ use core\update\remote_info;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/filelib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/classes/plugins.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/plugins.php');
 
 $installupdate = required_param('installupdate', PARAM_COMPONENT); // Install given available update.
 $installupdateversion = required_param('installupdateversion', PARAM_INT); // Version of the available update to
@@ -41,9 +41,9 @@ $syscontext = context_system::instance();
 require_capability('moodle/site:config', $syscontext);
 
 $pageparams = array('installupdate' => $installupdate, 'installupdateversion' => $installupdateversion, 'sesskey' => $sesskey);
-$pageurl = new moodle_url('/blocks/edwiser_server_monitor/plugin.php', $pageparams);
+$pageurl = new moodle_url('/blocks/edwiser_site_monitor/plugin.php', $pageparams);
 
-$edwiserpluginman = new block_edwiser_server_monitor_plugins();
+$edwiserpluginman = new block_edwiser_site_monitor_plugins();
 $update = $edwiserpluginman->prepare_edwiser_plugins_update($installupdate);
 if ($update !== true) {
     $output = $PAGE->get_renderer('core', 'admin');

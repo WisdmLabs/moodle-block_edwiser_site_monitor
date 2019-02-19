@@ -1,76 +1,79 @@
-.edwiser_server_monitor .nav-tabs .nav-item .nav-link.esm-outline, .edwiser_server_monitor .edwiser_plugins_recommendation .esm-outline {
+.edwiser_site_monitor .nav-tabs .nav-item .nav-link.esm-outline, .edwiser_site_monitor .edwiser_plugins_recommendation .esm-outline {
     color: #1177d1;
     border-color: #1177d1;
 }
-.edwiser_server_monitor .esm_legend {
+.edwiser_site_monitor .esm_legend {
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     margin-left: 0.5rem;
 }
-.edwiser_server_monitor .legends {
+.edwiser_site_monitor .legends {
     float: right;
 }
-.edwiser_server_monitor .legends .legend {
+.edwiser_site_monitor .legends .legend {
     display: inline-block;
     margin: 0 0.2rem;
 }
-.edwiser_server_monitor .legends .legend .color {
+.edwiser_site_monitor .legends .legend .color {
     width: 1rem;
     height: 1rem;
     display: inline-block;
     vertical-align: middle;
 }
-aside.block-region[data-blockregion="content"] .edwiser_server_monitor .cannot_display_server_usage {
+aside.block-region[data-blockregion="content"] .edwiser_site_monitor .cannot_display_server_usage {
     display: none;
 }
-aside.block-region:not([data-blockregion="content"]) .edwiser_server_monitor .server_usage_chart {
+aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .server_usage_chart {
     max-height: 400px;
     display: none;
 }
-.edwiser_server_monitor .server_usage_chart {
+.edwiser_site_monitor .server_usage_chart {
     background: white;
 }
-.edwiser_server_monitor .server-plugins, .edwiser_server_monitor .has-loader {
+.edwiser_site_monitor .server-plugins, .edwiser_site_monitor .has-loader {
     min-height: 4rem;
     position: relative;
 }
-.edwiser_server_monitor .server-plugins .server-plugins-list .generaltable {
+.edwiser_site_monitor .server-plugins .server-plugins-list {
+    margin-top: 1.2rem;
+}
+.edwiser_site_monitor .server-plugins .server-plugins-list .generaltable {
     max-height: 30rem;
     overflow-y: auto;
 }
-.edwiser_server_monitor .server-plugins .server-plugins-list .plugin-list-refresh {
+.edwiser_site_monitor .server-plugins .server-plugins-list .plugin-list-refresh {
     width: 100%;
     text-align: right;
 }
-.edwiser_server_monitor .has-loader .edwiser-server-monitor-loader {
+.edwiser_site_monitor .has-loader .edwiser-server-monitor-loader {
     position: absolute;
     height: 100%;
     width: 100%;
     background: rgba(255,255,255,.6);
     top: 0;
 }
-.edwiser_server_monitor .has-loader .edwiser-server-monitor-loader:not(.show) {
+.edwiser_site_monitor .has-loader .edwiser-server-monitor-loader:not(.show) {
     display: none;
 }
-.edwiser_server_monitor .has-loader .edwiser-server-monitor-loader .edwiser-server-monitor-loading-icon {
+.edwiser_site_monitor .has-loader .edwiser-server-monitor-loader .edwiser-server-monitor-loading-icon {
     display: inline-block;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
-.edwiser_server_monitor .has-loader .edwiser-server-monitor-loader .edwiser-server-monitor-loading-icon .fa {
+.edwiser_site_monitor .has-loader .edwiser-server-monitor-loader .edwiser-server-monitor-loading-icon .fa {
     font-size: 2rem;
 }
-.edwiser_server_monitor .generaltable.edwiser tbody tr:not(.edwiser) {
+.edwiser_site_monitor .generaltable.edwiser tbody tr:not(.edwiser) {
     display: none;
 }
-.edwiser_server_monitor .generaltable.other tbody tr:not(.other) {
+.edwiser_site_monitor .generaltable.other tbody tr:not(.other) {
     display: none;
 }
-.edwiser_server_monitor .generaltable.update tbody tr:not(.update) {
+.edwiser_site_monitor .generaltable.update tbody tr:not(.update) {
     display: none;
 }
 .edwiser-plugin-filter {
@@ -135,22 +138,22 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_server_monitor .se
 }
 
 /* Update info container designs */
-.edwiser_server_monitor .edwiserpluginupdateinfo .singlebutton {
+.edwiser_site_monitor .edwiserpluginupdateinfo .singlebutton {
     margin: 5px 0;
     padding: 0;
 }
-.edwiser_server_monitor .edwiserpluginupdateinfo .info {
+.edwiser_site_monitor .edwiserpluginupdateinfo .info {
     display: inline-block;
 }
-.edwiser_server_monitor .separator:after {
+.edwiser_site_monitor .separator:after {
     content: " | ";
 }
-.edwiser_server_monitor .edwiserpluginupdateinfo .info {
+.edwiser_site_monitor .edwiserpluginupdateinfo .info {
     display: inline-block;
 }
-.edwiser_server_monitor .nav-tabs .nav-item .nav-link.btn-primary {
+.edwiser_site_monitor .nav-tabs .nav-item .nav-link.btn-primary {
     color: white;
 }
-.edwiser_server_monitor .generaltable tbody td a {
+.edwiser_site_monitor .generaltable tbody td a {
     color: #62a8eb;
 }

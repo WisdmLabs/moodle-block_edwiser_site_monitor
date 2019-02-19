@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Local class of edwiser_server_monitor external api functions
+ * Local class of edwiser_site_monitor external api functions
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -26,12 +26,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/classes/plugins.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/plugins.php');
 /**
- * This class implements services for block_edwiser_server_monitor
+ * This class implements services for block_edwiser_site_monitor
  */
-class block_edwiser_server_monitor_externallib extends external_api {
+class block_edwiser_site_monitor_externallib extends external_api {
 
     /**
      * Describes the parameters for get blocks function
@@ -102,7 +102,7 @@ class block_edwiser_server_monitor_externallib extends external_api {
         }
         $usage = $DB->get_records_sql(
             "SELECT `time`, cpu, memory, storage
-               FROM {block_edwiser_server_monitor}
+               FROM {block_edwiser_site_monitor}
               WHERE `time` >= ? AND `time` < ?
               ORDER BY `time` ASC", array($timestamp, $timestamp + 24 * 60 * 60)
         );
@@ -157,12 +157,12 @@ class block_edwiser_server_monitor_externallib extends external_api {
     public static function get_plugins_update() {
         global $PAGE;
         $PAGE->set_context(context_system::instance());
-        $plugins = new block_edwiser_server_monitor_plugins();
+        $plugins = new block_edwiser_site_monitor_plugins();
         $time = time();
         return array(
             'lasttimefetched' => get_string('checkforupdateslast', 'core_plugin', date('d F Y, h:i A e', $time)),
-            'plugins' => $PAGE->get_renderer('block_edwiser_server_monitor')->render_from_template(
-                'block_edwiser_server_monitor/plugins',
+            'plugins' => $PAGE->get_renderer('block_edwiser_site_monitor')->render_from_template(
+                'block_edwiser_site_monitor/plugins',
                 $plugins->get_plugins()
             )
         );
@@ -212,21 +212,21 @@ class block_edwiser_server_monitor_externallib extends external_api {
         $support = new stdClass;
         $support->id = -99;
         $support->email = EDWISER_SUPPORT_EMAIL;
-        $status = edwiser_server_monitor_send_email(
+        $status = edwiser_site_monitor_send_email(
             $admin,
             $support,
             $subject,
             $message,
             $email
         );
-        $subject = get_string('thankssubject', 'block_edwiser_server_monitor');
-        $message = get_string('thanksmessage', 'block_edwiser_server_monitor', array(
+        $subject = get_string('thankssubject', 'block_edwiser_site_monitor');
+        $message = get_string('thanksmessage', 'block_edwiser_site_monitor', array(
             'user' => $firstname,
             'email' => EDWISER_SUPPORT_EMAIL
         ));
         $admin->firstname = 'Edwiser';
         $admin->lastname = '';
-        $status &= edwiser_server_monitor_send_email(
+        $status &= edwiser_site_monitor_send_email(
             $admin,
             $admin,
             $subject,
@@ -235,10 +235,10 @@ class block_edwiser_server_monitor_externallib extends external_api {
         if (!$status) {
             return array(
                 'status' => false,
-                'header' => get_string('failed', 'block_edwiser_server_monitor'),
-                'message' => get_string('emailfailed', 'block_edwiser_server_monitor') . get_string(
+                'header' => get_string('failed', 'block_edwiser_site_monitor'),
+                'message' => get_string('emailfailed', 'block_edwiser_site_monitor') . get_string(
                     'checksettings',
-                    'block_edwiser_server_monitor',
+                    'block_edwiser_site_monitor',
                     array(
                         'link' => (new moodle_url(
                             '/admin/settings.php',
@@ -254,7 +254,7 @@ class block_edwiser_server_monitor_externallib extends external_api {
         return array(
             'status' => true,
             'header' => get_string('success'),
-            'message' => get_string('emailsuccess', 'block_edwiser_server_monitor')
+            'message' => get_string('emailsuccess', 'block_edwiser_site_monitor')
         );
     }
 

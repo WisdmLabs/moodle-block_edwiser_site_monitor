@@ -17,7 +17,7 @@
 /**
  * Search form renderable.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright Wisdmlabs 2018
  * @author    Yogesh Shirsath
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -183,11 +183,11 @@ function get_all_users() {
 }
 
 /**
- * Call cron on the edwiser_server_monitor.
+ * Call cron on the edwiser_site_monitor.
  *
  * @return boolean
  */
-function edwiser_server_monitor_cron() {
+function edwiser_site_monitor_cron() {
     global $DB, $CFG;
     $data = new stdClass;
     $data->time = time();
@@ -195,14 +195,14 @@ function edwiser_server_monitor_cron() {
     $data->memory = get_memory_usage();
     $data->storage = get_storage_usage();
     $context = context_user::instance(get_admin()->id);
-    $instance = $DB->get_record('block_instances', array('blockname' => 'edwiser_server_monitor', 'parentcontextid' => $context->id));
+    $instance = $DB->get_record('block_instances', array('blockname' => 'edwiser_site_monitor', 'parentcontextid' => $context->id));
     if ($instance) {
         $config = unserialize(base64_decode($instance->configdata));
-        require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/classes/usage_warning.php');
-        new block_edwiser_server_monitor_usage_warning($config, $data->cpu, $data->memory, $data->storage);
+        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/usage_warning.php');
+        new block_edwiser_site_monitor_usage_warning($config, $data->cpu, $data->memory, $data->storage);
     }
-    $DB->insert_record('block_edwiser_server_monitor', $data);
-    $DB->delete_records_select('block_edwiser_server_monitor', 'time < ?', array(time() - 24 * 60 * 60 * 7));
+    $DB->insert_record('block_edwiser_site_monitor', $data);
+    $DB->delete_records_select('block_edwiser_site_monitor', 'time < ?', array(time() - 24 * 60 * 60 * 7));
 }
 
 /**
@@ -214,7 +214,7 @@ function edwiser_server_monitor_cron() {
  * @param  stdClass $messagehtml email body
  * @return boolean email sending status
  */
-function edwiser_server_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
+function edwiser_site_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
     global $PAGE;
     $context = context_system::instance();
     $PAGE->set_context($context);

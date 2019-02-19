@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Local class of edwiser_server_monitor
+ * Local class of edwiser_site_monitor
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -25,12 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 require_once($CFG->libdir . '/adminlib.php');
 /**
- * This class implements services for block_edwiser_server_monitor
+ * This class implements services for block_edwiser_site_monitor
  */
-class block_edwiser_server_monitor_plugins {
+class block_edwiser_site_monitor_plugins {
 
     /** @var array edwiserplugins edwiser plugins list */
     public $edwiserplugins = [];
@@ -52,7 +52,7 @@ class block_edwiser_server_monitor_plugins {
         global $DB;
         $plugins = get_edwiser_plugin_list();
         if (!$plugins) {
-            return get_string('invalidjsonfile', 'block_edwiser_server_monitor');
+            return get_string('invalidjsonfile', 'block_edwiser_site_monitor');
         }
         $pluginman = core_plugin_manager::instance();
         $plugininfo = $pluginman->get_plugins();
@@ -217,7 +217,7 @@ class block_edwiser_server_monitor_plugins {
                 'version' => $update->requires
             )];
             if ($status === 2) {
-                $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_server_monitor', $update->requires);
+                $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_site_monitor', $update->requires);
             }
             return $options;
         }
@@ -241,10 +241,10 @@ class block_edwiser_server_monitor_plugins {
         if (!$license) {
             return array(false, '', $changelog);
         }
-        require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/classes/curl.php');
+        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/curl.php');
 
-        // Create curl edwiser_server_monitor_curl object to initialise curl request
-        $curl = new edwiser_server_monitor_curl(
+        // Create curl edwiser_site_monitor_curl object to initialise curl request
+        $curl = new edwiser_site_monitor_curl(
             "https://edwiser.org/check-update",
             'POST',
             array(
@@ -393,7 +393,7 @@ class block_edwiser_server_monitor_plugins {
             $info[] = html_writer::div(
                 html_writer::link(
                     '#',
-                    get_string('changelog', 'block_edwiser_server_monitor'),
+                    get_string('changelog', 'block_edwiser_site_monitor'),
                     array(
                         'class' => 'showchangelog',
                         'target' => '_blank',
@@ -442,7 +442,7 @@ class block_edwiser_server_monitor_plugins {
                     $status->has = true;
                     $button = $OUTPUT->single_button(
                         new moodle_url(
-                            $CFG->wwwroot . '/blocks/edwiser_server_monitor/plugin.php',
+                            $CFG->wwwroot . '/blocks/edwiser_site_monitor/plugin.php',
                             array(
                                 'installupdate' => $updateinfo->component,
                                 'installupdateversion' => $updateinfo->version,
@@ -563,7 +563,7 @@ class block_edwiser_server_monitor_plugins {
             $plugin->changelog = $edwiserplugin->changelog;
             if (isset($edwiserplugin->parent)) {
                 $plugin->parent = html_writer::div(
-                    get_string('comeswith', 'block_edwiser_server_monitor', $edwiserplugin->parent),
+                    get_string('comeswith', 'block_edwiser_site_monitor', $edwiserplugin->parent),
                     'comeswith'
                 );
             }
@@ -722,13 +722,13 @@ class block_edwiser_server_monitor_plugins {
     protected function download_plugin_zip_file($url, $tofile) {
 
         // if (file_exists($tofile)) {
-        // debugging(get_string('errorfetchingexist', 'block_edwiser_server_monitor', $tofile), DEBUG_DEVELOPER);
+        // debugging(get_string('errorfetchingexist', 'block_edwiser_site_monitor', $tofile), DEBUG_DEVELOPER);
         // return false;
         // }
 
         $status = $this->download_file_content($url, $tofile);
         if (!$status) {
-            debugging(get_string('errorfetching', 'block_edwiser_server_monitor', $url), DEBUG_DEVELOPER);
+            debugging(get_string('errorfetching', 'block_edwiser_site_monitor', $url), DEBUG_DEVELOPER);
             @unlink($tofile);
             return false;
         }
@@ -832,7 +832,7 @@ class block_edwiser_server_monitor_plugins {
         $zipcontents = $pluginman->unzip_plugin_file($zip, $temp, $name);
 
         if (empty($zipcontents)) {
-            $this->errors[] = get_string('invalidzip', 'block_edwiser_server_monitor', $name);
+            $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name);
             return false;
         }
 
@@ -840,7 +840,7 @@ class block_edwiser_server_monitor_plugins {
         // Check all files from zip is ok and has zip inside zip
         foreach ($zipcontents as $file => $status) {
             if (!$status) {
-                $this->errors[] = get_string('invalidzip', 'block_edwiser_server_monitor', $name);
+                $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name);
                 return false;
             }
             if (stripos($file, ".zip") !== false) {
@@ -857,7 +857,7 @@ class block_edwiser_server_monitor_plugins {
         if ($zipcount != count($zipcontents)) {
             $plugin = $this->get_plugin_details($temp, $zipcontents);
             if (!$plugin) {
-                $this->errors[] = get_string('unabletoloadplugindetails', 'block_edwiser_server_monitor', $name);
+                $this->errors[] = get_string('unabletoloadplugindetails', 'block_edwiser_site_monitor', $name);
             }
             return $plugin;
         }
@@ -868,7 +868,7 @@ class block_edwiser_server_monitor_plugins {
             $path = make_request_directory();
             $zipcontents = $pluginman->unzip_plugin_file($temp . '/' . $file, $path, $name1);
             if (empty($zipcontents)) {
-                $this->errors[] = get_string('invalidzip', 'block_edwiser_server_monitor', $name . '  ->  ' . $name1);
+                $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name . '  ->  ' . $name1);
                 return false;
             }
 
@@ -876,7 +876,7 @@ class block_edwiser_server_monitor_plugins {
 
             unset($zips[$file]);
             if (!$plugin) {
-                $this->errors[] = get_string('unabletoloadplugindetails', 'block_edwiser_server_monitor', $name . '  ->  ' . $name1);
+                $this->errors[] = get_string('unabletoloadplugindetails', 'block_edwiser_site_monitor', $name . '  ->  ' . $name1);
                 $zipserror = true;
             } else {
                 $zips[$temp . '/' . $file] = $plugin;
@@ -909,7 +909,7 @@ class block_edwiser_server_monitor_plugins {
 
         if (empty($zipcontents)) {
             $silent or mtrace(get_string('error'));
-            $silent or mtrace(get_string('unabletounzip', 'block_edwiser_server_monitor', $zipfile));
+            $silent or mtrace(get_string('unabletounzip', 'block_edwiser_site_monitor', $zipfile));
             return false;
         }
 
@@ -1035,7 +1035,7 @@ class block_edwiser_server_monitor_plugins {
 
         if (!$zips) {
             $silent or mtrace(get_string('error'));
-            $silent or mtrace(get_string('unabletounzip', 'block_edwiser_server_monitor', $zipfile), PHP_EOL);
+            $silent or mtrace(get_string('unabletounzip', 'block_edwiser_site_monitor', $zipfile), PHP_EOL);
             return false;
         }
         $checks = true;
@@ -1066,7 +1066,7 @@ class block_edwiser_server_monitor_plugins {
             }
             if (!$pluginman->unzip_plugin_file($zipfile, $target, $pluginname)) {
                 $silent or mtrace(get_string('error'));
-                $silent or mtrace(get_string('unabletounzip', 'block_edwiser_server_monitor', $zipfile), PHP_EOL);
+                $silent or mtrace(get_string('unabletounzip', 'block_edwiser_site_monitor', $zipfile), PHP_EOL);
                 if (function_exists('opcache_reset')) {
                     opcache_reset();
                 }
@@ -1083,7 +1083,7 @@ class block_edwiser_server_monitor_plugins {
     }
 
     /**
-     * Helper procedure/macro for installing remote pluginsat block/edwiser_server_monitor/plugin.php
+     * Helper procedure/macro for installing remote pluginsat block/edwiser_site_monitor/plugin.php
      *
      * Does not return, always redirects or exits.
      *

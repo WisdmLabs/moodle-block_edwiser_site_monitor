@@ -14,51 +14,51 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
-<div class="edwiser_server_monitor">
-    <div class="w-p100 d-flex my-10" id="edwiser_server_monitor-section">
+<div class="edwiser_site_monitor">
+    <div class="w-p100 d-flex my-10" id="edwiser_site_monitor-section">
         <ul class="nav nav-tabs nav-tabs-line border-0 mx-15 w-full" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" href="#edwiser_server_monitor_view_live_status" data-container="edwiser_server_monitor_view_live_status" data-toggle="tab">
-                    {{#str}} liveusage, block_edwiser_server_monitor {{/str}}
+                <a class="nav-link active" href="#edwiser_site_monitor_view_live_status" data-container="edwiser_site_monitor_view_live_status" data-toggle="tab">
+                    {{#str}} liveusage, block_edwiser_site_monitor {{/str}}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#edwiser_server_monitor_last_24_hours_usage" data-container="edwiser_server_monitor_last_24_hours_usage" data-toggle="tab">
-                    {{#str}} last24hoursusage, block_edwiser_server_monitor {{/str}}
+                <a class="nav-link" href="#edwiser_site_monitor_last_24_hours_usage" data-container="edwiser_site_monitor_last_24_hours_usage" data-toggle="tab">
+                    {{#str}} last24hoursusage, block_edwiser_site_monitor {{/str}}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#edwiser_server_monitor_plugins" data-container="edwiser_server_monitor_plugins" data-toggle="tab">
+                <a class="nav-link" href="#edwiser_site_monitor_plugins" data-container="edwiser_site_monitor_plugins" data-toggle="tab">
                     {{#str}} pluginsoverview, core_admin {{/str}}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link esm-outline" href="#edwiser_server_monitor_recommendation" data-container="edwiser_server_monitor_recommendation" data-toggle="tab">
-                    {{#str}} recommendation, block_edwiser_server_monitor {{/str}}
+                <a class="nav-link esm-outline" href="#edwiser_site_monitor_recommendation" data-container="edwiser_site_monitor_recommendation" data-toggle="tab">
+                    {{#str}} recommendation, block_edwiser_site_monitor {{/str}}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#edwiser_server_monitor_contactus" data-container="edwiser_server_monitor_contactus" data-toggle="tab">
-                    {{#str}} contactus, block_edwiser_server_monitor {{/str}}
+                <a class="nav-link" href="#edwiser_site_monitor_contactus" data-container="edwiser_site_monitor_contactus" data-toggle="tab">
+                    {{#str}} contactus, block_edwiser_site_monitor {{/str}}
                 </a>
             </li>
         </ul>
     </div>
     <div class="tab-content pt-10">
-        <div role="tabpanel" class="tab-pane fade show active" id="edwiser_server_monitor_view_live_status">
+        <div role="tabpanel" class="tab-pane fade show active" id="edwiser_site_monitor_view_live_status">
             <div class="mt-3 align-items-left justify-content-center flex-column">
                 {{{ live_status }}}
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="edwiser_server_monitor_last_24_hours_usage">
+        <div role="tabpanel" class="tab-pane fade" id="edwiser_site_monitor_last_24_hours_usage">
             <div class="mt-3 align-items-center justify-content-center flex-column">
                 {{{ last_24_hours_usage }}}
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="edwiser_server_monitor_plugins">
+        <div role="tabpanel" class="tab-pane fade" id="edwiser_site_monitor_plugins">
             <div class="mt-3 align-items-center justify-content-center flex-column">
                 <div id="page-admin-plugins" class="server-plugins has-loader">
-                    <a target="_blank" href="{{installnewurl}}" class='btn btn-inverse'>{{#str}} installnew, block_edwiser_server_monitor {{/str}}</a>
+                    <a target="_blank" href="{{installnewurl}}" class='btn btn-inverse'>{{#str}} installnew, block_edwiser_site_monitor {{/str}}</a>
                     <button class='btn btn-inverse refresh-plugin-list'>{{#str}} checkforupdates, core_plugin {{/str}}</button>
                     <label class="lasttimefetched">{{{lasttime}}}</label>
                     <div class="server-plugins-list">
@@ -71,12 +71,12 @@
                 </div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="edwiser_server_monitor_recommendation">
+        <div role="tabpanel" class="tab-pane fade" id="edwiser_site_monitor_recommendation">
             <div class="mt-3 align-items-center justify-content-center flex-column">
                 {{{ recommendation }}}
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="edwiser_server_monitor_contactus">
+        <div role="tabpanel" class="tab-pane fade" id="edwiser_site_monitor_contactus">
             <div class="mt-3 align-items-center justify-content-center flex-column has-loader">
                 {{{ contactus }}}
                 <div class="edwiser-server-monitor-loader">

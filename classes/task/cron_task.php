@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A scheduled task for edwiser_server_monitor cron.
+ * A scheduled task for edwiser_site_monitor cron.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
-namespace block_edwiser_server_monitor\task;
+namespace block_edwiser_site_monitor\task;
 
 class cron_task extends \core\task\scheduled_task {
 
@@ -32,16 +32,16 @@ class cron_task extends \core\task\scheduled_task {
      * @return string
      */
     public function get_name() {
-        return get_string('crontask', 'block_edwiser_server_monitor');
+        return get_string('crontask', 'block_edwiser_site_monitor');
     }
 
     /**
-     * Run edwiser_server_monitor cron.
+     * Run edwiser_site_monitor cron.
      */
     public function execute() {
         global $CFG;
-        require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
-        edwiser_server_monitor_cron();
+        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+        edwiser_site_monitor_cron();
     }
 
 }

@@ -17,7 +17,7 @@
 /**
  * Definition of Forum scheduled tasks.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @category  task
  * @copyright Wisdmlabs 2018
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $tasks = array(
     array(
-        'classname' => 'block_edwiser_server_monitor\task\cron_task',
+        'classname' => 'block_edwiser_site_monitor\task\cron_task',
         'blocking' => 0,
         'minute' => '*/5',
         'hour' => '*',

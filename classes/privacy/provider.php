@@ -15,20 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for block_edwiser_server_monitor.
+ * Privacy Subsystem implementation for block_edwiser_site_monitor.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
-namespace block_edwiser_server_monitor\privacy;
+namespace block_edwiser_site_monitor\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem for block_edwiser_server_monitor implementing null_provider.
+ * Privacy Subsystem for block_edwiser_site_monitor implementing null_provider.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
 

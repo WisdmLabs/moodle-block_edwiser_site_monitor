@@ -17,16 +17,16 @@
 /**
  * Plugin recommendation renderable.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
-namespace block_edwiser_server_monitor\output;
+namespace block_edwiser_site_monitor\output;
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
 use help_icon;
 use moodle_url;
@@ -60,7 +60,7 @@ class recommendation implements renderable, templatable {
         $data = [];
         $plugins = get_edwiser_plugin_list();
         if (!$plugins) {
-            $data['error'] = get_string('invalidjsonfile', 'block_edwiser_server_monitor');
+            $data['error'] = get_string('invalidjsonfile', 'block_edwiser_site_monitor');
             return $data;
         }
         $theme = isset($SESSION->theme) ? $SESSION->theme : $CFG->theme;

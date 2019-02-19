@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * External api functions for block_edwiser_server_monitor
+ * External api functions for block_edwiser_site_monitor
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
@@ -25,37 +25,37 @@
 
 defined('MOODLE_INTERNAL') || die();
 $functions = [
-    'block_edwiser_server_monitor_get_live_status' => [
-        'classname' => 'block_edwiser_server_monitor_externallib',
+    'block_edwiser_site_monitor_get_live_status' => [
+        'classname' => 'block_edwiser_site_monitor_externallib',
         'methodname' => 'get_live_status',
-        'classpath' => 'blocks/edwiser_server_monitor/classes/externallib.php',
+        'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get live status of server',
         'type' => 'read',
         'loginrequired' => true,
         'ajax' => true,
     ],
-    'block_edwiser_server_monitor_get_last_24_hours_usage' => [
-        'classname' => 'block_edwiser_server_monitor_externallib',
+    'block_edwiser_site_monitor_get_last_24_hours_usage' => [
+        'classname' => 'block_edwiser_site_monitor_externallib',
         'methodname' => 'get_last_24_hours_usage',
-        'classpath' => 'blocks/edwiser_server_monitor/classes/externallib.php',
+        'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get live status of server',
         'type' => 'read',
         'loginrequired' => true,
         'ajax' => true,
     ],
-    'block_edwiser_server_monitor_get_plugins_update' => [
-        'classname' => 'block_edwiser_server_monitor_externallib',
+    'block_edwiser_site_monitor_get_plugins_update' => [
+        'classname' => 'block_edwiser_site_monitor_externallib',
         'methodname' => 'get_plugins_update',
-        'classpath' => 'blocks/edwiser_server_monitor/classes/externallib.php',
+        'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get updates of edwiser plugins or other plugins based on parameter',
         'type' => 'read',
         'loginrequired' => true,
         'ajax' => true,
     ],
-    'block_edwiser_server_monitor_send_contactus_email' => [
-        'classname' => 'block_edwiser_server_monitor_externallib',
+    'block_edwiser_site_monitor_send_contactus_email' => [
+        'classname' => 'block_edwiser_site_monitor_externallib',
         'methodname' => 'send_contactus_email',
-        'classpath' => 'blocks/edwiser_server_monitor/classes/externallib.php',
+        'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Send contact us email',
         'type' => 'read',
         'loginrequired' => true,

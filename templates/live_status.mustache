@@ -18,52 +18,52 @@
     <div class="legends">
         <div class="low-usage legend">
             <div class="color bg-success"></div>
-            <label>{{#str}}lowusage, block_edwiser_server_monitor{{/str}}</label>
+            <label>{{#str}}lowusage, block_edwiser_site_monitor{{/str}}</label>
         </div>
         <div class="moderate-usage legend">
             <div class="color bg-warning"></div>
-            <label>{{#str}}moderateusage, block_edwiser_server_monitor{{/str}}</label>
+            <label>{{#str}}moderateusage, block_edwiser_site_monitor{{/str}}</label>
         </div>
         <div class="high-usage legend">
             <div class="color bg-danger"></div>
-            <label>{{#str}}highusage, block_edwiser_server_monitor{{/str}}</label>
+            <label>{{#str}}highusage, block_edwiser_site_monitor{{/str}}</label>
         </div>
     </div>
-    <div class="progress-row pb-2">
-        <label class="progress-name h4"><i class="fa fa-server mr-10" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_server_monitor {{/str}}:</label>
+    <div class="progress-row pb-4">
+        <label class="progress-name h4"><i class="fa fa-server pr-2" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
         <div class="progress-wrap progress">
             <div class="progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
         </div>
     </div>
-    <div class="progress-row pb-2">
-        <label class="progress-name h4"><i class="fa fa-microchip mr-10" aria-hidden="true"></i>{{#str}} memory, block_edwiser_server_monitor {{/str}}:</label>
+    <div class="progress-row pb-4">
+        <label class="progress-name h4"><i class="fa fa-microchip pr-2" aria-hidden="true"></i>{{#str}} memory, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
         <div class="progress-wrap progress">
             <div class="progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
         </div>
     </div>
-    <div class="progress-row pb-2">
-        <label class="progress-name h4"><i class="fa fa-hdd-o mr-10" aria-hidden="true"></i>{{#str}} storage, block_edwiser_server_monitor {{/str}}:</label>
+    <div class="progress-row pb-4">
+        <label class="progress-name h4"><i class="fa fa-hdd-o pr-2" aria-hidden="true"></i>{{#str}} storage, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_storage_usage_label">{{storage}}% ({{storagevalues}})</label>
         <div class="progress-wrap progress">
             <div class="progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
         </div>
     </div>
-    <div class="pb-2">
-        <label class="h4"><i class="fa fa-users mr-10" aria-hidden="true"></i>{{#str}} users, block_edwiser_server_monitor {{/str}}:</label>
+    <div class="pb-4">
+        <label class="h4"><i class="fa fa-users pr-2" aria-hidden="true"></i>{{#str}} users, block_edwiser_site_monitor {{/str}}:</label>
         <div class="legends">
             <div class="activeusers legend">
                 <div class="color bg-success"></div>
-                <label>{{#str}} activeusers, block_edwiser_server_monitor {{/str}}({{active}})</label>
+                <label>{{#str}} activeusers, block_edwiser_site_monitor {{/str}}({{active}})</label>
             </div>
             <div class="suspendedusers legend">
                 <div class="color bg-warning"></div>
-                <label>{{#str}} suspendedusers, block_edwiser_server_monitor {{/str}}({{suspended}})</label>
+                <label>{{#str}} suspendedusers, block_edwiser_site_monitor {{/str}}({{suspended}})</label>
             </div>
             <div class="deletedusers legend">
                 <div class="color bg-danger"></div>
-                <label>{{#str}} deletedusers, block_edwiser_server_monitor {{/str}}({{deleted}})</label>
+                <label>{{#str}} deletedusers, block_edwiser_site_monitor {{/str}}({{deleted}})</label>
             </div>
         </div>
         <div class="progress-wrap progress">
@@ -72,8 +72,8 @@
             <div class="progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
         </div>
     </div>
-    <div class="h4 pb-2">
-        <label class="h4"><i class="fa fa-user-circle mr-10" aria-hidden="true"></i>{{#str}} liveusers, block_edwiser_server_monitor {{/str}}:</label>
+    <div class="h4 pb-4">
+        <label class="h4"><i class="fa fa-user-circle pr-2" aria-hidden="true"></i>{{#str}} liveusers, block_edwiser_site_monitor {{/str}}:</label>
         <label id="esm_live_users_label">{{liveusers}}</label>
     </div>
 </div>

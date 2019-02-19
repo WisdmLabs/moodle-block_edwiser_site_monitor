@@ -17,16 +17,16 @@
 /**
  * Last 24 hour usage renderable.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
-namespace block_edwiser_server_monitor\output;
+namespace block_edwiser_site_monitor\output;
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_server_monitor/lib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
 use help_icon;
 use moodle_url;
@@ -60,16 +60,16 @@ class last_24_hours_usage implements renderable, templatable {
         global $DB;
         $data = new stdClass;
         $data->dates = [];
-        $maxtime = $DB->get_field_sql('SELECT max(`time`) FROM {block_edwiser_server_monitor}');
+        $maxtime = $DB->get_field_sql('SELECT max(`time`) FROM {block_edwiser_site_monitor}');
         $sql = 'SELECT `time`
-                  FROM {block_edwiser_server_monitor}
+                  FROM {block_edwiser_site_monitor}
                   WHERE `time` < ? AND `time` >= ?';
         $min = strtotime(date('d-m-Y', $maxtime));
         $today = strtotime(date('d-m-Y', time()));
         $limit = strtotime(date('d-m-Y', $maxtime - 24 * 60 * 60 * 7));
         if ($DB->record_exists_sql($sql, array($maxtime, $min))) {
             $data->dates[] = [
-                'date' => $today == $min ? get_string('today', 'block_edwiser_server_monitor') : date('d-m-Y', $min),
+                'date' => $today == $min ? get_string('today', 'block_edwiser_site_monitor') : date('d-m-Y', $min),
                 'stamp' => $min,
                 "selected" => "selected"
             ];

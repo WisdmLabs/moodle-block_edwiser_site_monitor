@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Edwiser Server Monitor block installation.
+ * Edwiser Site Monitor block installation.
  *
- * @package   block_edwiser_server_monitor
+ * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
-function xmldb_block_edwiser_server_monitor_install() {
+function xmldb_block_edwiser_site_monitor_install() {
     global $DB;
     $systempage = $DB->get_record('my_pages', array('userid' => null, 'private' => 1));
 
@@ -35,12 +35,12 @@ function xmldb_block_edwiser_server_monitor_install() {
 
     // Adding multiple blocks
     if ($systempage) {
-        $page->blocks->add_block('edwiser_server_monitor', 'content', -2, false, 'my-index', $systempage->id);
+        $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index', $systempage->id);
     }
     $admin = get_admin();
     if ($admin != false) {
         $page->set_context(context_user::instance($admin->id));
-        $page->blocks->add_block('edwiser_server_monitor', 'content', -2, false, 'my-index');
+        $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index');
     }
 
     return true;

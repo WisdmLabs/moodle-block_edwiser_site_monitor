@@ -16,7 +16,7 @@
 /**
  * Javascript used to save the user's tab preference.
  *
- * @package    block_edwiser_server_monitor
+ * @package    block_edwiser_site_monitor
  * @copyright  Wisdmlabs 2019
  * @author     Yogesh Shirsath
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -63,7 +63,7 @@ require([
                 }
                 fetchtingstatus = true;
                 var promise = ajax.call([{
-                    methodname: 'block_edwiser_server_monitor_get_live_status',
+                    methodname: 'block_edwiser_site_monitor_get_live_status',
                     args: {}
                 }]);
                 promise[0].done(function(response) {
@@ -85,17 +85,17 @@ require([
                     return;
                 }
                 fetchtinglastusage = true;
-                $('.edwiser_server_monitor #edwiser_server_monitor_last_24_hours_usage .edwiser-server-monitor-loader').addClass('show');
+                $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').addClass('show');
                 var timestamp = $('#esm_usage_date_selector').val() || 0;
                 var promise = ajax.call([{
-                    methodname: 'block_edwiser_server_monitor_get_last_24_hours_usage',
+                    methodname: 'block_edwiser_site_monitor_get_last_24_hours_usage',
                     args: {
                         timestamp: timestamp
                     }
                 }]);
                 promise[0].done(function(response) {
                     fetchtinglastusage = false;
-                    $('.edwiser_server_monitor #edwiser_server_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
                     if (chart != null) {
                         chart.data.labels = JSON.parse(response.time);
                         chart.data.datasets[0].data = JSON.parse(response.cpu);
@@ -109,7 +109,7 @@ require([
                         data: {
                             labels: JSON.parse(response.time),
                             datasets: [{
-                                label: M.util.get_string('cpuusage', 'block_edwiser_server_monitor'),
+                                label: M.util.get_string('cpuusage', 'block_edwiser_site_monitor'),
                                 data: JSON.parse(response.cpu),
                                 borderColor: "#ff4c52",
                                 borderWidth: 1,
@@ -117,7 +117,7 @@ require([
                                 pointRadius: 0,
                                 hoverPointRadius: 1,
                             }, {
-                                label: M.util.get_string('memoryusage', 'block_edwiser_server_monitor'),
+                                label: M.util.get_string('memoryusage', 'block_edwiser_site_monitor'),
                                 data: JSON.parse(response.memory),
                                 borderColor: "#11c26d",
                                 borderWidth: 1,
@@ -125,7 +125,7 @@ require([
                                 pointRadius: 0,
                                 hoverPointRadius: 1,
                             }, {
-                                label: M.util.get_string('storageusage', 'block_edwiser_server_monitor'),
+                                label: M.util.get_string('storageusage', 'block_edwiser_site_monitor'),
                                 data: JSON.parse(response.storage),
                                 borderColor: "#667afa",
                                 borderWidth: 1,
@@ -146,7 +146,7 @@ require([
                                     },
                                     scaleLabel: {
                                         display: true,
-                                        labelString: M.util.get_string('yaxistitle', 'block_edwiser_server_monitor')
+                                        labelString: M.util.get_string('yaxistitle', 'block_edwiser_site_monitor')
                                     }
                                 }],
                                 xAxes: [{
@@ -155,7 +155,7 @@ require([
                                     },
                                     scaleLabel: {
                                         display: true,
-                                        labelString: M.util.get_string('xaxistitle', 'block_edwiser_server_monitor')
+                                        labelString: M.util.get_string('xaxistitle', 'block_edwiser_site_monitor')
                                     }
                                 }]
                             },
@@ -186,7 +186,7 @@ require([
                     };
                     chart = new Chart($('#esm_usage_chart')[0].getContext('2d'), graph);
                 }).fail(function(ex) {
-                    $('.edwiser_server_monitor #edwiser_server_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
                     alert(ex.message);
                     fetchtinglastusage = false;
                 });
@@ -196,18 +196,18 @@ require([
                     return;
                 }
                 fetchtingplugins = true;
-                $('.edwiser_server_monitor #edwiser_server_monitor_plugins .edwiser-server-monitor-loader').addClass('show');
+                $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').addClass('show');
                 var promise = ajax.call([{
-                    methodname: 'block_edwiser_server_monitor_get_plugins_update',
+                    methodname: 'block_edwiser_site_monitor_get_plugins_update',
                     args: {}
                 }]);
                 promise[0].done(function(response) {
-                    $('.edwiser_server_monitor #edwiser_server_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
-                    $('.edwiser_server_monitor #edwiser_server_monitor_plugins .server-plugins-list').html(response.plugins);
-                    $('.edwiser_server_monitor .lasttimefetched').text(response.lasttimefetched);
+                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .server-plugins-list').html(response.plugins);
+                    $('.edwiser_site_monitor .lasttimefetched').text(response.lasttimefetched);
                     fetchtingplugins = false;
                 }).fail(function(ex) {
-                    $('.edwiser_server_monitor #edwiser_server_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
                     notification.exception(ex);
                     fetchtingplugins = false;
                 });
@@ -217,10 +217,10 @@ require([
                     return;
                 }
                 sendingemail = true;
-                $('.edwiser_server_monitor #edwiser_server_monitor_contactus .edwiser-server-monitor-loader').addClass('show');
+                $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').addClass('show');
                 var promise = ajax.call(parameters);
                 promise[0].done(function(response) {
-                    $('.edwiser_server_monitor #edwiser_server_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
                     var trigger = $('#create-modal');
                     ModalFactory.create({
                         title: response.header,
@@ -236,7 +236,7 @@ require([
                     }
                     sendingemail = false;
                 }).fail(function(ex) {
-                    $('.edwiser_server_monitor #edwiser_server_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
+                    $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
                     notification.exception(ex);
                     sendingemail = false;
                 });
@@ -249,30 +249,30 @@ require([
             $('#esm_usage_date_selector').change(function() {
                 functions.get_last_24_hours_usage();
             });
-            $('.edwiser_server_monitor .nav-link').click(function() {
+            $('.edwiser_site_monitor .nav-link').click(function() {
                 switch ($(this).data('container')) {
-                    case "edwiser_server_monitor_view_live_status":
+                    case "edwiser_site_monitor_view_live_status":
                         liveusage = setInterval(function() {
                             functions.get_live_status();
                         }, refreshrate * 1000);
                         break;
-                    case "edwiser_server_monitor_last_24_hours_usage":
+                    case "edwiser_site_monitor_last_24_hours_usage":
                         functions.get_last_24_hours_usage();
                         clearInterval(liveusage);
                         break;
-                    case "edwiser_server_monitor_plugins":
-                        if ($.trim($('.edwiser_server_monitor .server-plugins-list').text()) == '') {
-                            $('.edwiser_server_monitor .refresh-plugin-list').trigger('click');
+                    case "edwiser_site_monitor_plugins":
+                        if ($.trim($('.edwiser_site_monitor .server-plugins-list').text()) == '') {
+                            $('.edwiser_site_monitor .refresh-plugin-list').trigger('click');
                         }
-                    case "edwiser_server_monitor_recommendation":
-                    case "edwiser_server_monitor_contactus":
+                    case "edwiser_site_monitor_recommendation":
+                    case "edwiser_site_monitor_contactus":
                         clearInterval(liveusage);
                         break;
                 }
             });
-            $('body').on('click', '.edwiser_server_monitor .refresh-plugin-list', function() {
+            $('body').on('click', '.edwiser_site_monitor .refresh-plugin-list', function() {
                 functions.get_plugins();
-            }).on('click', '.edwiser_server_monitor .edwiser-plugin-filter', function(event) {
+            }).on('click', '.edwiser_site_monitor .edwiser-plugin-filter', function(event) {
                 event.preventDefault();
                 $(this).parent('.server-plugins-list').removeClass('all edwiser other update').addClass($(this).data('filter'));
                 $('#plugins-control-panel').removeClass('all edwiser other update').addClass($(this).data('filter'));
@@ -284,7 +284,7 @@ require([
                 event.preventDefault();
                 var trigger = $('#create-modal');
                 ModalFactory.create({
-                    title: M.util.get_string('changelog', 'block_edwiser_server_monitor'),
+                    title: M.util.get_string('changelog', 'block_edwiser_site_monitor'),
                     body: $(this).data('log').changelog
                 }, trigger).done(function(modal) {
                     modal.show();
@@ -295,7 +295,7 @@ require([
                 event.preventDefault();
                 var array = $(this).serializeArray();
                 var paramter = {
-                    methodname: 'block_edwiser_server_monitor_send_contactus_email',
+                    methodname: 'block_edwiser_site_monitor_send_contactus_email',
                     args: {}
                 };
                 $.each(array, function(i, obj) {

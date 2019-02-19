@@ -261,33 +261,3 @@ function get_edwiser_plugin_list() {
 function get_values_ratio($percent, $total) {
     return round($total * $percent / 100, 2)."G/".round($total, 2)."G";
 }
-
-function random_float($min = 0, $max = 1) {
-    return $min + mt_rand() / mt_getrandmax() * ($max - $min);
-}
-
-function randomize_usage() {
-    global $DB;
-    ob_implicit_flush(true);
-    $DB->delete_records('block_edwiser_server_monitor');
-    $from = time();
-    $to = strtotime(date('d-m-Y', time()));
-    for ($j = 0; $j < 7; $j++) {
-        $step = 300;
-        $data = new stdClass;
-        mtrace("Generating");
-        $count = 0;
-        for ($i = $from; $i >= $to; $i = $i - $step) {
-            $data->time = $i;
-            $data->cpu = random_float(0, 100);
-            $data->memory = random_float(10, 50);
-            $data->storage = random_float(25, 35);
-            echo $count++ . "<br>";
-            $DB->insert_record('block_edwiser_server_monitor', $data);
-        }
-        $from = $to;
-        $to = $from - 24 * 60 * 60;
-    }
-    echo "Done";
-    die;
-}

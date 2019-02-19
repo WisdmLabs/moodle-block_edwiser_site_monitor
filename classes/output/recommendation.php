@@ -80,7 +80,6 @@ class recommendation implements renderable, templatable {
                 );
             }
         }
-        $data['plugins'] = array_merge($data['plugins'], $data['plugins'], $data['plugins'], $data['plugins'], $data['plugins'], $data['plugins'], $data['plugins'], $data['plugins']);
         $data['has'] = count($data['plugins']) > 0;
         $output = null;
         return $data;

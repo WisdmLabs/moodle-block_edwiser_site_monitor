@@ -8,3 +8,5 @@ Features
 4. See number of live users
 5. See number of active, suspended and active users.
 6. See server performance graph for last 24 hours
+7. See plugin Recommendations
+8. Contact developers by Contact US form.

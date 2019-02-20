@@ -40,10 +40,9 @@ function get_cpu_usage() {
         $load = shell_exec("wmic cpu get loadpercentage");
         $load = (int)filter_var($load, FILTER_SANITIZE_NUMBER_INT);
     } else if (stripos(PHP_OS, 'linux') !== false) {
-        $load = (float)shell_exec("ps -A -o pcpu | tail -n+2 | paste -sd+ | bc");
-        if ($load == "") {
-            $load = 0;
-        }
+        $loads = sys_getloadavg();
+        $corenums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
+        $load = round($loads[0] / ($corenums + 1) * 100, 2);
     }
     if ($load > 100) {
         return 100;
@@ -65,11 +64,12 @@ function get_memory_usage() {
         $free = (int)filter_var($free, FILTER_SANITIZE_NUMBER_INT);
         $usage = round(($max - $free) / $max * 100, 2);
     } else if (stripos(PHP_OS, 'linux') !== false) {
-        $memory = shell_exec('grep "Mem*" /proc/meminfo');
+        $memory = shell_exec('free -k');
         if ($memory != "") {
             $memory = explode("\n", $memory);
-            $maxmemory = round((int)filter_var($memory[0], FILTER_SANITIZE_NUMBER_INT) / 1024 / 1024, 2);
-            $usage = $maxmemory - round((int)filter_var($memory[2], FILTER_SANITIZE_NUMBER_INT) / 1024 / 1024, 2);
+            $memory = explode(' ', preg_replace('!\s+!', ' ', $memory[1]));
+            $maxmemory = round($memory[1] / 1024 / 1024, 2);
+            $usage = round($memory[2] / 1024 / 1024, 2);
             $usage = round($usage / $maxmemory * 100, 2);
         }
     }

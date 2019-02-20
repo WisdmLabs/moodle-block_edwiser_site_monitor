@@ -60,10 +60,10 @@ class last_24_hours_usage implements renderable, templatable {
         global $DB;
         $data = new stdClass;
         $data->dates = [];
-        $maxtime = $DB->get_field_sql('SELECT max(`time`) FROM {block_edwiser_site_monitor}');
-        $sql = 'SELECT `time`
+        $maxtime = $DB->get_field_sql('SELECT max(time) FROM {block_edwiser_site_monitor}');
+        $sql = 'SELECT time
                   FROM {block_edwiser_site_monitor}
-                  WHERE `time` < ? AND `time` >= ?';
+                  WHERE time < ? AND time >= ?';
         $min = strtotime(date('d-m-Y', $maxtime));
         $today = strtotime(date('d-m-Y', time()));
         $limit = strtotime(date('d-m-Y', $maxtime - 24 * 60 * 60 * 7));

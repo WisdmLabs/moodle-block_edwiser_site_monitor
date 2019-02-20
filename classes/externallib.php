@@ -101,10 +101,10 @@ class block_edwiser_site_monitor_externallib extends external_api {
             $timestamp = strtotime(date('d-m-Y', time()));
         }
         $usage = $DB->get_records_sql(
-            "SELECT `time`, cpu, memory, storage
+            "SELECT time, cpu, memory, storage
                FROM {block_edwiser_site_monitor}
-              WHERE `time` >= ? AND `time` < ?
-              ORDER BY `time` ASC", array($timestamp, $timestamp + 24 * 60 * 60)
+              WHERE time >= ? AND time < ?
+              ORDER BY time ASC", array($timestamp, $timestamp + 24 * 60 * 60)
         );
         $cpu = $memory = $storage = $time = [];
         foreach ($usage as $use) {

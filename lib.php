@@ -169,7 +169,8 @@ function get_all_users() {
                 count(CASE suspended WHEN 1 THEN 1 ELSE NULL END) suspended,
                 count(CASE deleted WHEN 1 THEN 1 ELSE NULL END) deleted
            FROM {user}
-           WHERE username <> "guest"'
+           WHERE username <> ?',
+        array("guest")
     );
     return [
         'total' => $users->total,

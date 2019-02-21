@@ -63,6 +63,11 @@ class block_edwiser_site_monitor extends block_base {
         if ($this->content !== null) {
             return $this->content;
         }
+
+        if (!has_capability('block/edwiser_site_monitor:addinstance', context_system::instance())) {
+            return null;
+        }
+
         $renderer = $this->page->get_renderer('block_edwiser_site_monitor');
 
         $refreshrate = isset($this) && isset($this->config) && isset($this->config->refreshrate) ? $this->config->refreshrate : 5;

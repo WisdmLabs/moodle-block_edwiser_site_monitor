@@ -15,19 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Global Search version details.
+ * A scheduled task for edwiser_site_monitor cron.
  *
  * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
+namespace block_edwiser_site_monitor\task;
 
-defined('MOODLE_INTERNAL') || die;
+class news extends \core\task\scheduled_task {
 
-$plugin->version   = 2019250207;
-$plugin->requires  = 2017111301;
-$plugin->release   = '1.0.1';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'block_edwiser_site_monitor';
-$plugin->cron      = 300;
+    /**
+     * Get a descriptive name for this task (shown to admins).
+     *
+     * @return string
+     */
+    public function get_name() {
+        return get_string('news', 'block_edwiser_site_monitor');
+    }
+
+    /**
+     * Run edwiser_site_monitor news task.
+     */
+    public function execute() {
+        $notification = new \block_edwiser_site_monitor_notifications();
+        $notification->check();
+    }
+
+}

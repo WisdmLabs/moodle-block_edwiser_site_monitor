@@ -48,6 +48,7 @@ $string['moderateusage'] = 'Moderate usage';
 $string['highusage'] = 'High usage';
 $string['yaxistitle'] = 'Usage(%)';
 $string['xaxistitle'] = 'Time';
+$string['messageprovider:notifications'] = $string['news'] = 'Edwiser News and Updates';
 
 
 // Config page strings.

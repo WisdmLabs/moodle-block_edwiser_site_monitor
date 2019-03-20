@@ -22,6 +22,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
+defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
 function xmldb_block_edwiser_site_monitor_install() {
     global $DB;
@@ -42,7 +45,7 @@ function xmldb_block_edwiser_site_monitor_install() {
         $page->set_context(context_user::instance($admin->id));
         $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index');
     }
-
+    update_notification_configs();
     return true;
 }
 

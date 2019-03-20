@@ -26,6 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 define("EDWISER_PLUGINS_LIST", "https://edwiser.org/edwiserupdates.json");
+// define("EDWISER_NEWS_LIST", "https://edwiser.org/edwisernews.json");
+define("EDWISER_NEWS_LIST", "http://l/edwisernews.json");
 define("EDWISER_PRIVACY_POLICY_LINK", "https://edwiser.org/privacy-policy/");
 define("EDWISER_SUPPORT_EMAIL", "edwiser@wisdmlabs.com");
 
@@ -254,6 +256,17 @@ function get_edwiser_plugin_list() {
 }
 
 /**
+ * Get edwiser plugin list from plugin list url
+ *
+ * @return array plugin list
+ */
+function get_edwiser_news() {
+    $news = file_get_contents(EDWISER_NEWS_LIST);
+    $news = json_decode($news);
+    return $news;
+}
+
+/**
  * Get values ratio in used and total value
  *
  * @param  integer $percent usage value
@@ -261,4 +274,47 @@ function get_edwiser_plugin_list() {
  */
 function get_values_ratio($percent, $total) {
     return round($total * $percent / 100, 2)."G/".round($total, 2)."G";
+}
+
+/**
+ * Updated notification message configurations for blogs post notifications
+ */
+function update_notification_configs() {
+    set_config('block_edwiser_site_monitor_notifications_disable', '0', 'message');
+    set_config('airnotifier_provider_block_edwiser_site_monitor_notifications_permitted', 'permitted', 'message');
+    set_config('email_provider_block_edwiser_site_monitor_notifications_permitted', 'disallowed', 'message');
+    set_config('jabber_provider_block_edwiser_site_monitor_notifications_permitted', 'permitted', 'message');
+    set_config('popup_provider_block_edwiser_site_monitor_notifications_permitted', 'permitted', 'message');
+    set_config('message_provider_block_edwiser_site_monitor_notifications_loggedin', 'popup', 'message');
+    set_config('message_provider_block_edwiser_site_monitor_notifications_loggedoff', 'popup', 'message');
+}
+
+/**
+ * Check if admin permitted to receive notification
+ *
+ * @param object $admin admin user object
+ * @return bool True if allowed to send notification
+ */
+function edwiser_site_monitor_notification_allowed($admin) {
+    global $CFG;
+    if (get_config('block_edwiser_site_monitor_notifications_disable', 'message') == 1) {
+        return false;
+    }
+    if (get_config('message', 'popup_provider_block_edwiser_site_monitor_notifications_permitted') != 'permitted') {
+        return false;
+    }
+    $timetosee = 300;
+    if (isset($CFG->block_online_users_timetosee)) {
+        $timetosee = $CFG->block_online_users_timetosee * 60;
+    }
+    $time = time() - $timetosee;
+    $setting = get_config('message', 'message_provider_block_edwiser_site_monitor_notifications_loggedin');
+    if (stripos($setting, 'popup') !== false && $admin->lastaccess >= $time) {
+        return true;
+    }
+    $setting = get_config('message', 'message_provider_block_edwiser_site_monitor_notifications_loggedoff');
+    if (stripos($setting, 'popup') !== false && $admin->lastaccess < $time) {
+        return true;
+    }
+    return false;
 }

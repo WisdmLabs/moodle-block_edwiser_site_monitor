@@ -28,8 +28,6 @@ use core\update\remote_info;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/filelib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/plugins.php');
 
 $installupdate = required_param('installupdate', PARAM_COMPONENT); // Install given available update.
 $installupdateversion = required_param('installupdateversion', PARAM_INT); // Version of the available update to

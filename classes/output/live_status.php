@@ -26,13 +26,12 @@
 namespace block_edwiser_site_monitor\output;
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
-use help_icon;
-use moodle_url;
 use renderable;
-use renderer_base;
 use templatable;
+use renderer_base;
+use block_edwiser_site_monitor_usage as esmusage;
+use block_edwiser_site_monitor_utility as esmutility;
 
 class live_status implements renderable, templatable {
 
@@ -44,18 +43,19 @@ class live_status implements renderable, templatable {
      * @return stdClass|array
      */
     public function export_for_template(renderer_base $output) {
+        $usage = esmusage::get_instance();
         $data = [
-            "cpu"       => get_cpu_usage(),
-            "memory"    => get_memory_usage(),
-            "storage"   => get_storage_usage(),
-            "liveusers" => get_live_users(),
+            "cpu"       => $usage->get_cpu_usage(),
+            "memory"    => $usage->get_memory_usage(),
+            "storage"   => $usage->get_storage_usage(),
+            "liveusers" => $usage->get_live_users(),
         ];
-        $data["cpucolor"]       = get_color_class_from_value($data["cpu"]);
-        $data["memorycolor"]    = get_color_class_from_value($data["memory"]);
-        $data["storagecolor"]   = get_color_class_from_value($data["storage"]);
-        $data["memoryvalues"]    = get_values_ratio($data["memory"], get_total_memory());
-        $data["storagevalues"]   = get_values_ratio($data["storage"], get_total_storage());
-        $data = array_merge($data, get_all_users());
+        $data["cpucolor"]        = esmutility::get_color_class_from_value($data["cpu"]);
+        $data["memorycolor"]     = esmutility::get_color_class_from_value($data["memory"]);
+        $data["storagecolor"]    = esmutility::get_color_class_from_value($data["storage"]);
+        $data["memoryvalues"]    = esmutility::get_values_ratio($data["memory"], $usage->get_total_memory());
+        $data["storagevalues"]   = esmutility::get_values_ratio($data["storage"], $usage->get_total_storage());
+        $data = array_merge($data, $usage->get_all_users());
         $output = null;
         return $data;
     }

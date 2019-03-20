@@ -25,7 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 require_once($CFG->libdir . '/adminlib.php');
 /**
  * This class implements services for block_edwiser_site_monitor
@@ -50,7 +49,7 @@ class block_edwiser_site_monitor_plugins {
      */
     public function prepare_edwiser_plugins_update($plug = null) {
         global $DB;
-        $plugins = get_edwiser_plugin_list();
+        $plugins = block_edwiser_site_monitor_utility::get_edwiser_plugin_list();
         if (!$plugins) {
             return get_string('invalidjsonfile', 'block_edwiser_site_monitor');
         }

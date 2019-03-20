@@ -26,8 +26,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/plugins.php');
+
+use block_edwiser_site_monitor_usage   as esmusage;
+use block_edwiser_site_monitor_plugins as esmplugins;
+use block_edwiser_site_monitor_utility as esmutility;
+
 /**
  * This class implements services for block_edwiser_site_monitor
  */
@@ -39,10 +42,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
      * @return external_function_parameters
      */
     public static function get_live_status_parameters() {
-        return new external_function_parameters(
-            array(
-            )
-        );
+        return new external_function_parameters(array());
     }
 
     /**
@@ -51,11 +51,12 @@ class block_edwiser_site_monitor_externallib extends external_api {
      * @return array
      */
     public static function get_live_status() {
+        $usage = esmusage::get_instance();
         return array(
-            "cpu" => get_cpu_usage(),
-            "memory" => get_memory_usage(),
-            "storage" => get_storage_usage(),
-            "liveusers" => get_live_users()
+            "cpu"       => $usage->get_cpu_usage(),
+            "memory"    => $usage->get_memory_usage(),
+            "storage"   => $usage->get_storage_usage(),
+            "liveusers" => $usage->get_live_users()
         );
     }
 
@@ -65,14 +66,12 @@ class block_edwiser_site_monitor_externallib extends external_api {
      * @return external_single_structure
      */
     public static function get_live_status_returns() {
-        return new external_single_structure(
-            [
-            "cpu" => new external_value(PARAM_FLOAT, "cpu usage"),
-            "memory" => new external_value(PARAM_FLOAT, "memory usage"),
-            "storage" => new external_value(PARAM_FLOAT, "storage usage"),
+        return new external_single_structure([
+            "cpu"       => new external_value(PARAM_FLOAT, "cpu usage"),
+            "memory"    => new external_value(PARAM_FLOAT, "memory usage"),
+            "storage"   => new external_value(PARAM_FLOAT, "storage usage"),
             "liveusers" => new external_value(PARAM_INT, "number of live users")
-            ]
-        );
+        ]);
     }
 
     /**
@@ -143,10 +142,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
      * @return external_function_parameters
      */
     public static function get_plugins_update_parameters() {
-        return new external_function_parameters(
-            array(
-            )
-        );
+        return new external_function_parameters(array());
     }
 
     /**
@@ -157,7 +153,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
     public static function get_plugins_update() {
         global $PAGE;
         $PAGE->set_context(context_system::instance());
-        $plugins = new block_edwiser_site_monitor_plugins();
+        $plugins = new esmplugins();
         $time = time();
         return array(
             'lasttimefetched' => get_string('checkforupdateslast', 'core_plugin', date('d F Y, h:i A e', $time)),
@@ -206,13 +202,13 @@ class block_edwiser_site_monitor_externallib extends external_api {
      */
     public static function send_contactus_email($firstname, $lastname, $email, $subject, $message) {
         $admin = get_admin();
-        $admin->email = $email;
+        $admin->email     = $email;
         $admin->firstname = $firstname;
-        $admin->lastname = $lastname;
-        $support = new stdClass;
-        $support->id = -99;
-        $support->email = EDWISER_SUPPORT_EMAIL;
-        $status = edwiser_site_monitor_send_email(
+        $admin->lastname  = $lastname;
+        $support        = new stdClass;
+        $support->id    = -99;
+        $support->email = esmutility::EDWISER_SUPPORT_EMAIL;
+        $status = esmutility::edwiser_site_monitor_send_email(
             $admin,
             $support,
             $subject,
@@ -221,12 +217,12 @@ class block_edwiser_site_monitor_externallib extends external_api {
         );
         $subject = get_string('thankssubject', 'block_edwiser_site_monitor');
         $message = get_string('thanksmessage', 'block_edwiser_site_monitor', array(
-            'user' => $firstname,
-            'email' => EDWISER_SUPPORT_EMAIL
+            'user'  => $firstname,
+            'email' => esmutility::EDWISER_SUPPORT_EMAIL
         ));
         $admin->firstname = 'Edwiser';
-        $admin->lastname = '';
-        $status &= edwiser_site_monitor_send_email(
+        $admin->lastname  = '';
+        $status &= esmutility::edwiser_site_monitor_send_email(
             $admin,
             $admin,
             $subject,

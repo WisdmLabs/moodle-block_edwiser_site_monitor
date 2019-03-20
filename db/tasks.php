@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Definition of Forum scheduled tasks.
+ * Definition of Edwiser Site monitor scheduled tasks.
  *
  * @package   block_edwiser_site_monitor
  * @category  task

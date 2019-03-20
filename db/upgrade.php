@@ -29,22 +29,21 @@
  * database_manager class
  *
  * Please do not forget to use upgrade_set_timeout()
- * before any action that may take longer time to finish.
  *
- * @since Moodle 2.0
- * @package block_navigation
- * @copyright 2009 Sam Hemelryk
+ * Definition of Edwiser Site monitor upgrade.
+ *
+ * @package   block_edwiser_site_monitor
+ * @category  task
+ * @copyright Wisdmlabs 2018
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-
 function xmldb_block_edwiser_site_monitor_upgrade($oldversion, $block) {
     $block = $block;
     if ($oldversion < 2019250207) {
-        update_notification_configs();
+        block_edwiser_site_monitor_utility::update_notification_configs();
     }
     return true;
 }

@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/renderer.php');
 
+use block_edwiser_site_monitor_usage as esmusage;
+
 class block_edwiser_site_monitor extends block_base {
 
     /**
@@ -59,7 +61,7 @@ class block_edwiser_site_monitor extends block_base {
      */
     public function get_content() {
         global $PAGE, $CFG;
-
+        $usage = esmusage::get_instance();
         if ($this->content !== null) {
             return $this->content;
         }
@@ -77,8 +79,8 @@ class block_edwiser_site_monitor extends block_base {
         $PAGE->requires->strings_for_js(array_keys($strings), 'block_edwiser_site_monitor');
 
         $PAGE->requires->data_for_js('refreshrate', $refreshrate);
-        $PAGE->requires->data_for_js('totalmemory', get_total_memory());
-        $PAGE->requires->data_for_js('totalstorage', get_total_storage());
+        $PAGE->requires->data_for_js('totalmemory', $usage->get_total_memory());
+        $PAGE->requires->data_for_js('totalstorage', $usage->get_total_storage());
 
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/edwiser_site_monitor/amd/src/main.js'));
 

@@ -28,13 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
-use help_icon;
-use moodle_url;
 use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
-use core\output\inplace_editable;
+use block_edwiser_site_monitor_utility as esmutility;
 
 class contactus implements renderable, templatable {
 

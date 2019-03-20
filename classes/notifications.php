@@ -81,10 +81,10 @@ class block_edwiser_site_monitor_notifications {
     public function check() {
         global $DB;
         $admin = get_admin();
-        if (!edwiser_site_monitor_notification_allowed($admin)) {
+        if (!block_edwiser_site_monitor_utility::edwiser_site_monitor_notification_allowed($admin)) {
             return false;
         }
-        $posts = get_edwiser_news();
+        $posts = block_edwiser_site_monitor_utility::get_edwiser_news();
         // Last two month timestamp is 2(month) * 30(day) * 24(hour) * 60(minute) * 60(second) = 5184000(second)
         $last2month = time() - 5184000;
         $messages = [];

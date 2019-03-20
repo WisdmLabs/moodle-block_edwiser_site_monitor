@@ -28,12 +28,10 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
 
-use help_icon;
-use moodle_url;
 use renderable;
 use renderer_base;
 use templatable;
-use stdClass;
+use block_edwiser_site_monitor_utility as esmutility;
 
 class recommendation implements renderable, templatable {
 
@@ -48,6 +46,25 @@ class recommendation implements renderable, templatable {
     public function __construct($instance) {
         $this->instance = $instance;
     }
+
+    /**
+     * Get data for recommended plugins list
+     *
+     * @param  stdClass $recommendation Recommendation details about plugin
+     * @param  stdClass $plugin         Plugin details
+     * @param  string   $cardclass      card css class
+     * @return array
+     */
+    private function get_data($recommendation, $plugin, $cardclass) {
+        return array(
+            'image'       => isset($recommendation->image) ? $recommendation->image : '',
+            'title'       => isset($recommendation->title) ? $recommendation->title : '',
+            'description' => isset($recommendation->description) ? $recommendation->description : '',
+            'purchaseurl' => isset($plugin->purchaseurl) ? $plugin->purchaseurl : '',
+            'content'     => isset($recommendation->content) ? $recommendation->content : false,
+            'cardclass'   => $cardclass
+        );
+    }
     /**
      * Function to export the renderer data in a format that is suitable for a
      * mustache template.
@@ -58,7 +75,7 @@ class recommendation implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $CFG, $SESSION;
         $data = [];
-        $plugins = get_edwiser_plugin_list();
+        $plugins = esmutility::get_edwiser_plugin_list();
         if (!$plugins) {
             $data['error'] = get_string('invalidjsonfile', 'block_edwiser_site_monitor');
             return $data;
@@ -69,15 +86,8 @@ class recommendation implements renderable, templatable {
         $cardclass = $this->instance->region == 'content' ? 'col-lg-' . $columns . ' col-md-6 col-12' : '';
         foreach ($plugins as $plugin) {
             if (isset($plugin->recommendation)) {
-                $recommendation = $plugin->recommendation;
-                $data['plugins'][] = array(
-                    'image'       => isset($recommendation->image) ? $recommendation->image : '',
-                    'title'       => isset($recommendation->title) ? $recommendation->title : '',
-                    'description' => isset($recommendation->description) ? $recommendation->description : '',
-                    'purchaseurl' => isset($plugin->purchaseurl) ? $plugin->purchaseurl : '',
-                    'content'     => isset($recommendation->content) ? $recommendation->content : false,
-                    'cardclass'   => $cardclass
-                );
+                $recommendation    = $plugin->recommendation;
+                $data['plugins'][] = $this->get_data($recommendation, $plugin, $cardclass);
             }
         }
         $data['has'] = count($data['plugins']) > 0;

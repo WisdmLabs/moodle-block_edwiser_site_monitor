@@ -97,6 +97,78 @@ class block_edwiser_site_monitor_usage_warning {
     }
 
     /**
+     * Check cpu usage thresholds
+     *
+     * @param  array &$thresholds Threshold warning array
+     */
+    private function check_cpu_usage_thresholds(&$thresholds) {
+        if ($this->cpu < $this->config->cpulowerlimit && $content = $this->get_usage_threshold_email_content(
+            'cpu',
+            $this->cpu,
+            $this->config->cpulowerlimit,
+            'low'
+        )) {
+                $thresholds[] = $content;
+        }
+        if ($this->cpu > $this->config->cpuhigherlimit && $content = $this->get_usage_threshold_email_content(
+            'cpu',
+            $this->cpu,
+            $this->config->cpuhigherlimit,
+            'high'
+        )) {
+                $thresholds[] = $content;
+        }
+    }
+
+    /**
+     * Check memory usage_thresholds
+     *
+     * @param  array &$thresholds Threshold warning array
+     */
+    private function check_memory_usage_thresholds(&$thresholds) {
+        if ($this->memory < $this->config->memorylowerlimit && $content = $this->get_usage_threshold_email_content(
+            'memory',
+            $this->memory,
+            $this->config->memorylowerlimit,
+            'low'
+        )) {
+                $thresholds[] = $content;
+        }
+        if ($this->memory > $this->config->memoryhigherlimit && $content = $this->get_usage_threshold_email_content(
+            'memory',
+            $this->memory,
+            $this->config->memoryhigherlimit,
+            'high'
+        )) {
+                $thresholds[] = $content;
+        }
+    }
+
+    /**
+     * Check storage usage thresholds
+     *
+     * @param  array &$thresholds Threshold warning array
+     */
+    private function check_storage_usage_thresholds(&$thresholds) {
+        if ($this->storage < $this->config->storagelowerlimit && $content = $this->get_usage_threshold_email_content(
+            'storage',
+            $this->storage,
+            $this->config->storagelowerlimit,
+            'low'
+        )) {
+                $thresholds[] = $content;
+        }
+        if ($this->storage > $this->config->storagehigherlimit && $content = $this->get_usage_threshold_email_content(
+            'storage',
+            $this->storage,
+            $this->config->storagehigherlimit,
+            'high'
+        )) {
+                $thresholds[] = $content;
+        }
+    }
+
+    /**
      * Check if server usage is less/more than threshold limit
      *
      * @return void
@@ -106,37 +178,9 @@ class block_edwiser_site_monitor_usage_warning {
             return;
         }
         $thresholds = [];
-
-        if ($this->cpu < $this->config->cpulowerlimit) {
-            if ($content = $this->get_usage_threshold_email_content('cpu', $this->cpu, $this->config->cpulowerlimit, 'low')) {
-                $thresholds[] = $content;
-            }
-        }
-        if ($this->cpu > $this->config->cpuhigherlimit) {
-            if ($content = $this->get_usage_threshold_email_content('cpu', $this->cpu, $this->config->cpuhigherlimit, 'high')) {
-                $thresholds[] = $content;
-            }
-        }
-        if ($this->memory < $this->config->memorylowerlimit) {
-            if ($content = $this->get_usage_threshold_email_content('memory', $this->memory, $this->config->memorylowerlimit, 'low')) {
-                $thresholds[] = $content;
-            }
-        }
-        if ($this->memory > $this->config->memoryhigherlimit) {
-            if ($content = $this->get_usage_threshold_email_content('memory', $this->memory, $this->config->memoryhigherlimit, 'high')) {
-                $thresholds[] = $content;
-            }
-        }
-        if ($this->storage < $this->config->storagelowerlimit) {
-            if ($content = $this->get_usage_threshold_email_content('storage', $this->storage, $this->config->storagelowerlimit, 'low')) {
-                $thresholds[] = $content;
-            }
-        }
-        if ($this->storage > $this->config->storagehigherlimit) {
-            if ($content = $this->get_usage_threshold_email_content('storage', $this->storage, $this->config->storagehigherlimit, 'high')) {
-                $thresholds[] = $content;
-            }
-        }
+        $this->check_cpu_usage_thresholds($thresholds);
+        $this->check_memory_usage_thresholds($thresholds);
+        $this->check_storage_usage_thresholds($thresholds);
         if (count($thresholds) == 0) {
             return;
         }

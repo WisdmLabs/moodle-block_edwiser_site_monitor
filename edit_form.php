@@ -83,6 +83,54 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
     }
 
     /**
+     * Storage validation
+     * @param  array $data    data from config form
+     * @param  array &$errors errors array
+     */
+    private function cpu_validation($data, &$errors) {
+        if (empty($data['config_cpulowerlimit']) || $data['config_cpulowerlimit'] < 1 || $data['config_cpulowerlimit'] > 100) {
+            $errors['config_cpulowerlimit'] = get_string('cpulimit_invalid', 'block_edwiser_site_monitor');
+        }
+        if (empty($data['config_cpuhigherlimit']) || $data['config_cpuhigherlimit'] < 1 || $data['config_cpuhigherlimit'] > 100) {
+            $errors['config_cpuhigherlimit'] = get_string('cpulimit_invalid', 'block_edwiser_site_monitor');
+        } else if (!empty($data['config_cpulowerlimit']) && $data['config_cpulowerlimit'] > $data['config_cpuhigherlimit']) {
+            $errors['config_cpuhigherlimit'] = get_string('cpulimit_overlap', 'block_edwiser_site_monitor');
+        }
+    }
+
+    /**
+     * Storage validation
+     * @param  array $data    data from config form
+     * @param  array &$errors errors array
+     */
+    private function memory_validation($data, &$errors) {
+        if (empty($data['config_memorylowerlimit']) || $data['config_memorylowerlimit'] < 1 || $data['config_memorylowerlimit'] > 100) {
+            $errors['config_memorylowerlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
+        }
+        if (empty($data['config_memoryhigherlimit']) || $data['config_memoryhigherlimit'] < 1 || $data['config_memoryhigherlimit'] > 100) {
+            $errors['config_memoryhigherlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
+        } else if (!empty($data['config_memorylowerlimit']) && $data['config_memorylowerlimit'] > $data['config_memoryhigherlimit']) {
+            $errors['config_memoryhigherlimit'] = get_string('memorylimit_overlap', 'block_edwiser_site_monitor');
+        }
+    }
+
+    /**
+     * Storage validation
+     * @param  array $data    data from config form
+     * @param  array &$errors errors array
+     */
+    private function storage_validation($data, &$errors) {
+        if (empty($data['config_storagelowerlimit']) || $data['config_storagelowerlimit'] < 1 || $data['config_storagelowerlimit'] > 100) {
+            $errors['config_storagelowerlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
+        }
+        if (empty($data['config_storagehigherlimit']) || $data['config_storagehigherlimit'] < 1 || $data['config_storagehigherlimit'] > 100) {
+            $errors['config_storagehigherlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
+        } else if (!empty($data['config_storagelowerlimit']) && $data['config_storagelowerlimit'] > $data['config_storagehigherlimit']) {
+            $errors['config_storagehigherlimit'] = get_string('storagelimit_overlap', 'block_edwiser_site_monitor');
+        }
+    }
+
+    /**
      * Perform minimal validation on the settings form
      *
      * @param array $data  submitted data
@@ -99,34 +147,13 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         }
 
         // Validate cpu usage limit
-        if (empty($data['config_cpulowerlimit']) || $data['config_cpulowerlimit'] < 1 || $data['config_cpulowerlimit'] > 100) {
-            $errors['config_cpulowerlimit'] = get_string('cpulimit_invalid', 'block_edwiser_site_monitor');
-        }
-        if (empty($data['config_cpuhigherlimit']) || $data['config_cpuhigherlimit'] < 1 || $data['config_cpuhigherlimit'] > 100) {
-            $errors['config_cpuhigherlimit'] = get_string('cpulimit_invalid', 'block_edwiser_site_monitor');
-        } else if (!empty($data['config_cpulowerlimit']) && $data['config_cpulowerlimit'] > $data['config_cpuhigherlimit']) {
-            $errors['config_cpuhigherlimit'] = get_string('cpulimit_overlap', 'block_edwiser_site_monitor');
-        }
+        $this->cpu_validation($data, $errors);
 
         // Validate memory usage limit
-        if (empty($data['config_memorylowerlimit']) || $data['config_memorylowerlimit'] < 1 || $data['config_memorylowerlimit'] > 100) {
-            $errors['config_memorylowerlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
-        }
-        if (empty($data['config_memoryhigherlimit']) || $data['config_memoryhigherlimit'] < 1 || $data['config_memoryhigherlimit'] > 100) {
-            $errors['config_memoryhigherlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
-        } else if (!empty($data['config_memorylowerlimit']) && $data['config_memorylowerlimit'] > $data['config_memoryhigherlimit']) {
-            $errors['config_memoryhigherlimit'] = get_string('memorylimit_overlap', 'block_edwiser_site_monitor');
-        }
+        $this->memory_validation($data, $errors);
 
         // Validate storage usage limit
-        if (empty($data['config_storagelowerlimit']) || $data['config_storagelowerlimit'] < 1 || $data['config_storagelowerlimit'] > 100) {
-            $errors['config_storagelowerlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
-        }
-        if (empty($data['config_storagehigherlimit']) || $data['config_storagehigherlimit'] < 1 || $data['config_storagehigherlimit'] > 100) {
-            $errors['config_storagehigherlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
-        } else if (!empty($data['config_storagelowerlimit']) && $data['config_storagelowerlimit'] > $data['config_storagehigherlimit']) {
-            $errors['config_storagehigherlimit'] = get_string('storagelimit_overlap', 'block_edwiser_site_monitor');
-        }
+        $this->storage_validation($data, $errors);
         return $errors;
     }
 }

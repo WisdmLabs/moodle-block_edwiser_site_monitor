@@ -39,9 +39,7 @@ class cron_task extends \core\task\scheduled_task {
      * Run edwiser_site_monitor cron.
      */
     public function execute() {
-        global $CFG;
-        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-        edwiser_site_monitor_cron();
+        block_edwiser_site_monitor_uitility::edwiser_site_monitor_cron();
     }
 
 }

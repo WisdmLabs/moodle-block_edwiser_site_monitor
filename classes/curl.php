@@ -25,8 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-
 /**
  * This class implements methods to send curl request easily
  * and get response.
@@ -90,19 +88,11 @@ class edwiser_site_monitor_curl {
         $this->__curl = curl_init();
         $curloptions = array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $this->__url,
-            // CURLOPT_URL => "https://edwiser.org/check-update",
-            CURLOPT_POST => $this->__post,
-            CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT'].' - '.$CFG->wwwroot,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_URL            => $this->__url,
+            CURLOPT_POST           => $this->__post,
+            CURLOPT_USERAGENT      => $_SERVER['HTTP_USER_AGENT'].' - '.$CFG->wwwroot,
+            CURLOPT_TIMEOUT        => 30,
             CURLOPT_SSL_VERIFYPEER => false,
-            // CURLOPT_POSTFIELDS => array(
-            // 'edd_action' => 'get_version',
-            // 'license' => 'fa95ffbd52743829a97cc65da6cd609e',
-            // 'item_name' => urlencode('Edwiser RemUI'),
-            // 'current_version' => '3.6.0',
-            // 'url' => urlencode($CFG->wwwroot),
-            // )
         );
         if ($this->__post) {
             $curloptions[CURLOPT_POSTFIELDS] = $this->__options;

@@ -21,7 +21,7 @@
  * @author     Yogesh Shirsath
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require([
+define([
     'jquery',
     'core/ajax',
     'core/notification',
@@ -306,5 +306,8 @@ require([
             });
         });
     };
-    init();
+
+    return {
+        init: init
+    }
 });

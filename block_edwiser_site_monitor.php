@@ -60,7 +60,7 @@ class block_edwiser_site_monitor extends block_base {
      * @return string The block HTML.
      */
     public function get_content() {
-        global $PAGE, $CFG;
+        global $PAGE;
         $usage = esmusage::get_instance();
         if ($this->content !== null) {
             return $this->content;
@@ -82,7 +82,7 @@ class block_edwiser_site_monitor extends block_base {
         $PAGE->requires->data_for_js('totalmemory', $usage->get_total_memory());
         $PAGE->requires->data_for_js('totalstorage', $usage->get_total_storage());
 
-        $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/edwiser_site_monitor/amd/src/main.js'));
+        $PAGE->requires->js_call_amd('block_edwiser_site_monitor/main', 'init');
 
         $this->content = new stdClass();
         $this->content->footer = '';

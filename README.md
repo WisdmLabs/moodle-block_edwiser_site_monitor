@@ -58,6 +58,9 @@ Under this tab you will be able to view all the plugins that have an update. Alo
 5) Contact Us -
 This tab contains a contact form using which users of Edwiser Site Monitor can directly contact us just in case they have any issue or need any assistance related to the product.
 
+6) Notification -
+Admins will receive notification containing Tips & Tricks to improve their Moodle LMS.
+
 [(Back to top)](#table-of-contents)
 
 # Plugin Version

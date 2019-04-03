@@ -207,7 +207,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
         $admin->lastname  = $lastname;
         $support        = new stdClass;
         $support->id    = -99;
-        $support->email = esmutility::EDWISER_SUPPORT_EMAIL;
+        $support->email = EDWISER_SUPPORT_EMAIL;
         $status = esmutility::edwiser_site_monitor_send_email(
             $admin,
             $support,
@@ -218,7 +218,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
         $subject = get_string('thankssubject', 'block_edwiser_site_monitor');
         $message = get_string('thanksmessage', 'block_edwiser_site_monitor', array(
             'user'  => $firstname,
-            'email' => esmutility::EDWISER_SUPPORT_EMAIL
+            'email' => EDWISER_SUPPORT_EMAIL
         ));
         $admin->firstname = 'Edwiser';
         $admin->lastname  = '';

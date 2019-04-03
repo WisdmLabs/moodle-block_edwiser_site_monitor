@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2019250207;
+$plugin->version   = 2019250208;
 $plugin->requires  = 2017111301;
-$plugin->release   = '1.0.1';
+$plugin->release   = '1.0.2';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'block_edwiser_site_monitor';
 $plugin->cron      = 300;

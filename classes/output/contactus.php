@@ -32,7 +32,6 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
-use block_edwiser_site_monitor_utility as esmutility;
 
 class contactus implements renderable, templatable {
 
@@ -49,7 +48,7 @@ class contactus implements renderable, templatable {
         $data->firstname = $USER->firstname;
         $data->lastname = $USER->lastname;
         $data->email = $USER->email;
-        $data->policy = get_string('policy', 'block_edwiser_site_monitor', esmutility::EDWISER_PRIVACY_POLICY_LINK);
+        $data->policy = get_string('policy', 'block_edwiser_site_monitor', EDWISER_PRIVACY_POLICY_LINK);
         $output = null;
         return $data;
     }

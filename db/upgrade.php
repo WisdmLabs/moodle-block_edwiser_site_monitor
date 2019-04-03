@@ -42,7 +42,7 @@ defined('MOODLE_INTERNAL') || die();
 
 function xmldb_block_edwiser_site_monitor_upgrade($oldversion, $block) {
     $block = $block;
-    if ($oldversion < 2019250207) {
+    if ($oldversion < 2019040300) {
         block_edwiser_site_monitor_utility::update_notification_configs();
     }
     return true;

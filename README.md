@@ -13,7 +13,6 @@ Edwiser Site Monitor plugin for Moodle
 - [Uninstallation](#uninstallation)
 - [Files Information](#files-information)
 - [Languages](#languages)
-- [History](#history)
 - [Author](#author)
 - [Provided by](#provided-by)
 
@@ -59,6 +58,9 @@ Under this tab you will be able to view all the plugins that have an update. Alo
 5) Contact Us -
 This tab contains a contact form using which users of Edwiser Site Monitor can directly contact us just in case they have any issue or need any assistance related to the product.
 
+6) Notification -
+Admins will receive notification containing Tips & Tricks to improve their Moodle LMS.
+
 [(Back to top)](#table-of-contents)
 
 # Plugin Version
@@ -82,16 +84,12 @@ Please ensure that your hardware and software complies with 'Requirements' in 'I
 
 The Edwiser Site Monitor is 'free' software under the terms of the GNU GPLv3 License, please see 'LICENSE.md'.
 
-The primary source is on add-git-downloadable-link
-
-If you download from the development area - https://github.com/WisdmLabs/moodle-block_edwiser_site_monitor - consider that
-the code is unstable and not for use in production environments.  This is because I develop the next version in stages
-and use GitHub as a means of backup.  Therefore the code is not finished, subject to alteration and requires testing.
+The primary source is on https://github.com/WisdmLabs/moodle-block_edwiser_site_monitor
 
 You have all the rights granted to you by the GPLv3 license.  If you are unsure about anything, then the
 FAQ - http://www.gnu.org/licenses/gpl-faq.html - is a good place to look.
 
-If you reuse any of the code then I kindly ask that you make reference to the format.
+If you reuse any of the code then we kindly ask that you make reference to the our Edwiser Site Monitor block pluhin.
 
 [(Back to top)](#table-of-contents)
 
@@ -101,7 +99,7 @@ For all support queries related to Edwiser Site Monitor plugin you could email u
 Apart from that you could raise your support queries in this forum too - https://forums.edwiser.org/category/39/edwiser-site-monitor
  
 And if you wish to see any new features as part of the product then you could share your feature requests here 
-forum https://forums.edwiser.org/category/42/request-a-feature for support. 
+forum https://forums.edwiser.org/category/43/request-a-feature for support. 
 Together we could make this solution better for your Moodle.
 
 [(Back to top)](#table-of-contents)
@@ -109,7 +107,7 @@ Together we could make this solution better for your Moodle.
 # Installation
 
 1. Ensure you have the version of Moodle as stated above in 'Required version of Moodle'.  This is essential as the
-   format relies on underlying core code that is out of my control.
+   block relies on underlying core code that is out of my control.
 2. Put Moodle in 'Maintenance Mode' (docs.moodle.org/en/admin/setting/maintenancemode) so that there are no
    users using it bar you as the administrator - if you have not already done so.
 3. Copy 'moodle-block_edwiser_site_monitor/' to '/block/' if you have not already done so.
@@ -122,9 +120,8 @@ Together we could make this solution better for your Moodle.
 # Uninstallation
 
 1. Put Moodle in 'Maintenance Mode' so that there are no users using it bar you as the administrator.
-2. It is recommended but not essential to change all of the courses that use the format to another.  If this is not done Moodle will pick the last format in your list of formats to use but display in 'Edit settings' of the course the first format in the list.  You can then set the desired format.
-3. In '/block/' remove the folder 'moodle-block_edwiser_site_monitor/'.
-4. Put Moodle out of Maintenance Mode.
+2. In '/block/' remove the folder 'moodle-block_edwiser_site_monitor/'.
+3. Put Moodle out of Maintenance Mode.
 
 [(Back to top)](#table-of-contents)
 
@@ -132,19 +129,10 @@ Together we could make this solution better for your Moodle.
 
 # Languages
 
-The moodle-block_edwiser_site_monitor/lang folder contains the language files for the format.
-
-Note that existing formats store their language strings in the main
-moodle.php, which you can also do, but this separate file is recommended
-for contributed formats.
+The moodle-block_edwiser_site_monitor/lang folder contains the language files for the block.
 
 Of course you can have other folders as well as English etc. if you want to
 provide multiple languages.
-
-[(Back to top)](#table-of-contents)
-
-# History
-See changes.txt
 
 [(Back to top)](#table-of-contents)
 
@@ -156,6 +144,7 @@ Wisdmlabs
 
 # Provided by
 
-[![alt text](https://edwiser.org/wp-content/uploads/2018/11/SI_20181122_211041-1-1.png)](https://edwiser.org)
+[![alt text](https://github.com/WisdmLabs/moodle-block_edwiser_site_monitor/blob/master/pix/edwiser-logo.png)](https://edwiser.org)
 
 -----------------------------
+

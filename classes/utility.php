@@ -24,28 +24,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+define('EDWISER_PLUGINS_LIST', "https://edwiser.org/edwiserupdates.json");
+define('EDWISER_NEWS_LIST', "https://edwiser.org/edwisernews.json");
+define('EDWISER_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
+define('EDWISER_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
 
 class block_edwiser_site_monitor_utility {
-
-    /**
-     * @var string Plugin list json url
-     */
-    public const EDWISER_PLUGINS_LIST        = "https://edwiser.org/edwiserupdates.json";
-
-    /**
-     * @var string News post list json url
-     */
-    public const EDWISER_NEWS_LIST           = "https://edwiser.org/edwisernews.json";
-
-    /**
-     * @var string Privacy policy link
-     */
-    public const EDWISER_PRIVACY_POLICY_LINK = "https://edwiser.org/privacy-policy/";
-
-    /**
-     * @var string Support email address
-     */
-    public const EDWISER_SUPPORT_EMAIL       = "edwiser@wisdmlabs.com";
 
     /**
      * Send email to user
@@ -89,7 +73,7 @@ class block_edwiser_site_monitor_utility {
      * @return array plugin list
      */
     public static function get_edwiser_plugin_list() {
-        $plugins = file_get_contents(self::EDWISER_PLUGINS_LIST);
+        $plugins = file_get_contents(EDWISER_PLUGINS_LIST);
         $plugins = json_decode($plugins);
         return $plugins;
     }
@@ -100,7 +84,7 @@ class block_edwiser_site_monitor_utility {
      * @return array plugin list
      */
     public static function get_edwiser_news() {
-        $news = file_get_contents(self::EDWISER_NEWS_LIST);
+        $news = file_get_contents(EDWISER_NEWS_LIST);
         $news = json_decode($news);
         return $news;
     }

@@ -89,7 +89,7 @@ The primary source is on https://github.com/WisdmLabs/moodle-block_edwiser_site_
 You have all the rights granted to you by the GPLv3 license.  If you are unsure about anything, then the
 FAQ - http://www.gnu.org/licenses/gpl-faq.html - is a good place to look.
 
-If you reuse any of the code then we kindly ask that you make reference to the our Edwiser Site Monitor block pluhin.
+If you reuse any of the code then we kindly ask that you make reference to the our Edwiser Site Monitor block plugin.
 
 [(Back to top)](#table-of-contents)
 

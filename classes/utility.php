@@ -43,9 +43,6 @@ class block_edwiser_site_monitor_utility {
      * @return boolean email sending status
      */
     public static function edwiser_site_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
-        global $PAGE;
-        $context = context_system::instance();
-        $PAGE->set_context($context);
         $messagetext = html_to_text($messagehtml);
         if ($replyto === false) {
             return email_to_user($to, $from, $subject, $messagetext, $messagehtml);

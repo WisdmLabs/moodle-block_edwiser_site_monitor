@@ -25,7 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+use block_edwiser_site_monitor_utility as esmutility;
+
 /**
  * This class implements services for block_edwiser_site_monitor
  */
@@ -174,6 +175,8 @@ class block_edwiser_site_monitor_usage_warning {
      * @return void
      */
     private function check_usage_thresholds() {
+        global $PAGE, $COURSE;
+        $PAGE->set_context(context_system::instance());
         if ($this->config->enablethreshold != 1) {
             return;
         }
@@ -193,10 +196,16 @@ class block_edwiser_site_monitor_usage_warning {
             get_string('header-current', 'block_edwiser_site_monitor')
         );
         $data->warnings = $thresholds;
-        global $PAGE, $COURSE;
-        $PAGE->set_context(context_system::instance());
-        $email = $PAGE->get_renderer('block_edwiser_site_monitor')->render_from_template('block_edwiser_site_monitor/usage_warning_email', $data);
+        $email = $PAGE->get_renderer('block_edwiser_site_monitor')->render_from_template(
+            'block_edwiser_site_monitor/usage_warning_email',
+            $data
+        );
         $admin = get_admin();
-        edwiser_site_monitor_send_email($admin, $admin, get_string('usageemailsubject', 'block_edwiser_site_monitor', $COURSE->fullname), $email);
+        esmutility::edwiser_site_monitor_send_email(
+            $admin,
+            $admin,
+            get_string('usageemailsubject', 'block_edwiser_site_monitor', $COURSE->fullname),
+            $email
+        );
     }
 }

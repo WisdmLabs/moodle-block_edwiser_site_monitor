@@ -17,17 +17,17 @@
 /**
  * Definition of Edwiser Site monitor scheduled tasks.
  *
- * @package   block_edwiser_site_monitor
- * @category  task
- * @copyright Wisdmlabs 2018
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_edwiser_site_monitor
+ * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $tasks = array(
     array(
-        'classname' => 'block_edwiser_site_monitor\task\cron_task',
+        'classname' => 'block_edwiser_site_monitor\task\cron',
         'blocking' => 0,
         'minute' => '*/5',
         'hour' => '*',

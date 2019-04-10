@@ -24,7 +24,11 @@
  */
 namespace block_edwiser_site_monitor\task;
 
-class cron_task extends \core\task\scheduled_task {
+defined('MOODLE_INTERNAL') || die();
+
+use block_edwiser_site_monitor_utility as esmutility;
+
+class cron extends \core\task\scheduled_task {
 
     /**
      * Get a descriptive name for this task (shown to admins).
@@ -39,7 +43,7 @@ class cron_task extends \core\task\scheduled_task {
      * Run edwiser_site_monitor cron.
      */
     public function execute() {
-        block_edwiser_site_monitor_uitility::edwiser_site_monitor_cron();
+        esmutility::edwiser_site_monitor_cron();
     }
 
 }

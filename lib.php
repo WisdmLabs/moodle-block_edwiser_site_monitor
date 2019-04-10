@@ -15,38 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Search form renderable.
+ * Edwiser Site Monitor lib.
  *
- * @package   block_edwiser_site_monitor
- * @copyright Wisdmlabs 2018
- * @author    Yogesh Shirsath
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_edwiser_site_monitor
+ * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-use block_edwiser_site_monitor_usage as esmusage;
+use block_edwiser_site_monitor_utility as esmutility;
 
 /**
  * Call cron on the edwiser_site_monitor.
- *
- * @return boolean
  */
 function edwiser_site_monitor_cron() {
-    global $DB, $CFG;
-    $usage = esmusage::get_instance();
-    $data          = new stdClass;
-    $data->time    = time();
-    $data->cpu     = $usage->get_cpu_usage();
-    $data->memory  = $usage->get_memory_usage();
-    $data->storage = $usage->get_storage_usage();
-    $context = context_user::instance(get_admin()->id);
-    $instance = $DB->get_record('block_instances', array('blockname' => 'edwiser_site_monitor', 'parentcontextid' => $context->id));
-    if ($instance) {
-        $config = unserialize(base64_decode($instance->configdata));
-        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/usage_warning.php');
-        new block_edwiser_site_monitor_usage_warning($config, $data->cpu, $data->memory, $data->storage);
-    }
-    $DB->insert_record('block_edwiser_site_monitor', $data);
-    $DB->delete_records_select('block_edwiser_site_monitor', 'time < ?', array(time() - 24 * 60 * 60 * 7));
+    esmutility::edwiser_site_monitor_cron();
 }

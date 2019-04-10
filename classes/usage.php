@@ -18,9 +18,9 @@
  * Class to get Site usage
  *
  * @package   block_edwiser_site_monitor
- * @copyright Wisdmlabs 2019
- * @author    Yogesh Shirsath
+ * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author    Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die;

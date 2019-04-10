@@ -18,9 +18,9 @@
  * Utility class for edwiser site monitor
  *
  * @package   block_edwiser_site_monitor
- * @copyright Wisdmlabs 2019
- * @author    Yogesh Shirsath
+ * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author    Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die;
@@ -28,6 +28,8 @@ define('EDWISER_PLUGINS_LIST', "https://edwiser.org/edwiserupdates.json");
 define('EDWISER_NEWS_LIST', "https://edwiser.org/edwisernews.json");
 define('EDWISER_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
 define('EDWISER_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
+
+use block_edwiser_site_monitor_usage as esmusage;
 
 class block_edwiser_site_monitor_utility {
 
@@ -143,5 +145,31 @@ class block_edwiser_site_monitor_utility {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Call cron on the edwiser_site_monitor.
+     *
+     * @return boolean
+     */
+    public static function edwiser_site_monitor_cron() {
+        global $DB, $CFG;
+        $usage = esmusage::get_instance();
+        $data          = new stdClass;
+        $data->time    = time();
+        $data->cpu     = $usage->get_cpu_usage();
+        $data->memory  = $usage->get_memory_usage();
+        $data->storage = $usage->get_storage_usage();
+        $context = context_user::instance(get_admin()->id);
+        $instance = $DB->get_record(
+            'block_instances',
+            array('blockname' => 'edwiser_site_monitor', 'parentcontextid' => $context->id)
+        );
+        if ($instance && $instance->configdata != '') {
+            $config = unserialize(base64_decode($instance->configdata));
+            new block_edwiser_site_monitor_usage_warning($config, $data->cpu, $data->memory, $data->storage);
+        }
+        $DB->insert_record('block_edwiser_site_monitor', $data);
+        $DB->delete_records_select('block_edwiser_site_monitor', 'time < ?', array(time() - 24 * 60 * 60 * 7));
     }
 }

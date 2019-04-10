@@ -24,10 +24,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-define('EDWISER_PLUGINS_LIST', "https://edwiser.org/edwiserupdates.json");
-define('EDWISER_NEWS_LIST', "https://edwiser.org/edwisernews.json");
-define('EDWISER_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
-define('EDWISER_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
+
+define('ESM_PLUGINS_LIST', "https://edwiser.org/edwiserupdates.json");
+define('ESM_NEWS_LIST', "https://edwiser.org/edwisernews.json");
+define('ESM_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
+define('ESM_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
 
 use block_edwiser_site_monitor_usage as esmusage;
 
@@ -72,7 +73,7 @@ class block_edwiser_site_monitor_utility {
      * @return array plugin list
      */
     public static function get_edwiser_plugin_list() {
-        $plugins = file_get_contents(EDWISER_PLUGINS_LIST);
+        $plugins = file_get_contents(ESM_PLUGINS_LIST);
         $plugins = json_decode($plugins);
         return $plugins;
     }
@@ -84,7 +85,7 @@ class block_edwiser_site_monitor_utility {
      */
     public static function get_edwiser_news() {
         try {
-            $news = @file_get_contents(EDWISER_NEWS_LIST);
+            $news = @file_get_contents(ESM_NEWS_LIST);
             return json_decode($news);
         } catch (Exception $ex) {
             return false;

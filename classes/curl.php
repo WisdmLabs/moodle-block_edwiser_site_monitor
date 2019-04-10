@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Global search block.
+ * Edwiser site monitor curl class
  *
  * @package   block_edwiser_site_monitor
  * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
@@ -73,7 +73,7 @@ class edwiser_site_monitor_curl {
         $options['url'] = $CFG->wwwroot;
         $this->__options = $options;
 
-        // Initialising curl request
+        // Initialising curl request.
         $this->init();
     }
 
@@ -90,7 +90,6 @@ class edwiser_site_monitor_curl {
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL            => $this->__url,
             CURLOPT_POST           => $this->__post,
-            CURLOPT_USERAGENT      => $_SERVER['HTTP_USER_AGENT'].' - '.$CFG->wwwroot,
             CURLOPT_TIMEOUT        => 30,
             CURLOPT_SSL_VERIFYPEER => false,
         );

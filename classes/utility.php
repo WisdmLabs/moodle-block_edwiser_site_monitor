@@ -84,9 +84,12 @@ class block_edwiser_site_monitor_utility {
      * @return array plugin list
      */
     public static function get_edwiser_news() {
-        $news = file_get_contents(EDWISER_NEWS_LIST);
-        $news = json_decode($news);
-        return $news;
+        try {
+            $news = @file_get_contents(EDWISER_NEWS_LIST);
+            return json_decode($news);
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 
     /**

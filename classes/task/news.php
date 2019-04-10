@@ -24,6 +24,8 @@
  */
 namespace block_edwiser_site_monitor\task;
 
+defined('MOODLE_INTERNAL') || die();
+
 class news extends \core\task\scheduled_task {
 
     /**

@@ -25,8 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
-
 class block_edwiser_site_monitor_notifications {
 
     /**
@@ -85,7 +83,10 @@ class block_edwiser_site_monitor_notifications {
             return false;
         }
         $posts = block_edwiser_site_monitor_utility::get_edwiser_news();
-        // Last two month timestamp is 2(month) * 30(day) * 24(hour) * 60(minute) * 60(second) = 5184000(second)
+        if (empty($posts)) {
+            return;
+        }
+        // Last two month timestamp is 2(month) * 30(day) * 24(hour) * 60(minute) * 60(second) = 5184000(second).
         $last2month = time() - 5184000;
         $messages = [];
         foreach ($posts as $post) {

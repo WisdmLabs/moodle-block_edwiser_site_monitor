@@ -15,17 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Global search block.
+ * Ediwser Site Monitor Block
  *
  * @package    block_edwiser_site_monitor
- * @copyright  Wisdmlabs 2019
- * @author     Yogesh Shirsath
+ * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/renderer.php');
 
 use block_edwiser_site_monitor_usage as esmusage;
 
@@ -89,19 +87,19 @@ class block_edwiser_site_monitor extends block_base {
 
         $data = new stdClass;
 
-        // Render live status
+        // Render live status.
         $data->live_status = $renderer->render(new \block_edwiser_site_monitor\output\live_status());
 
-        // Render last 24 hours usage
+        // Render last 24 hours usage.
         $data->last_24_hours_usage = $renderer->render(new \block_edwiser_site_monitor\output\last_24_hours_usage($this->instance));
 
-        // Install new plugin page url
+        // Install new plugin page url.
         $data->installnewurl = (new moodle_url('/admin/tool/installaddon/index.php'))->__toString();
 
-        // Render recommendation view
+        // Render recommendation view.
         $data->recommendation = $renderer->render(new \block_edwiser_site_monitor\output\recommendation($this->instance));
 
-        // Render contactus view
+        // Render contactus view.
         $data->contactus = $renderer->render(new \block_edwiser_site_monitor\output\contactus());
 
         $this->content->text = $renderer->render_from_template('block_edwiser_site_monitor/main', $data);
@@ -114,7 +112,10 @@ class block_edwiser_site_monitor extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        return array('my' => true);
+        if (is_siteadmin()) {
+            return array('my' => true);
+        }
+        return array();
     }
 
     /**
@@ -125,7 +126,7 @@ class block_edwiser_site_monitor extends block_base {
      */
     public function instance_allow_multiple() {
         // Are you going to allow multiple instances of each block?
-        // If yes, then it is assumed that the block WILL USE per-instance configuration
+        // If yes, then it is assumed that the block WILL USE per-instance configuration.
         return false;
     }
 }

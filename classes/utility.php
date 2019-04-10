@@ -73,9 +73,12 @@ class block_edwiser_site_monitor_utility {
      * @return array plugin list
      */
     public static function get_edwiser_plugin_list() {
-        $plugins = file_get_contents(ESM_PLUGINS_LIST);
-        $plugins = json_decode($plugins);
-        return $plugins;
+        try {
+            $plugins = @file_get_contents(ESM_PLUGINS_LIST);
+            return json_decode($plugins);
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 
     /**

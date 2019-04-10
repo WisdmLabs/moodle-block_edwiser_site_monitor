@@ -15,19 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing edwiser_site_monitor block instances.
+ * Edit form for block configuration
  *
  * @package    block_edwiser_site_monitor
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Yogesh Shirsath
  */
 
-/**
- * Form for editing edwiser_site_monitor block instances.
- *
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+defined('MOODLE_INTERNAL') || die();
+
 class block_edwiser_site_monitor_edit_form extends block_edit_form {
 
     protected function specific_definition($mform) {
@@ -38,7 +35,12 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         $mform->setDefault('config_title', get_string('pluginname', 'block_edwiser_site_monitor'));
 
         // Refresh rate config.
-        $mform->addElement('text', 'config_refreshrate', get_string('livestatusrefreshrate', 'block_edwiser_site_monitor'), array('size' => 2));
+        $mform->addElement(
+            'text',
+            'config_refreshrate',
+            get_string('livestatusrefreshrate', 'block_edwiser_site_monitor'),
+            array('size' => 2)
+        );
         $mform->setType('config_refreshrate', PARAM_FLOAT);
         $mform->addHelpButton('config_refreshrate', 'livestatusrefreshrate', 'block_edwiser_site_monitor');
         $mform->setDefault('config_refreshrate', 5);
@@ -48,34 +50,34 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         $mform->addElement('checkbox', 'config_enablethreshold', get_string('enablethreshold', 'block_edwiser_site_monitor'));
         $mform->addHelpButton('config_enablethreshold', 'enablethreshold', 'block_edwiser_site_monitor');
 
-        // CPU lower limit
+        // CPU lower limit.
         $mform->addElement('text', 'config_cpulowerlimit', get_string('cpulowerlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_cpulowerlimit', PARAM_INT);
         $mform->setDefault('config_cpulowerlimit', 20);
         $mform->addHelpButton('config_cpulowerlimit', 'cpulowerlimit', 'block_edwiser_site_monitor');
-        // CPU higher limit
+        // CPU higher limit.
         $mform->addElement('text', 'config_cpuhigherlimit', get_string('cpuhigherlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_cpuhigherlimit', PARAM_INT);
         $mform->setDefault('config_cpuhigherlimit', 80);
         $mform->addHelpButton('config_cpuhigherlimit', 'cpuhigherlimit', 'block_edwiser_site_monitor');
 
-        // Memory lower limit
+        // Memory lower limit.
         $mform->addElement('text', 'config_memorylowerlimit', get_string('memorylowerlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_memorylowerlimit', PARAM_INT);
         $mform->setDefault('config_memorylowerlimit', 20);
         $mform->addHelpButton('config_memorylowerlimit', 'memorylowerlimit', 'block_edwiser_site_monitor');
-        // Memory higher limit
+        // Memory higher limit.
         $mform->addElement('text', 'config_memoryhigherlimit', get_string('memoryhigherlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_memoryhigherlimit', PARAM_INT);
         $mform->setDefault('config_memoryhigherlimit', 80);
         $mform->addHelpButton('config_memoryhigherlimit', 'memoryhigherlimit', 'block_edwiser_site_monitor');
 
-        // Storage lower limit
+        // Storage lower limit.
         $mform->addElement('text', 'config_storagelowerlimit', get_string('storagelowerlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_storagelowerlimit', PARAM_INT);
         $mform->setDefault('config_storagelowerlimit', 20);
         $mform->addHelpButton('config_storagelowerlimit', 'storagelowerlimit', 'block_edwiser_site_monitor');
-        // Storage higher limit
+        // Storage higher limit.
         $mform->addElement('text', 'config_storagehigherlimit', get_string('storagehigherlimit', 'block_edwiser_site_monitor'));
         $mform->setType('config_storagehigherlimit', PARAM_INT);
         $mform->setDefault('config_storagehigherlimit', 80);
@@ -104,12 +106,20 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
      * @param  array &$errors errors array
      */
     private function memory_validation($data, &$errors) {
-        if (empty($data['config_memorylowerlimit']) || $data['config_memorylowerlimit'] < 1 || $data['config_memorylowerlimit'] > 100) {
+        if (empty($data['config_memorylowerlimit']) ||
+            $data['config_memorylowerlimit'] < 1 ||
+            $data['config_memorylowerlimit'] > 100
+        ) {
             $errors['config_memorylowerlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
         }
-        if (empty($data['config_memoryhigherlimit']) || $data['config_memoryhigherlimit'] < 1 || $data['config_memoryhigherlimit'] > 100) {
+        if (empty($data['config_memoryhigherlimit']) ||
+            $data['config_memoryhigherlimit'] < 1 ||
+            $data['config_memoryhigherlimit'] > 100
+        ) {
             $errors['config_memoryhigherlimit'] = get_string('memorylimit_invalid', 'block_edwiser_site_monitor');
-        } else if (!empty($data['config_memorylowerlimit']) && $data['config_memorylowerlimit'] > $data['config_memoryhigherlimit']) {
+        } else if (!empty($data['config_memorylowerlimit']) &&
+            $data['config_memorylowerlimit'] > $data['config_memoryhigherlimit']
+        ) {
             $errors['config_memoryhigherlimit'] = get_string('memorylimit_overlap', 'block_edwiser_site_monitor');
         }
     }
@@ -120,12 +130,20 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
      * @param  array &$errors errors array
      */
     private function storage_validation($data, &$errors) {
-        if (empty($data['config_storagelowerlimit']) || $data['config_storagelowerlimit'] < 1 || $data['config_storagelowerlimit'] > 100) {
+        if (empty($data['config_storagelowerlimit']) ||
+            $data['config_storagelowerlimit'] < 1 ||
+            $data['config_storagelowerlimit'] > 100
+        ) {
             $errors['config_storagelowerlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
         }
-        if (empty($data['config_storagehigherlimit']) || $data['config_storagehigherlimit'] < 1 || $data['config_storagehigherlimit'] > 100) {
+        if (empty($data['config_storagehigherlimit']) ||
+            $data['config_storagehigherlimit'] < 1 ||
+            $data['config_storagehigherlimit'] > 100
+        ) {
             $errors['config_storagehigherlimit'] = get_string('storagelimit_invalid', 'block_edwiser_site_monitor');
-        } else if (!empty($data['config_storagelowerlimit']) && $data['config_storagelowerlimit'] > $data['config_storagehigherlimit']) {
+        } else if (!empty($data['config_storagelowerlimit']) &&
+            $data['config_storagelowerlimit'] > $data['config_storagehigherlimit']
+        ) {
             $errors['config_storagehigherlimit'] = get_string('storagelimit_overlap', 'block_edwiser_site_monitor');
         }
     }
@@ -141,18 +159,18 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        // Validate refresh rate
+        // Validate refresh rate.
         if (empty($data['config_refreshrate']) || $data['config_refreshrate'] <= 0) {
             $errors['config_refreshrate'] = get_string('livestatusrefreshrate_invalid', 'block_edwiser_site_monitor');
         }
 
-        // Validate cpu usage limit
+        // Validate cpu usage limit.
         $this->cpu_validation($data, $errors);
 
-        // Validate memory usage limit
+        // Validate memory usage limit.
         $this->memory_validation($data, $errors);
 
-        // Validate storage usage limit
+        // Validate storage usage limit.
         $this->storage_validation($data, $errors);
         return $errors;
     }

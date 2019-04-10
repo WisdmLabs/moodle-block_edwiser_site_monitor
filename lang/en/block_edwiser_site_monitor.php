@@ -18,9 +18,12 @@
  * Strings for component 'block_edwiser_site_monitor'.
  *
  * @package    block_edwiser_site_monitor
- * @copyright  Prateek Sachan {@link http://prateeksachan.com}
+ * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Yogesh Shirsath
  */
+
+defined('MOODLE_INTERNAL') || die();
 
 $string['configtitle'] = 'Edwiser Site Monitor block title';
 $string['pluginname'] = 'Edwiser Site Monitor';
@@ -91,7 +94,7 @@ $string['storagehigherlimit_help'] = 'Higher limit of storage usage';
 $string['storagelimit_invalid'] = 'Please provide valid storage limit';
 $string['storagelimit_overlap'] = 'Please provide valid storage limit. Higher limit cannot be equal or less than lower limit';
 
-// Plugin update list
+// Plugin update list.
 $string['errors'] = 'Errors';
 $string['invalidzip'] = 'Invalid zip file. <b>{$a}</b>';
 $string['errorfetching'] = 'Error fetching plugin ZIP. <b>{$a}</b>';
@@ -106,10 +109,10 @@ $string['comeswith'] = 'Comes with: {$a}';
 $string['changelog'] = 'Change Log';
 $string['installnew'] = 'Install new plugin';
 
-// Recommendation
+// Recommendation.
 $string['explore'] = 'Explore';
 
-// Contact us
+// Contact us.
 $string['contactus'] = 'Contact Us';
 $string['policy'] = 'I agree to the <a href="{$a}" target="_blank">Privacy Policy</a>';
 $string['emailsent'] = 'Email sent.';

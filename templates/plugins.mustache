@@ -32,50 +32,52 @@
         </a>
     </li>
 </ul>
-<table class="generaltable {{#hasupdate}}update{{/hasupdate}}" id="plugins-control-panel">
-    <thead>
-        <tr>
-            <th class="header displayname" scope="col">{{#str}} displayname, core_plugin {{/str}} </th>
-            <th class="header version" scope="col">{{#str}} version, core_plugin {{/str}} </th>
-            <th class="header notes" scope="col">{{#str}} notes, core_plugin {{/str}} </th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#list}}
-        <tr class="{{class}}">
-        {{#header}}
-            <th class="pluginname cell c0 lastcol" colspan="6" scope="row">
-                <span id="plugin_type_cell_{{type}}">
-                    {{{html}}}
-                </span>
-            </th>
-        {{/header}}
-        {{^header}}
-            <td class="pluginname cell">
-                <div class="displayname">
-                    {{{icon}}}{{displayname}}
-                </div>
-                <div class="componentname">{{component}}</div>
-            </td>
-            <td class="version cell">
-                <div class="release">{{release}}</div>
-                <div class="versionnumber">{{versiondb}}</div>
-            </td>
-            <td class="status cell">
-                {{{source}}}
-                {{{actions}}}
-                {{{msg}}}
-                {{{requireby}}}
-                {{{parent}}}
-                {{#update}}
-                    {{#has}}
+<div class="edwiser-plugin-list">
+    <table class="generaltable {{#hasupdate}}update{{/hasupdate}}" id="plugins-control-panel">
+        <thead>
+            <tr>
+                <th class="header displayname" scope="col">{{#str}} displayname, core_plugin {{/str}} </th>
+                <th class="header version" scope="col">{{#str}} version, core_plugin {{/str}} </th>
+                <th class="header notes" scope="col">{{#str}} notes, core_plugin {{/str}} </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#list}}
+            <tr class="{{class}}">
+            {{#header}}
+                <th class="pluginname cell c0 lastcol" colspan="6" scope="row">
+                    <span id="plugin_type_cell_{{type}}">
                         {{{html}}}
-                    {{/has}}
-                {{/update}}
-            </td>
-        {{/header}}
-        </tr>
-        {{/list}}
-    </tbody>
-</table>
+                    </span>
+                </th>
+            {{/header}}
+            {{^header}}
+                <td class="pluginname cell">
+                    <div class="displayname">
+                        {{{icon}}}{{displayname}}
+                    </div>
+                    <div class="componentname">{{component}}</div>
+                </td>
+                <td class="version cell">
+                    <div class="release">{{release}}</div>
+                    <div class="versionnumber">{{versiondb}}</div>
+                </td>
+                <td class="status cell">
+                    {{{source}}}
+                    {{{actions}}}
+                    {{{msg}}}
+                    {{{requireby}}}
+                    {{{parent}}}
+                    {{#update}}
+                        {{#has}}
+                            {{{html}}}
+                        {{/has}}
+                    {{/update}}
+                </td>
+            {{/header}}
+            </tr>
+            {{/list}}
+        </tbody>
+    </table>
+</div>
 {{/errors}}

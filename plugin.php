@@ -30,7 +30,7 @@ require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/filelib.php');
 
 $installupdate = required_param('installupdate', PARAM_COMPONENT); // Install given available update.
-$installupdateversion = required_param('installupdateversion', PARAM_INT); // Version of the available update to
+$installupdateversion = required_param('installupdateversion', PARAM_INT); // Version of the available update to.
 $confirminstallupdate = optional_param('confirminstallupdate', 0, PARAM_INT);
 $sesskey = optional_param('sesskey', 0, PARAM_RAW);
 

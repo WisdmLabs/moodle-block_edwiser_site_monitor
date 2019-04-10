@@ -24,6 +24,7 @@
  */
 
 namespace block_edwiser_site_monitor\output;
+
 defined('MOODLE_INTERNAL') || die();
 
 

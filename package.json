@@ -10,17 +10,18 @@
   "license": "ISC",
   "dependencies": {
     "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-batch-replace": "0.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-exec": "^3.0.2",
     "gulp-minify": "^3.1.0",
+    "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.2.0",
     "gulp-replace": "^1.0.0",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-autoprefixer": "^5.0.0",
     "gulp-sass": "^4.0.2",
+    "gulp-shell": "^0.7.0",
     "npm": "^6.9.0"
   },
   "devDependencies": {

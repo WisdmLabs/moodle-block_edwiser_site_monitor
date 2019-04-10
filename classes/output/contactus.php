@@ -24,9 +24,8 @@
  */
 
 namespace block_edwiser_site_monitor\output;
-defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+defined('MOODLE_INTERNAL') || die();
 
 use renderable;
 use renderer_base;
@@ -48,7 +47,7 @@ class contactus implements renderable, templatable {
         $data->firstname = $USER->firstname;
         $data->lastname = $USER->lastname;
         $data->email = $USER->email;
-        $data->policy = get_string('policy', 'block_edwiser_site_monitor', EDWISER_PRIVACY_POLICY_LINK);
+        $data->policy = get_string('policy', 'block_edwiser_site_monitor', ESM_PRIVACY_POLICY_LINK);
         $output = null;
         return $data;
     }

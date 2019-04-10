@@ -22,9 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
-defined('MOODLE_INTERNAL') || die;
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+defined('MOODLE_INTERNAL') || die;
 
 function xmldb_block_edwiser_site_monitor_install() {
     global $DB;
@@ -33,10 +32,10 @@ function xmldb_block_edwiser_site_monitor_install() {
     $page = new moodle_page();
     $page->set_context(context_system::instance());
 
-    // selecting default region for blocks i.e. content
+    // Selecting default region for blocks i.e. content.
     $page->blocks->add_region('content');
 
-    // Adding multiple blocks
+    // Adding multiple blocks.
     if ($systempage) {
         $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index', $systempage->id);
     }

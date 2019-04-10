@@ -50,30 +50,30 @@ class block_edwiser_site_monitor_plugins {
     public function prepare_edwiser_plugins_update($plug = null) {
         global $DB;
         $plugins = block_edwiser_site_monitor_utility::get_edwiser_plugin_list();
-        if (!$plugins) {
+        if (empty($plugins)) {
             return get_string('invalidjsonfile', 'block_edwiser_site_monitor');
         }
         $pluginman = core_plugin_manager::instance();
         $plugininfo = $pluginman->get_plugins();
         foreach ($plugins as $component => $plugin) {
 
-            // Fetch only plugin if $plug is set
+            // Fetch only plugin if $plug is set.
             if (!is_null($plug) && $component != $plug) {
                 continue;
             }
             list($plugintype, $pluginname) = core_component::normalize_component($component);
 
-            // Check whether plugin is installed or not
+            // Check whether plugin is installed or not.
             if (isset($plugininfo[$plugintype][$pluginname])) {
 
-                // Edwiser plugin which comes along with product
+                // Edwiser plugin which comes along with product.
                 if (!isset($plugin->purchaseurl)) {
                     $options = $this->get_edwiser_addon_options($plugin, $component);
                     $this->set_edwiser_plugin($plugintype, $pluginname, $options);
                     continue;
                 }
 
-                // Check for plugin license
+                // Check for plugin license.
                 $license = false;
                 if (isset($plugin->license)) {
                     $license = $plugin->license;
@@ -85,7 +85,7 @@ class block_edwiser_site_monitor_plugins {
                     $license = $DB->get_field_sql($sql, array($component));
                 }
 
-                // Fetch plugin update
+                // Fetch plugin update.
                 list(
                     $update,
                     $downloadurl,
@@ -113,7 +113,7 @@ class block_edwiser_site_monitor_plugins {
                     continue;
                 }
 
-                // Check does plugin has update
+                // Check does plugin has update.
                 $updates = $this->check_edwiser_plugin_update($plugininfo, $plugintype, $pluginname, $update, $options);
                 if ($updates !== false) {
                     $options = $updates;
@@ -186,7 +186,7 @@ class block_edwiser_site_monitor_plugins {
      */
     public function check_edwiser_plugin_update($plugininfo, $plugintype, $pluginname, $updates, $options) {
 
-        // There is an error with update method
+        // There is an error with update method.
         if (is_string($updates)) {
             $options['msg'][] = $updates;
             return $options;
@@ -196,7 +196,7 @@ class block_edwiser_site_monitor_plugins {
             $updates = array($updates);
         }
 
-        // Iterate each update details
+        // Iterate each update details.
         foreach (array_values($updates) as $update) {
             if ($update->component != $plugintype . '_' . $pluginname) {
                 continue;
@@ -242,7 +242,7 @@ class block_edwiser_site_monitor_plugins {
         }
         require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/curl.php');
 
-        // Create curl edwiser_site_monitor_curl object to initialise curl request
+        // Create curl edwiser_site_monitor_curl object to initialise curl request.
         $curl = new edwiser_site_monitor_curl(
             "https://edwiser.org/check-update",
             'POST',
@@ -257,19 +257,19 @@ class block_edwiser_site_monitor_plugins {
 
         $curl = $curl->execute();
 
-        // Error while getting server response
+        // Error while getting server response.
         if ($curl->error != "") {
             return array($curl->error, '', $changelog);
         }
 
-        // Invalid license
+        // Invalid license.
         if (isset($curl->response->msg)) {
             return array($curl->response->msg, '', $changelog);
         }
 
         $url = $curl->response->download_link;
 
-        // unserialize and check for changelog of plugin
+        // Unserialize and check for changelog of plugin.
         $information = unserialize($curl->response->sections);
         if ($information) {
             $changelog = json_encode(array('changelog' => $information['changelog']));
@@ -497,7 +497,11 @@ class block_edwiser_site_monitor_plugins {
         $actions = [];
         $settingsurl = $pluginfo->get_settings_url();
         if (!is_null($settingsurl)) {
-            $actions[] = html_writer::link($settingsurl, get_string('settings', 'core_plugin'), array('target' => '_blank', 'class' => 'settings'));
+            $actions[] = html_writer::link(
+                $settingsurl,
+                get_string('settings', 'core_plugin'),
+                array('target' => '_blank', 'class' => 'settings')
+            );
         }
 
         if ($uninstallurl = $pluginman->get_uninstall_url($pluginfo->component, $CFG->wwwroot . '/my/')) {
@@ -720,11 +724,6 @@ class block_edwiser_site_monitor_plugins {
      */
     protected function download_plugin_zip_file($url, $tofile) {
 
-        // if (file_exists($tofile)) {
-        // debugging(get_string('errorfetchingexist', 'block_edwiser_site_monitor', $tofile), DEBUG_DEVELOPER);
-        // return false;
-        // }
-
         $status = $this->download_file_content($url, $tofile);
         if (!$status) {
             debugging(get_string('errorfetching', 'block_edwiser_site_monitor', $url), DEBUG_DEVELOPER);
@@ -836,7 +835,7 @@ class block_edwiser_site_monitor_plugins {
         }
 
         $zipcount = 0;
-        // Check all files from zip is ok and has zip inside zip
+        // Check all files from zip is ok and has zip inside zip.
         foreach ($zipcontents as $file => $status) {
             if (!$status) {
                 $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name);
@@ -851,8 +850,8 @@ class block_edwiser_site_monitor_plugins {
             }
         }
 
-        // If cound is different means only one plugin file is there
-        // Else zip contains multiple plugins
+        // If cound is different means only one plugin file is there.
+        // Else zip contains multiple plugins.
         if ($zipcount != count($zipcontents)) {
             $plugin = $this->get_plugin_details($temp, $zipcontents);
             if (!$plugin) {
@@ -1094,7 +1093,13 @@ class block_edwiser_site_monitor_plugins {
      *
      * @return void
      */
-    public function upgrade_install_plugin(\core\update\remote_info $installable, $confirmed, $heading='', $continue=null, $return=null) {
+    public function upgrade_install_plugin(
+        \core\update\remote_info $installable,
+        $confirmed,
+        $heading='',
+        $continue=null,
+        $return=null
+    ) {
         global $CFG, $PAGE;
 
         if (empty($return)) {
@@ -1116,8 +1121,8 @@ class block_edwiser_site_monitor_plugins {
             }
 
             // Always redirect to admin/index.php to perform the database upgrade.
-            // Do not throw away the existing $PAGE->url parameters such as
-            // confirmupgrade or confirmrelease if $PAGE->url is a superset of the
+            // Do not throw away the existing $PAGE->url parameters such as.
+            // confirmupgrade or confirmrelease if $PAGE->url is a superset of the.
             // URL we must go to.
             $mustgoto = new moodle_url('/admin/index.php', array('cache' => 0, 'confirmplugincheck' => 0));
             if ($mustgoto->compare($PAGE->url, URL_MATCH_PARAMS)) {

@@ -24,9 +24,8 @@
  */
 
 namespace block_edwiser_site_monitor\output;
-defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/lib.php');
+defined('MOODLE_INTERNAL') || die();
 
 use renderable;
 use renderer_base;
@@ -76,7 +75,7 @@ class recommendation implements renderable, templatable {
         global $CFG, $SESSION;
         $data = [];
         $plugins = esmutility::get_edwiser_plugin_list();
-        if (!$plugins) {
+        if (empty($plugins)) {
             $data['error'] = get_string('invalidjsonfile', 'block_edwiser_site_monitor');
             return $data;
         }

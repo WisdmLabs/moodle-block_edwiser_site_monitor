@@ -24,12 +24,8 @@
  */
 
 namespace block_edwiser_site_monitor\output;
-defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/live_status.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/last_24_hours_usage.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/recommendation.php');
-require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/output/contactus.php');
+defined('MOODLE_INTERNAL') || die();
 
 use plugin_renderer_base;
 use renderable;
@@ -58,7 +54,10 @@ class renderer extends plugin_renderer_base {
      * @return string
      */
     public function render_last_24_hours_usage(renderable $last24hoursusage) {
-        return $this->render_from_template('block_edwiser_site_monitor/last_24_hours_usage', $last24hoursusage->export_for_template($this));
+        return $this->render_from_template(
+            'block_edwiser_site_monitor/last_24_hours_usage',
+            $last24hoursusage->export_for_template($this)
+        );
     }
 
     /**
@@ -69,7 +68,10 @@ class renderer extends plugin_renderer_base {
      * @return string
      */
     public function render_recommendation(renderable $recommendation) {
-        return $this->render_from_template('block_edwiser_site_monitor/recommendation', $recommendation->export_for_template($this));
+        return $this->render_from_template(
+            'block_edwiser_site_monitor/recommendation',
+            $recommendation->export_for_template($this)
+        );
     }
 
     /**

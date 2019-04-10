@@ -24,6 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 $functions = [
     'block_edwiser_site_monitor_get_live_status' => [
         'classname' => 'block_edwiser_site_monitor_externallib',

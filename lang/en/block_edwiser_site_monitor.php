@@ -53,10 +53,17 @@ $string['yaxistitle'] = 'Usage(%)';
 $string['xaxistitle'] = 'Time';
 $string['messageprovider:notifications'] = $string['news'] = 'Edwiser News and Updates';
 
+// Privacy strings.
+$string['privacy:metadata:block_edwiser_site_monitor:tableexplanation'] = 'Stores the cpu, memory and storage usage of site.';
+$string['privacy:metadata:block_edwiser_site_monitor:time'] = 'Time when usage is recorded.';
+$string['privacy:metadata:block_edwiser_site_monitor:cpu'] = 'Cpu usage of site when it is recorded.';
+$string['privacy:metadata:block_edwiser_site_monitor:memory'] = 'Memory usage of site when it is recorded.';
+$string['privacy:metadata:block_edwiser_site_monitor:storage'] = 'Storage usage of site when it is recorded.';
+
 
 // Config page strings.
-$string['block/edwiser_site_monitor:addinstance'] = 'Add a new site monitor block';
-$string['block/edwiser_site_monitor:myaddinstance'] = 'Add a new site monitor to Dashboard';
+$string['edwiser_site_monitor:addinstance'] = 'Add a new site monitor block';
+$string['edwiser_site_monitor:myaddinstance'] = 'Add a new site monitor to Dashboard';
 $string['livestatusrefreshrate'] = 'Refresh rate';
 $string['livestatusrefreshrate_help'] = 'Refresh rate for live status tab in seconds';
 $string['livestatusrefreshrate_invalid'] = 'Please provide valid refresh rate in seconds';

@@ -69,7 +69,7 @@ $string['livestatusrefreshrate_help'] = 'Refresh rate for live status tab in sec
 $string['livestatusrefreshrate_invalid'] = 'Please provide valid refresh rate in seconds';
 
 $string['thresholdheader'] = 'Threshold limit';
-$string['usageemailsubject'] = '{$a}: ' . $string['pluginname'] . ' - Usage Warning';
+$string['usageemailsubject'] = '{$a}: Edwiser Site Monitor - Usage Warning';
 $string['header-type'] = 'Type';
 $string['hader-threshold'] = 'Threshold';
 $string['header-expected'] = 'Low/High';
@@ -109,7 +109,7 @@ $string['errorfetchingexist'] = 'Error fetching plugin ZIP: target location exis
 $string['unabletounzip'] = 'Unable to unzip <b>{$a}</b>';
 $string['unabletoloadplugindetails'] = 'Unable to load Plugin details <b>{$a}</b>';
 $string['requirehigherversion'] = 'Requires Moodle version: <b>{$a}</b>';
-$string['noupdates'] = 'Everything is uptodate.';
+$string['noupdates'] = 'Everything is up to date.';
 $string['invalidjsonfile'] = 'Invalid Edwiser product list.';
 $string['recommendation'] = 'Recommended Plugins';
 $string['comeswith'] = 'Comes with: {$a}';
@@ -117,7 +117,7 @@ $string['changelog'] = 'Change Log';
 $string['installnew'] = 'Install new plugin';
 
 // Recommendation.
-$string['explore'] = 'Explore';
+$string['knowmore'] = 'Know More';
 
 // Contact us.
 $string['contactus'] = 'Contact Us';

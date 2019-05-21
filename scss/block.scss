@@ -100,8 +100,19 @@ aside.block-region {
     .separator:after {
         content: " | ";
     }
-    .tab-content .tab-pane.active {
-        display: block;
+    .tab-content {
+        .tab-pane {
+            display: none;
+            &.fade {
+                opacity: 0;
+                &.show {
+                    opacity: 1;
+                }
+            }
+            &.active {
+                display: block;
+            }
+        }
     }
 }
 

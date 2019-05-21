@@ -37,7 +37,7 @@ define([
         var liveusage = "";
         var chart = null;
         var fetchtingstatus = fetchtinglastusage = fetchtingplugins = sendingemail = false;
-        $('.progress-bar').bind('progress-status', function(event, width) {
+        $('.usage-progress-bar').bind('progress-status', function(event, width) {
             let allClasses = 'bg-success bg-warning bg-danger';
             let currentClass = 'bg-danger';
             if (width < 30) {

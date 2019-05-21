@@ -33,21 +33,21 @@
         <label class="progress-name h4"><i class="fa fa-server pr-2" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
         <div class="progress-wrap progress">
-            <div class="progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
+            <div class="usage-progress-bar progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
         </div>
     </div>
     <div class="progress-row pb-4">
         <label class="progress-name h4"><i class="fa fa-microchip pr-2" aria-hidden="true"></i>{{#str}} memory, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
         <div class="progress-wrap progress">
-            <div class="progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
+            <div class="usage-progress-bar progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
         </div>
     </div>
     <div class="progress-row pb-4">
         <label class="progress-name h4"><i class="fa fa-hdd-o pr-2" aria-hidden="true"></i>{{#str}} storage, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_storage_usage_label">{{storage}}% ({{storagevalues}})</label>
         <div class="progress-wrap progress">
-            <div class="progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
+            <div class="usage-progress-bar progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
         </div>
     </div>
     <div class="pb-4">
@@ -67,9 +67,9 @@
             </div>
         </div>
         <div class="progress-wrap progress">
-            <div class="progress-bar bg-success" role="progressbar" id="esm_users_active_bar" style="width: {{activepercentage}}%;"></div>
-            <div class="progress-bar bg-warning" role="progressbar" id="esm_users_suspended_bar" style="width: {{suspendedpercentage}}%;"></div>
-            <div class="progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
+            <div class="usage-progress-bar progress-bar bg-success" role="progressbar" id="esm_users_active_bar" style="width: {{activepercentage}}%;"></div>
+            <div class="usage-progress-bar progress-bar bg-warning" role="progressbar" id="esm_users_suspended_bar" style="width: {{suspendedpercentage}}%;"></div>
+            <div class="usage-progress-bar progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
         </div>
     </div>
     <div class="h4 pb-4">

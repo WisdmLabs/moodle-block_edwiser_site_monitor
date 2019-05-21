@@ -110,7 +110,7 @@ Together we could make this solution better for your Moodle.
    block relies on underlying core code that is out of my control.
 2. Put Moodle in 'Maintenance Mode' (docs.moodle.org/en/admin/setting/maintenancemode) so that there are no
    users using it bar you as the administrator - if you have not already done so.
-3. Copy 'moodle-block_edwiser_site_monitor/' to '/block/' if you have not already done so.
+3. Copy 'moodle-block_edwiser_site_monitor/' to '/blocks/' if you have not already done so.
 4. Go back in as an administrator and follow standard the 'plugin' update notification.  If needed, go to 'Site administration' -> 'Notifications' if this does not happen.
 5. Put Moodle out of Maintenance Mode.
 6. You may need to check that the permissions within the 'moodle-block_edwiser_site_monitor/' folder are 755 for folders and 644 for files.
@@ -120,7 +120,7 @@ Together we could make this solution better for your Moodle.
 # Uninstallation
 
 1. Put Moodle in 'Maintenance Mode' so that there are no users using it bar you as the administrator.
-2. In '/block/' remove the folder 'moodle-block_edwiser_site_monitor/'.
+2. In '/blocks/' remove the folder 'moodle-block_edwiser_site_monitor/'.
 3. Put Moodle out of Maintenance Mode.
 
 [(Back to top)](#table-of-contents)

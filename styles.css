@@ -114,6 +114,18 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .serv
   content: " | ";
 }
 
+.edwiser_site_monitor .tab-content .tab-pane {
+  display: none;
+}
+
+.edwiser_site_monitor .tab-content .tab-pane.fade {
+  opacity: 0;
+}
+
+.edwiser_site_monitor .tab-content .tab-pane.fade.show {
+  opacity: 1;
+}
+
 .edwiser_site_monitor .tab-content .tab-pane.active {
   display: block;
 }

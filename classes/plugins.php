@@ -240,12 +240,11 @@ class block_edwiser_site_monitor_plugins {
         if (!$license) {
             return array(false, '', $changelog);
         }
-        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/curl.php');
 
         // Create curl edwiser_site_monitor_curl object to initialise curl request.
-        $curl = new edwiser_site_monitor_curl(
+        $curl = new curl();
+        $curl = $curl->post(
             "https://edwiser.org/check-update",
-            'POST',
             array(
                 'edd_action' => 'get_version',
                 'license' => $license,
@@ -255,22 +254,23 @@ class block_edwiser_site_monitor_plugins {
             )
         );
 
-        $curl = $curl->execute();
+        $response = json_decode($curl);
 
         // Error while getting server response.
-        if ($curl->error != "") {
-            return array($curl->error, '', $changelog);
+        if ($response == null) {
+            $this->errors[] = $curl;
+            return array($curl, '', $changelog);
         }
 
         // Invalid license.
-        if (isset($curl->response->msg)) {
-            return array($curl->response->msg, '', $changelog);
+        if (isset($response->msg)) {
+            return array($response->msg, '', $changelog);
         }
 
-        $url = $curl->response->download_link;
+        $url = $response->download_link;
 
         // Unserialize and check for changelog of plugin.
-        $information = unserialize($curl->response->sections);
+        $information = unserialize($response->sections);
         if ($information) {
             $changelog = json_encode(array('changelog' => $information['changelog']));
         }
@@ -431,13 +431,13 @@ class block_edwiser_site_monitor_plugins {
                 $box .= str_replace('form method="post"', 'form target="_blank" method="post"', $button);
             } else {
                 $reasonhelp = $this->info_remote_plugin_not_installable($reason);
-                if ($reasonhelp) {
+                if (isset($reasonhelp)) {
                     $box .= html_writer::div($reasonhelp, 'reasonhelp updateavailableinstall');
                 }
             }
         } else {
             if (empty($updateinfo->msg)) {
-                if ($updateinfo->update) {
+                if (isset($updateinfo->update)) {
                     $status->has = true;
                     $button = $OUTPUT->single_button(
                         new moodle_url(
@@ -563,7 +563,9 @@ class block_edwiser_site_monitor_plugins {
                 $pluginfo->type,
                 $pluginfo->name
             );
-            $plugin->changelog = $edwiserplugin->changelog;
+            if (isset($edwiserplugin->changelog)) {
+                $plugin->changelog = $edwiserplugin->changelog;
+            }
             if (isset($edwiserplugin->parent)) {
                 $plugin->parent = html_writer::div(
                     get_string('comeswith', 'block_edwiser_site_monitor', $edwiserplugin->parent),

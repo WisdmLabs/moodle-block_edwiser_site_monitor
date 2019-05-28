@@ -43,11 +43,13 @@ gulp.task('compress', function() {
     done();
 });
 
+gulp.task('purge', shell.task('php ../../admin/cli/purge_caches.php'));
+
 
 gulp.task('watch', function(done) {
-    gulp.watch('./amd/src/*.js', gulp.series('compress'));
-    gulp.watch('./scss/*.scss', gulp.series('sass'));
+    gulp.watch('./amd/src/*.js', gulp.series('compress', 'purge'));
+    gulp.watch('./scss/*.scss', gulp.series('sass', 'purge'));
     done();
 });
 
-gulp.task('default', gulp.series('watch', 'compress', 'sass'));
+gulp.task('default', gulp.series('watch', 'compress', 'sass', 'purge'));

@@ -7,6 +7,10 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .serv
     display: none;
 }
 
+.edwiser_site_monitor .server_live_status .usage-progress-bar {
+    height: 100%;
+}
+
 .edwiser_site_monitor .nav-tabs .nav-item .nav-link.esm-outline,
 .edwiser_site_monitor .nav-tabs .nav-item .nav-link .edwiser_plugins_recommendation .esm-outline {
     color: #1177d1;
@@ -193,4 +197,11 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .serv
     margin-right: -1.0715rem;
     margin-left: -1.0715rem;
     list-style: none;
+}
+
+.edwiser_plugins_recommendation .recommendation-list .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
 }

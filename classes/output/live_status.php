@@ -50,6 +50,7 @@ class live_status implements renderable, templatable {
             "memory"    => $usage->get_memory_usage(),
             "storage"   => $usage->get_storage_usage(),
             "liveusers" => $usage->get_live_users(),
+            "disabled"  => $usage::$disabled
         ];
         $data["cpucolor"]        = esmutility::get_color_class_from_value($data["cpu"]);
         $data["memorycolor"]     = esmutility::get_color_class_from_value($data["memory"]);

@@ -86,6 +86,7 @@ $string['cpulowerlimit_help'] = 'Lower limit of CPU usage';
 $string['cpuhigherlimit_help'] = 'Higher limit of CPU usage';
 $string['cpulimit_invalid'] = 'Please provide valid CPU limit';
 $string['cpulimit_overlap'] = 'Please provide valid CPU limit. Higher limit cannot be equal or less than lower limit';
+$string['cpucommandnotallowed'] = 'Command line <strong>/proc/cpuinfo</strong> --Permission Denied.';
 
 $string['memorylowerlimit'] = 'Memory lower limit';
 $string['memoryhigherlimit'] = 'Memory higher limit';
@@ -93,6 +94,7 @@ $string['memorylowerlimit_help'] = 'Lower limit of memory usage';
 $string['memoryhigherlimit_help'] = 'Higher limit of memory usage';
 $string['memorylimit_invalid'] = 'Please provide valid memory limit';
 $string['memorylimit_overlap'] = 'Please provide valid memory limit. Higher limit cannot be equal or less than lower limit';
+$string['memorycommandnotallowed'] = 'Command line <strong>df</strong> --Permission Denied.';
 
 $string['storagelowerlimit'] = 'Storage lower limit';
 $string['storagehigherlimit'] = 'Storage higher limit';

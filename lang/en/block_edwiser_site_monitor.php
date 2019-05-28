@@ -18,7 +18,7 @@
  * Strings for component 'block_edwiser_site_monitor'.
  *
  * @package    block_edwiser_site_monitor
- * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Yogesh Shirsath
  */

@@ -33,17 +33,25 @@
  * Definition of Edwiser Site monitor upgrade.
  *
  * @package    block_edwiser_site_monitor
- * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Updated notification message configurations for blogs post notifications on plugin upgrade
+ *
+ * @param  int    $oldversion Older version number of plugin
+ * @param  string $block      Plugin name
+ * @return bool               true
+ */
 function xmldb_block_edwiser_site_monitor_upgrade($oldversion, $block) {
     $block = $block;
     if ($oldversion < 2019040300) {
         block_edwiser_site_monitor_utility::update_notification_configs();
+        upgrade_plugin_savepoint(true, 2019040300, 'block', 'edwiser_site_monitor');
     }
     return true;
 }

@@ -1,22 +1,20 @@
 Change Log:
 ===========
 
-Version 1.0.0
+Version 1.0.2 (First release)
+=============================
+Fix - Update code according to moodle standards
+Feature - Receive edwiser news in notifications
+Feature - Implemented privacy provider
+Feature - Added gulp and sass
 
-Plugin Released
-
-
-Version 1.0.1
-
+Version 1.0.1 (Beta)
+====================
 Fix - Sql errors in PostgreSQL
 Fix - Hiding block from users other than admin
 Fix - Minor bugs in js
 Feature - Updated CPU and Memory usage commands to support hosting sites
 
-
-Version 1.0.2
-
-Fix - Update code according to moodle standards
-Feature - Receive edwiser news in notifications
-Feature - Implemented privacy provider
-Feature - Added gulp and sass
+Version 1.0.0 (Alpha)
+=====================
+Plugin Prototype

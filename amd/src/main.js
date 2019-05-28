@@ -38,14 +38,14 @@ define([
         var chart = null;
         var fetchtingstatus = fetchtinglastusage = fetchtingplugins = sendingemail = false;
         $('.usage-progress-bar').bind('progress-status', function(event, width) {
-            let allClasses = 'bg-success bg-warning bg-danger';
-            let currentClass = 'bg-danger';
+            let allclasses = 'bg-success bg-warning bg-danger';
+            let currentclass = 'bg-danger';
             if (width < 30) {
-                currentClass = 'bg-success';
+                currentclass = 'bg-success';
             } else if (width < 80) {
-                currentClass = 'bg-warning';
+                currentclass = 'bg-warning';
             }
-            $(this).removeClass(allClasses).addClass(currentClass);
+            $(this).removeClass(allclasses).addClass(currentclass);
         });
         /**
          * Get values ratio in used and total value

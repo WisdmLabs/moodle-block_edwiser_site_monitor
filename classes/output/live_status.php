@@ -18,7 +18,7 @@
  * Live status renderable.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -34,6 +34,12 @@ use renderer_base;
 use block_edwiser_site_monitor_usage as esmusage;
 use block_edwiser_site_monitor_utility as esmutility;
 
+/**
+ * Renderable for live status tab
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class live_status implements renderable, templatable {
 
     /**

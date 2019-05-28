@@ -18,15 +18,25 @@
  * Edit form for block configuration
  *
  * @package    block_edwiser_site_monitor
- * @copyright  2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Define definition for block settings form
+ *
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_edwiser_site_monitor_edit_form extends block_edit_form {
 
+    /**
+     * Add form element specific to block settings definition
+     * @param  object $mform MoodleQuickForm object
+     */
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
@@ -86,10 +96,12 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
 
     /**
      * Storage validation
-     * @param  array $data    data from config form
-     * @param  array &$errors errors array
+     * @param  array $data data from config form
+     *
+     * @return array       errors array
      */
-    private function cpu_validation($data, &$errors) {
+    private function cpu_validation($data) {
+        $errors = [];
         if (empty($data['config_cpulowerlimit']) || $data['config_cpulowerlimit'] < 1 || $data['config_cpulowerlimit'] > 100) {
             $errors['config_cpulowerlimit'] = get_string('cpulimit_invalid', 'block_edwiser_site_monitor');
         }
@@ -98,14 +110,17 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         } else if (!empty($data['config_cpulowerlimit']) && $data['config_cpulowerlimit'] > $data['config_cpuhigherlimit']) {
             $errors['config_cpuhigherlimit'] = get_string('cpulimit_overlap', 'block_edwiser_site_monitor');
         }
+        return $errors;
     }
 
     /**
      * Storage validation
-     * @param  array $data    data from config form
-     * @param  array &$errors errors array
+     * @param  array $data data from config form
+     *
+     * @return array       errors array
      */
-    private function memory_validation($data, &$errors) {
+    private function memory_validation($data) {
+        $errors = [];
         if (empty($data['config_memorylowerlimit']) ||
             $data['config_memorylowerlimit'] < 1 ||
             $data['config_memorylowerlimit'] > 100
@@ -122,14 +137,17 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         ) {
             $errors['config_memoryhigherlimit'] = get_string('memorylimit_overlap', 'block_edwiser_site_monitor');
         }
+        return $errors;
     }
 
     /**
      * Storage validation
-     * @param  array $data    data from config form
-     * @param  array &$errors errors array
+     * @param  array $data data from config form
+     *
+     * @return array       errors array
      */
-    private function storage_validation($data, &$errors) {
+    private function storage_validation($data) {
+        $errors = [];
         if (empty($data['config_storagelowerlimit']) ||
             $data['config_storagelowerlimit'] < 1 ||
             $data['config_storagelowerlimit'] > 100
@@ -146,6 +164,7 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         ) {
             $errors['config_storagehigherlimit'] = get_string('storagelimit_overlap', 'block_edwiser_site_monitor');
         }
+        return $errors;
     }
 
     /**
@@ -165,13 +184,13 @@ class block_edwiser_site_monitor_edit_form extends block_edit_form {
         }
 
         // Validate cpu usage limit.
-        $this->cpu_validation($data, $errors);
+        $errors = array_merge($errors, $this->cpu_validation($data));
 
         // Validate memory usage limit.
-        $this->memory_validation($data, $errors);
+        $errors = array_merge($errors, $this->memory_validation($data));
 
         // Validate storage usage limit.
-        $this->storage_validation($data, $errors);
+        $errors = array_merge($errors, $this->storage_validation($data));
         return $errors;
     }
 }

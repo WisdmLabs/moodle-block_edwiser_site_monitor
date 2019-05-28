@@ -14,6 +14,26 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template block_edwiser_site_monitor/usage_warning_email
+
+    This template renders live status tab
+
+    Example context (json):
+    {
+        "header": [
+            "Type",
+            "Threshold",
+            "Low/High",
+            "Current"
+        ],
+        "warning": [
+            {"cpu", 51, 45, "High"},
+            {"memory", 31, 60, "Low"},
+            {"storage", 89, 75, "High"},
+        ]
+    }
+}}
 <table>
     <thead>
         <tr>

@@ -14,6 +14,36 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template block_edwiser_site_monitor/live_status
+
+    This template renders live status tab
+
+    Example context (json):
+    {
+        "errors"         : "false"
+        "hasupdate"      : "true",
+        "overviewupdate" : 3,
+        "overviewall"    : 51,
+        "list": [{
+            "class"  : "type-block name-block_edwiser_site_monitor status-uptodate extension",
+            "header" : [{
+                "header"      : false,
+                "icon"        : "plugin icon",
+                "displayname" : "plugin name",
+                "component"   : "plugin component",
+                "release"     : "plugin release number",
+                "versiondb"   : "plugin version in db",
+                "source"      : "source of plugin",
+                "actions"     : "actions supported with the plugin",
+                "msg"         : "message to display about update",
+                "requireby"   : "is this plugin required by another plugin",
+                "parent"      : "parent plugin name",
+                "update"      : "does this plugin have update"
+            }]
+        }]
+    }
+}}
 {{#errors}}
     {{{errors}}}
 {{/errors}}

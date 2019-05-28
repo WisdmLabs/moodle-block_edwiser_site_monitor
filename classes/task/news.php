@@ -18,7 +18,7 @@
  * A scheduled task for edwiser_site_monitor cron.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -26,6 +26,12 @@ namespace block_edwiser_site_monitor\task;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Task to check edwiser news
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class news extends \core\task\scheduled_task {
 
     /**

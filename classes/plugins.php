@@ -18,7 +18,7 @@
  * Local class of edwiser_site_monitor
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -28,6 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/adminlib.php');
 /**
  * This class implements services for block_edwiser_site_monitor
+ *
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_edwiser_site_monitor_plugins {
 
@@ -978,11 +981,11 @@ class block_edwiser_site_monitor_plugins {
      * The method uses {@link mtrace()} to produce direct output and can be
      * used in both web and cli interfaces.
      *
-     * @param object $plugin    list of plugins
-     * @param bool   $confirmed should the files be really deployed into the dirroot?
-     * @param bool   $silent    hide debugg errors is set true
+     * @param  \core\update\remote_info $plugin    list of plugins
+     * @param  bool                     $confirmed should the files be really deployed into the dirroot?
+     * @param  bool                     $silent    hide debugg errors is set true
      *
-     * @return bool  true on success
+     * @return bool                                 true on success
      */
     public function install_plugin(\core\update\remote_info $plugin, $confirmed, $silent) {
         global $CFG;
@@ -1087,11 +1090,11 @@ class block_edwiser_site_monitor_plugins {
      *
      * Does not return, always redirects or exits.
      *
-     * @param array  $installable list of \core\update\remote_info
-     * @param bool   $confirmed   false: display the validation screen, true: proceed installation
-     * @param string $heading     validation screen heading
-     * @param mixed  $continue    URL to proceed with installation at the validation screen
-     * @param mixed  $return      URL to go back on cancelling at the validation screen
+     * @param \core\update\remote_info  $installable list of \core\update\remote_info
+     * @param bool                      $confirmed   false: display the validation screen, true: proceed installation
+     * @param string                    $heading     validation screen heading
+     * @param mixed                     $continue    URL to proceed with installation at the validation screen
+     * @param mixed                     $return      URL to go back on cancelling at the validation screen
      *
      * @return void
      */

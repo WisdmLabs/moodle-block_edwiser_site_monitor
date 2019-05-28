@@ -18,7 +18,7 @@
  * Utility class for edwiser site monitor
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -32,16 +32,23 @@ define('ESM_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
 
 use block_edwiser_site_monitor_usage as esmusage;
 
+/**
+ * Utility functions for block_edwiser_site_monitor
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_edwiser_site_monitor_utility {
 
     /**
      * Send email to user
      *
-     * @param  stdClass $from user
-     * @param  stdClass $to user
-     * @param  stdClass $subject of email
+     * @param  stdClass $from        which user is sending email
+     * @param  stdClass $to          to which user this email will be sent
+     * @param  stdClass $subject     subject of email
      * @param  stdClass $messagehtml email body
-     * @return boolean email sending status
+     * @param  boolean  $replyto     to whom user can reply
+     * @return boolean               email sending status
      */
     public static function edwiser_site_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
         $messagetext = html_to_text($messagehtml);
@@ -98,7 +105,8 @@ class block_edwiser_site_monitor_utility {
     /**
      * Get values ratio in used and total value
      *
-     * @param  integer $percent usage value
+     * @param  int $percent usage value
+     * @param  int $total   total usage
      * @return string
      */
     public static function get_values_ratio($percent, $total) {

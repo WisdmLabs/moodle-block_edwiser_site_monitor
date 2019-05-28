@@ -14,6 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template block_edwiser_site_monitor/recommendation
+
+    This template renders live status tab
+
+    Example context (json):
+    {
+        "error": false,
+        "plugins": [{
+            "cardclass"   : "col-lg-4 col-md-6 col-12",
+            "image"       : "image url",
+            "title"       : "title of recommendation",
+            "description" : "description of recommendation",
+            "purchaseurl" : "plugin purchase url",
+        }]
+
+    }
+}}
 <div class="edwiser_plugins_recommendation container">
     {{#error}}
         {{error}}

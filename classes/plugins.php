@@ -946,7 +946,7 @@ class block_edwiser_site_monitor_plugins {
 
         if (!$silent) {
             foreach ($validator->get_messages() as $message) {
-                if ($message->level === $validator::WARNING and !CLI_SCRIPT) {
+                if ($message->level === $validator::WARNING || $message->level === $validator::ERROR and !CLI_SCRIPT) {
                     mtrace('  <strong>['.$validator->message_level_name($message->level).']</strong>', ' ');
                 } else {
                     mtrace('  ['.$validator->message_level_name($message->level).']', ' ');

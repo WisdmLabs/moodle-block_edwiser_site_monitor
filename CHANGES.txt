@@ -1,6 +1,14 @@
 Change Log:
 ===========
 
+Version 1.0.3
+=============
+
+Fix - Improved plugin updater stability.
+Fix - Tabs working in themes not based on Bootstrap.
+Fix - Showing warning to Admin for linux if unable to fetch cpu and memory usage.
+
+
 Version 1.0.2 (First release)
 =============================
 Fix - Update code according to moodle standards

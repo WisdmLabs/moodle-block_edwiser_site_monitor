@@ -14,6 +14,32 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template block_edwiser_site_monitor/live_status
+
+    This template renders live status tab
+
+    Example context (json):
+    {
+        "disabled" : {
+            "cpu"    : false,
+            "memory" : false
+        },
+        "cpu"                  : 82.5,
+        "cpucolor"             : "bg-danger",
+        "memory"               : 67.4,
+        "memorycolor"          : "bg-warning",
+        "storage"              : 12.1,
+        "storagecolor"         : "bg-success",
+        "active"               : 1391,
+        "activepercentage"     : 89.11,
+        "susspended"           : 97,
+        "susspendedpercentage" : 6.21,
+        "deleted"              : 73,
+        "deletedpercentage"    : 4.68,
+        "liveusers"            : 189
+    }
+}}
 <div class="server_live_status">
     <div class="legends">
         <div class="low-usage legend">
@@ -32,6 +58,7 @@
     <div class="progress-row pb-4">
         <label class="progress-name h4"><i class="fa fa-server pr-2" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
+        <span class="command-disabled">{{#disabled.cpu}}{{#str}} cpucommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.cpu}}</span>
         <div class="progress-wrap progress">
             <div class="usage-progress-bar progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
         </div>
@@ -39,6 +66,7 @@
     <div class="progress-row pb-4">
         <label class="progress-name h4"><i class="fa fa-microchip pr-2" aria-hidden="true"></i>{{#str}} memory, block_edwiser_site_monitor {{/str}}:</label>
         <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
+        <span class="command-disabled">{{#disabled.memory}}{{#str}} memorycommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.memory}}</span>
         <div class="progress-wrap progress">
             <div class="usage-progress-bar progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
         </div>

@@ -18,7 +18,7 @@
  * Local class of edwiser_site_monitor
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -28,6 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/adminlib.php');
 /**
  * This class implements services for block_edwiser_site_monitor
+ *
+ * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_edwiser_site_monitor_plugins {
 
@@ -105,7 +108,7 @@ class block_edwiser_site_monitor_plugins {
                     'changelog'   => $changelog
                 );
 
-                if (!$update && !empty($this->errors)) {
+                if (!$license || !$update || !empty($this->errors)) {
                     $options['msg'] = $this->errors;
                     $this->errors = [];
                     $options['update'] = false;
@@ -196,29 +199,32 @@ class block_edwiser_site_monitor_plugins {
             $updates = array($updates);
         }
 
-        // Iterate each update details.
-        foreach (array_values($updates) as $update) {
-            if ($update->component != $plugintype . '_' . $pluginname) {
-                continue;
+        if (is_array($updates)) {
+            // Iterate each update details.
+            foreach (array_values($updates) as $update) {
+                if (!is_object($update) || $update->component != $plugintype . '_' . $pluginname) {
+                    continue;
+                }
+                $status = $this->is_supported_version($plugininfo[$plugintype][$pluginname], $update);
+                if ($status === false) {
+                    return false;
+                }
+                $options['version'] = $update->version;
+                if (isset($update->release)) {
+                    $options['release'] = $update->release;
+                }
+                if (isset($update->maturity)) {
+                    $options['maturity'] = $update->maturity;
+                }
+                $options['supportedmoodles'] = [(object)array(
+                    'version' => $update->requires
+                )];
+                if ($status === 2) {
+                    $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_site_monitor', $update->requires);
+                }
+                return $options;
             }
-            $status = $this->is_supported_version($plugininfo[$plugintype][$pluginname], $update);
-            if ($status === false) {
-                return false;
-            }
-            $options['version'] = $update->version;
-            if (isset($update->release)) {
-                $options['release'] = $update->release;
-            }
-            if (isset($update->maturity)) {
-                $options['maturity'] = $update->maturity;
-            }
-            $options['supportedmoodles'] = [(object)array(
-                'version' => $update->requires
-            )];
-            if ($status === 2) {
-                $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_site_monitor', $update->requires);
-            }
-            return $options;
+
         }
         return false;
     }
@@ -240,12 +246,11 @@ class block_edwiser_site_monitor_plugins {
         if (!$license) {
             return array(false, '', $changelog);
         }
-        require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/curl.php');
 
         // Create curl edwiser_site_monitor_curl object to initialise curl request.
-        $curl = new edwiser_site_monitor_curl(
+        $curl = new curl();
+        $curl = $curl->post(
             "https://edwiser.org/check-update",
-            'POST',
             array(
                 'edd_action' => 'get_version',
                 'license' => $license,
@@ -255,22 +260,24 @@ class block_edwiser_site_monitor_plugins {
             )
         );
 
-        $curl = $curl->execute();
+        $response = json_decode($curl);
 
         // Error while getting server response.
-        if ($curl->error != "") {
-            return array($curl->error, '', $changelog);
+        if ($response == null) {
+            $this->errors[] = $curl;
+            return array(false, '', $changelog);
         }
 
         // Invalid license.
-        if (isset($curl->response->msg)) {
-            return array($curl->response->msg, '', $changelog);
+        if (isset($response->msg)) {
+            $this->errors[] = $response->msg;
+            return array(false, '', $changelog);
         }
 
-        $url = $curl->response->download_link;
+        $url = $response->download_link;
 
         // Unserialize and check for changelog of plugin.
-        $information = unserialize($curl->response->sections);
+        $information = unserialize($response->sections);
         if ($information) {
             $changelog = json_encode(array('changelog' => $information['changelog']));
         }
@@ -431,13 +438,13 @@ class block_edwiser_site_monitor_plugins {
                 $box .= str_replace('form method="post"', 'form target="_blank" method="post"', $button);
             } else {
                 $reasonhelp = $this->info_remote_plugin_not_installable($reason);
-                if ($reasonhelp) {
+                if (isset($reasonhelp)) {
                     $box .= html_writer::div($reasonhelp, 'reasonhelp updateavailableinstall');
                 }
             }
         } else {
             if (empty($updateinfo->msg)) {
-                if ($updateinfo->update) {
+                if (isset($updateinfo->update) && isset($updateinfo->version)) {
                     $status->has = true;
                     $button = $OUTPUT->single_button(
                         new moodle_url(
@@ -563,7 +570,9 @@ class block_edwiser_site_monitor_plugins {
                 $pluginfo->type,
                 $pluginfo->name
             );
-            $plugin->changelog = $edwiserplugin->changelog;
+            if (isset($edwiserplugin->changelog)) {
+                $plugin->changelog = $edwiserplugin->changelog;
+            }
             if (isset($edwiserplugin->parent)) {
                 $plugin->parent = html_writer::div(
                     get_string('comeswith', 'block_edwiser_site_monitor', $edwiserplugin->parent),
@@ -817,6 +826,21 @@ class block_edwiser_site_monitor_plugins {
     }
 
     /**
+     * Unzip zip file of plugin file and return its content
+     * @param  object $pluginman Plugin manager
+     * @param  string $zip       Zip file path
+     * @param  string $temp      Temporary path
+     * @param  string $root      Root directory path
+     * @return array             Zip file content array
+     */
+    public function unzip_plugin_file($pluginman, $zip, $temp, $root) {
+        ini_set('log_errors', 'Off');
+        $contents = $pluginman->unzip_plugin_file($zip, $temp, $root);
+        ini_set('log_errors', 'On');
+        return $contents;
+    }
+
+    /**
      * Verify zip file is valid
      *
      * @param object $pluginman core plugin manager
@@ -827,7 +851,8 @@ class block_edwiser_site_monitor_plugins {
      * @return bool         True is zip file is valid
      */
     public function verify_zip($pluginman, $zip, $temp, $name) {
-        $zipcontents = $pluginman->unzip_plugin_file($zip, $temp, $name);
+
+        $zipcontents = $this->unzip_plugin_file($pluginman, $zip, $temp, $name);
 
         if (empty($zipcontents)) {
             $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name);
@@ -864,14 +889,14 @@ class block_edwiser_site_monitor_plugins {
         foreach (array_keys($zips) as $file) {
             $name1 = str_replace('.zip', '', $file);
             $path = make_request_directory();
-            $zipcontents = $pluginman->unzip_plugin_file($temp . '/' . $file, $path, $name1);
+            $zipcontents = $this->unzip_plugin_file($pluginman, $temp . '/' . $file, $path, $name1);
+
             if (empty($zipcontents)) {
                 $this->errors[] = get_string('invalidzip', 'block_edwiser_site_monitor', $name . '  ->  ' . $name1);
                 return false;
             }
 
             $plugin = $this->get_plugin_details($path, $zipcontents);
-
             unset($zips[$file]);
             if (!$plugin) {
                 $this->errors[] = get_string('unabletoloadplugindetails', 'block_edwiser_site_monitor', $name . '  ->  ' . $name1);
@@ -903,7 +928,7 @@ class block_edwiser_site_monitor_plugins {
         list($plugintype, $pluginname) = core_component::normalize_component($plugin->component);
 
         $tmp = make_request_directory();
-        $zipcontents = $pluginman->unzip_plugin_file($zipfile, $tmp, $pluginname);
+        $zipcontents = $this->unzip_plugin_file($pluginman, $zipfile, $tmp, $pluginname);
 
         if (empty($zipcontents)) {
             $silent or mtrace(get_string('error'));
@@ -921,7 +946,7 @@ class block_edwiser_site_monitor_plugins {
 
         if (!$silent) {
             foreach ($validator->get_messages() as $message) {
-                if ($message->level === $validator::WARNING and !CLI_SCRIPT) {
+                if ($message->level === $validator::WARNING || $message->level === $validator::ERROR and !CLI_SCRIPT) {
                     mtrace('  <strong>['.$validator->message_level_name($message->level).']</strong>', ' ');
                 } else {
                     mtrace('  ['.$validator->message_level_name($message->level).']', ' ');
@@ -957,7 +982,7 @@ class block_edwiser_site_monitor_plugins {
         if (!$result) {
             $silent or mtrace(get_string('packagesvalidatingfailed', 'core_plugin'));
         }
-        $silent or mtrace();
+        $silent or mtrace(PHP_EOL, '');
         return $result;
     }
 
@@ -976,11 +1001,11 @@ class block_edwiser_site_monitor_plugins {
      * The method uses {@link mtrace()} to produce direct output and can be
      * used in both web and cli interfaces.
      *
-     * @param object $plugin    list of plugins
-     * @param bool   $confirmed should the files be really deployed into the dirroot?
-     * @param bool   $silent    hide debugg errors is set true
+     * @param  \core\update\remote_info $plugin    list of plugins
+     * @param  bool                     $confirmed should the files be really deployed into the dirroot?
+     * @param  bool                     $silent    hide debugg errors is set true
      *
-     * @return bool  true on success
+     * @return bool                                 true on success
      */
     public function install_plugin(\core\update\remote_info $plugin, $confirmed, $silent) {
         global $CFG;
@@ -1018,8 +1043,6 @@ class block_edwiser_site_monitor_plugins {
                 $plugin->version['download'],
                 $plugin->component
             );
-            $silent or mtrace(PHP_EOL.' <- '.$plugin->version['download'], '');
-            $silent or mtrace(PHP_EOL.' -> '.$zip, ' ... ');
         }
         if (!$zip) {
             $silent or mtrace(get_string('error'));
@@ -1059,10 +1082,11 @@ class block_edwiser_site_monitor_plugins {
             list($plugintype, $pluginname) = core_component::normalize_component($plugin->component);
 
             $target = $pluginman->get_plugintype_root($plugintype);
-            if (file_exists($target.'/'.$pluginname)) {
-                $pluginman->remove_plugin_folder($pluginman->get_plugin_info($plugin->component));
+            $plugininfo = $pluginman->get_plugin_info($plugin->component);
+            if (file_exists($target.'/'.$pluginname) && $plugininfo) {
+                $pluginman->remove_plugin_folder($plugininfo);
             }
-            if (!$pluginman->unzip_plugin_file($zipfile, $target, $pluginname)) {
+            if (!$this->unzip_plugin_file($pluginman, $zipfile, $target, $pluginname)) {
                 $silent or mtrace(get_string('error'));
                 $silent or mtrace(get_string('unabletounzip', 'block_edwiser_site_monitor', $zipfile), PHP_EOL);
                 if (function_exists('opcache_reset')) {
@@ -1085,11 +1109,11 @@ class block_edwiser_site_monitor_plugins {
      *
      * Does not return, always redirects or exits.
      *
-     * @param array  $installable list of \core\update\remote_info
-     * @param bool   $confirmed   false: display the validation screen, true: proceed installation
-     * @param string $heading     validation screen heading
-     * @param mixed  $continue    URL to proceed with installation at the validation screen
-     * @param mixed  $return      URL to go back on cancelling at the validation screen
+     * @param \core\update\remote_info  $installable list of \core\update\remote_info
+     * @param bool                      $confirmed   false: display the validation screen, true: proceed installation
+     * @param string                    $heading     validation screen heading
+     * @param mixed                     $continue    URL to proceed with installation at the validation screen
+     * @param mixed                     $return      URL to go back on cancelling at the validation screen
      *
      * @return void
      */

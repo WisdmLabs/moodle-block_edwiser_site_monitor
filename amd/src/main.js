@@ -33,19 +33,33 @@ define([
     notification,
     ModalFactory
 ) {
+
+    var SELECTORS = {
+        USAGEBAR: '.usage-progress-bar',
+        LOADER: '.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader',
+        CONTATUSLOADER: '.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader',
+        LAST24HOURSUSAGELOADER: '.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader',
+        ROOT: '.block_edwiser_site_monitor.block',
+        SERVERPLUGINLIST: '.edwiser_site_monitor .server-plugins-list'
+    };
+
+    var EVENTS = {
+        PROGRESS_STATUS: 'progress-status'
+    };
+
     var init = function() {
         var liveusage = "";
         var chart = null;
         var fetchtingstatus = fetchtinglastusage = fetchtingplugins = sendingemail = false;
-        $('.usage-progress-bar').bind('progress-status', function(event, width) {
-            let allClasses = 'bg-success bg-warning bg-danger';
-            let currentClass = 'bg-danger';
+        $(SELECTORS.USAGEBAR).bind(EVENTS.PROGRESS_STATUS, function(event, width) {
+            let allclasses = 'bg-success bg-warning bg-danger';
+            let currentclass = 'bg-danger';
             if (width < 30) {
-                currentClass = 'bg-success';
+                currentclass = 'bg-success';
             } else if (width < 80) {
-                currentClass = 'bg-warning';
+                currentclass = 'bg-warning';
             }
-            $(this).removeClass(allClasses).addClass(currentClass);
+            $(this).removeClass(allclasses).addClass(currentclass);
         });
         /**
          * Get values ratio in used and total value
@@ -67,13 +81,13 @@ define([
                     args: {}
                 }]);
                 promise[0].done(function(response) {
-                    $('#esm_cpu_usage_bar').css('width', response.cpu + '%').trigger('progress-status', [response.cpu]);
-                    $('#esm_memory_usage_bar').css('width', response.memory + '%').trigger('progress-status', [response.memory]);
-                    $('#esm_storage_usage_bar').css('width', response.storage + '%').trigger('progress-status', [response.storage]);
-                    $('#esm_cpu_usage_label').text(response.cpu + '%');
-                    $('#esm_memory_usage_label').text(response.memory + '% (' + get_values_ratio(response.memory, totalmemory) + ')');
-                    $('#esm_storage_usage_label').text(response.storage + '% (' + get_values_ratio(response.storage, totalstorage) + ')');
-                    $('#esm_live_users_label').text(response.liveusers);
+                    $(SELECTORS.ROOT).find('#esm_cpu_usage_bar').css('width', response.cpu + '%').trigger(EVENTS.PROGRESS_STATUS, [response.cpu]);
+                    $(SELECTORS.ROOT).find('#esm_memory_usage_bar').css('width', response.memory + '%').trigger(EVENTS.PROGRESS_STATUS, [response.memory]);
+                    $(SELECTORS.ROOT).find('#esm_storage_usage_bar').css('width', response.storage + '%').trigger(EVENTS.PROGRESS_STATUS, [response.storage]);
+                    $(SELECTORS.ROOT).find('#esm_cpu_usage_label').text(response.cpu + '%');
+                    $(SELECTORS.ROOT).find('#esm_memory_usage_label').text(response.memory + '% (' + get_values_ratio(response.memory, totalmemory) + ')');
+                    $(SELECTORS.ROOT).find('#esm_storage_usage_label').text(response.storage + '% (' + get_values_ratio(response.storage, totalstorage) + ')');
+                    $(SELECTORS.ROOT).find('#esm_live_users_label').text(response.liveusers);
                     fetchtingstatus = false;
                 }).fail(function(ex) {
                     alert(ex.message);
@@ -85,8 +99,8 @@ define([
                     return;
                 }
                 fetchtinglastusage = true;
-                $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').addClass('show');
-                var timestamp = $('#esm_usage_date_selector').val() || 0;
+                $(SELECTORS.LAST24HOURSUSAGELOADER).addClass('show');
+                var timestamp = $(SELECTORS.ROOT).find('#esm_usage_date_selector').val() || 0;
                 var promise = ajax.call([{
                     methodname: 'block_edwiser_site_monitor_get_last_24_hours_usage',
                     args: {
@@ -95,7 +109,7 @@ define([
                 }]);
                 promise[0].done(function(response) {
                     fetchtinglastusage = false;
-                    $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
+                    $(SELECTORS.LAST24HOURSUSAGELOADER).removeClass('show');
                     if (chart != null) {
                         chart.data.labels = JSON.parse(response.time);
                         chart.data.datasets[0].data = JSON.parse(response.cpu);
@@ -186,7 +200,7 @@ define([
                     };
                     chart = new Chart($('#esm_usage_chart')[0].getContext('2d'), graph);
                 }).fail(function(ex) {
-                    $('.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader').removeClass('show');
+                    $(SELECTORS.LAST24HOURSUSAGELOADER).removeClass('show');
                     alert(ex.message);
                     fetchtinglastusage = false;
                 });
@@ -196,18 +210,18 @@ define([
                     return;
                 }
                 fetchtingplugins = true;
-                $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').addClass('show');
+                $(SELECTORS.LOADER).addClass('show');
                 var promise = ajax.call([{
                     methodname: 'block_edwiser_site_monitor_get_plugins_update',
                     args: {}
                 }]);
                 promise[0].done(function(response) {
-                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
-                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .server-plugins-list').html(response.plugins);
-                    $('.edwiser_site_monitor .lasttimefetched').text(response.lasttimefetched);
+                    $(SELECTORS.LOADER).removeClass('show');
+                    $(SELECTORS.SERVERPLUGINLIST).html(response.plugins);
+                    $(SELECTORS.ROOT).find('.edwiser_site_monitor .lasttimefetched').text(response.lasttimefetched);
                     fetchtingplugins = false;
                 }).fail(function(ex) {
-                    $('.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader').removeClass('show');
+                    $(SELECTORS.LOADER).removeClass('show');
                     notification.exception(ex);
                     fetchtingplugins = false;
                 });
@@ -217,10 +231,10 @@ define([
                     return;
                 }
                 sendingemail = true;
-                $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').addClass('show');
+                $(SELECTORS.CONTATUSLOADER).addClass('show');
                 var promise = ajax.call(parameters);
                 promise[0].done(function(response) {
-                    $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
+                    $(SELECTORS.CONTATUSLOADER).removeClass('show');
                     var trigger = $('#create-modal');
                     ModalFactory.create({
                         title: response.header,
@@ -231,12 +245,12 @@ define([
                         modal.show();
                     });
                     if (response.status) {
-                        $('#contactus_form button').prop('disabled', true);
-                        $('#contactus_form_succes').addClass('show');
+                        $(SELECTORS.ROOT).find('#contactus_form button').prop('disabled', true);
+                        $(SELECTORS.ROOT).find('#contactus_form_succes').addClass('show');
                     }
                     sendingemail = false;
                 }).fail(function(ex) {
-                    $('.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader').removeClass('show');
+                    $(SELECTORS.CONTATUSLOADER).removeClass('show');
                     notification.exception(ex);
                     sendingemail = false;
                 });
@@ -250,6 +264,12 @@ define([
                 functions.get_last_24_hours_usage();
             });
             $('.edwiser_site_monitor .nav-link').click(function() {
+                $(this).removeClass('active').parents('.nav-item').siblings().removeClass('active');
+                var tags = $(this).parents(SELECTORS.ROOT).find('.tab-pane').removeClass('show active');
+                var target = $(this).data('container');
+                $(this).parents('.nav-item').addClass('active');
+                console.log($(this).parents(SELECTORS.ROOT).find('#' + target));
+                $(this).parents(SELECTORS.ROOT).find('#' + target).addClass('show active');
                 switch ($(this).data('container')) {
                     case "edwiser_site_monitor_view_live_status":
                         liveusage = setInterval(function() {
@@ -261,8 +281,8 @@ define([
                         clearInterval(liveusage);
                         break;
                     case "edwiser_site_monitor_plugins":
-                        if ($.trim($('.edwiser_site_monitor .server-plugins-list').text()) == '') {
-                            $('.edwiser_site_monitor .refresh-plugin-list').trigger('click');
+                        if ($.trim($(SELECTORS.SERVERPLUGINLIST).text()) == '') {
+                            $(SELECTORS.ROOT).find('.edwiser_site_monitor .refresh-plugin-list').trigger('click');
                         }
                     case "edwiser_site_monitor_recommendation":
                     case "edwiser_site_monitor_contactus":
@@ -270,14 +290,14 @@ define([
                         break;
                 }
             });
-            $('body').on('click', '.edwiser_site_monitor .refresh-plugin-list', function() {
+            $('body').on('click', SELECTORS.ROOT + ' .refresh-plugin-list', function() {
                 functions.get_plugins();
-            }).on('click', '.edwiser_site_monitor .edwiser-plugin-filter', function(event) {
+            }).on('click', SELECTORS.ROOT + ' .edwiser-plugin-filter', function(event) {
                 event.preventDefault();
                 $(this).parent('.server-plugins-list').removeClass('all edwiser other update').addClass($(this).data('filter'));
-                $('#plugins-control-panel').removeClass('all edwiser other update').addClass($(this).data('filter'));
-                $('.edwiser-plugins-current-list').text($(this).data('heading'));
-                $('.edwiser-plugin-filter').removeClass('active');
+                $(SELECTORS.ROOT).find('#plugins-control-panel').removeClass('all edwiser other update').addClass($(this).data('filter'));
+                $(SELECTORS.ROOT).find('.edwiser-plugins-current-list').text($(this).data('heading'));
+                $(SELECTORS.ROOT).find('.edwiser-plugin-filter').removeClass('active');
                 $(this).addClass('active');
                 return;
             }).on('click', '.showchangelog', function(event) {

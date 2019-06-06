@@ -14,10 +14,25 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template block_edwiser_site_monitor/main
+
+    This template renders live status tab
+
+    Example context (json):
+    {
+        "live_status" : "<div>live_status</div>"
+        "last_24_hours_usage" : "<div>last_24_hours_usage</div>"
+        "installnewurl" : "<site>/admin/tool/installaddon/index.php"
+        "lasttime" : "<div>lasttime</div>"
+        "recommendation" : "<div>recommendation</div>"
+        "contactus" : "<div>contactus</div>"
+    }
+}}
 <div class="edwiser_site_monitor">
     <div class="w-p100 d-flex my-10" id="edwiser_site_monitor-section">
         <ul class="nav nav-tabs nav-tabs-line border-0 mx-15 w-full" role="tablist">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link active" href="#edwiser_site_monitor_view_live_status" data-container="edwiser_site_monitor_view_live_status" data-toggle="tab">
                     {{#str}} liveusage, block_edwiser_site_monitor {{/str}}
                 </a>

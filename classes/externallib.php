@@ -18,7 +18,7 @@
  * Local class of edwiser_site_monitor external api functions
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -33,6 +33,9 @@ use block_edwiser_site_monitor_utility as esmutility;
 
 /**
  * This class implements services for block_edwiser_site_monitor
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_edwiser_site_monitor_externallib extends external_api {
 
@@ -196,9 +199,14 @@ class block_edwiser_site_monitor_externallib extends external_api {
     }
 
     /**
-     * Get live_status based on filters
+     * Send email to edwiser@wisdmlabs.com with submitted data in the contact us form
      *
-     * @return array
+     * @param  string $firstname First name of user
+     * @param  string $lastname  Last name of user
+     * @param  string $email     Email id of user
+     * @param  string $subject   Subject for email
+     * @param  string $message   Message body for email
+     * @return array             status, header and message
      */
     public static function send_contactus_email($firstname, $lastname, $email, $subject, $message) {
         $admin = get_admin();

@@ -18,13 +18,18 @@
  * Edwiser Site Monitor block installation.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die;
 
+/**
+ * Create block instance for admin on installation
+ *
+ * @return bool true
+ */
 function xmldb_block_edwiser_site_monitor_install() {
     global $DB;
     $systempage = $DB->get_record('my_pages', array('userid' => null, 'private' => 1));

@@ -18,16 +18,16 @@
  * Global Search version details.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2019041500;
+$plugin->version   = 2019060600;
 $plugin->requires  = 2017111301;
-$plugin->release   = '1.0.2';
+$plugin->release   = '1.0.3';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'block_edwiser_site_monitor';
 $plugin->cron      = 300;

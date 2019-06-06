@@ -18,7 +18,7 @@
  * Local class of edwiser_site_monitor_usage_warning
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -29,6 +29,9 @@ use block_edwiser_site_monitor_utility as esmutility;
 
 /**
  * This class implements services for block_edwiser_site_monitor
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_edwiser_site_monitor_usage_warning {
 
@@ -100,9 +103,10 @@ class block_edwiser_site_monitor_usage_warning {
     /**
      * Check cpu usage thresholds
      *
-     * @param  array &$thresholds Threshold warning array
+     * @return array &$thresholds Threshold warning array
      */
-    private function check_cpu_usage_thresholds(&$thresholds) {
+    private function check_cpu_usage_thresholds() {
+        $thresholds = [];
         if ($this->cpu < $this->config->cpulowerlimit && $content = $this->get_usage_threshold_email_content(
             'cpu',
             $this->cpu,
@@ -119,14 +123,16 @@ class block_edwiser_site_monitor_usage_warning {
         )) {
                 $thresholds[] = $content;
         }
+        return $thresholds;
     }
 
     /**
      * Check memory usage_thresholds
      *
-     * @param  array &$thresholds Threshold warning array
+     * @return  array &$thresholds Threshold warning array
      */
-    private function check_memory_usage_thresholds(&$thresholds) {
+    private function check_memory_usage_thresholds() {
+        $thresholds = [];
         if ($this->memory < $this->config->memorylowerlimit && $content = $this->get_usage_threshold_email_content(
             'memory',
             $this->memory,
@@ -143,14 +149,16 @@ class block_edwiser_site_monitor_usage_warning {
         )) {
                 $thresholds[] = $content;
         }
+        return $thresholds;
     }
 
     /**
      * Check storage usage thresholds
      *
-     * @param  array &$thresholds Threshold warning array
+     * @return  array &$thresholds Threshold warning array
      */
-    private function check_storage_usage_thresholds(&$thresholds) {
+    private function check_storage_usage_thresholds() {
+        $thresholds = [];
         if ($this->storage < $this->config->storagelowerlimit && $content = $this->get_usage_threshold_email_content(
             'storage',
             $this->storage,
@@ -167,6 +175,7 @@ class block_edwiser_site_monitor_usage_warning {
         )) {
                 $thresholds[] = $content;
         }
+        return $thresholds;
     }
 
     /**
@@ -181,9 +190,9 @@ class block_edwiser_site_monitor_usage_warning {
             return;
         }
         $thresholds = [];
-        $this->check_cpu_usage_thresholds($thresholds);
-        $this->check_memory_usage_thresholds($thresholds);
-        $this->check_storage_usage_thresholds($thresholds);
+        $thresholds = array_merge($thresholds, $this->check_cpu_usage_thresholds());
+        $thresholds = array_merge($thresholds, $this->check_memory_usage_thresholds());
+        $thresholds = array_merge($thresholds, $this->check_storage_usage_thresholds());
         if (count($thresholds) == 0) {
             return;
         }

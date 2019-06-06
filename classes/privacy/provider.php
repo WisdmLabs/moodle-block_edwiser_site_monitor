@@ -18,7 +18,7 @@
  * Privacy implementation for block_edwiser_site_monitor.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -35,6 +35,12 @@ use core_privacy\local\request\writer;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\approved_userlist;
 
+/**
+ * Class to provide privacy information
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class provider implements
     // The block_edwiser_site_monitor block stores user provided data.
     \core_privacy\local\metadata\provider,
@@ -48,8 +54,8 @@ class provider implements
     /**
      * Returns information about how block_edwiser_site_monitor stores its data.
      *
-     * @param   collection     $collection The initialised collection to add items to.
-     * @return  collection     A listing of user data stored through this system.
+     * @param  collection $collection The initialised collection to add items to.
+     * @return collection A listing of user data stored through this system.
      */
     public static function get_metadata(collection $collection) : collection {
         $collection->add_database_table('block_edwiser_site_monitor', array(
@@ -83,8 +89,8 @@ class provider implements
     /**
      * Get the list of contexts that contain user information for the specified user.
      *
-     * @param   int         $userid     The user to search.
-     * @return  contextlist   $contextlist  The contextlist containing the list of contexts used in this plugin.
+     * @param  int         $userid       The user to search.
+     * @return contextlist $contextlist  The contextlist containing the list of contexts used in this plugin.
      */
     public static function get_contexts_for_userid(int $userid) : contextlist {
         $contextlist = new contextlist();
@@ -94,7 +100,7 @@ class provider implements
     /**
      * Get the list of users who have data within a context.
      *
-     * @param   userlist    $userlist   The userlist containing the list of users who have data in this context/plugin combination.
+     * @param userlist $userlist The userlist containing the list of users who have data in this context/plugin combination.
      */
     public static function get_users_in_context(userlist $userlist) {
     }
@@ -103,7 +109,7 @@ class provider implements
     /**
      * Delete all data for all users in the specified context.
      *
-     * @param   context                 $context   The specific context to delete data for.
+     * @param context $context The specific context to delete data for.
      */
     public static function delete_data_for_all_users_in_context(context $context) {
         static::delete_data();
@@ -112,7 +118,7 @@ class provider implements
     /**
      * Delete all user data for the specified user, in the specified contexts.
      *
-     * @param   approved_contextlist    $contextlist    The approved contexts and user information to delete information for.
+     * @param approved_contextlist $contextlist The approved contexts and user information to delete information for.
      */
     public static function delete_data_for_user(approved_contextlist $contextlist) {
         static::delete_data();
@@ -121,9 +127,9 @@ class provider implements
     /**
      * Delete all user data for the specified user, in the specified contexts.
      *
-     * @param   approved_contextlist    $contextlist    The approved contexts and user information to delete information for.
+     * @param approved_userlist $userlist The approved context and user information to delete information for.
      */
-    public static function delete_data_for_users(approved_userlist  $contextlist) {
+    public static function delete_data_for_users(approved_userlist $userlist) {
         static::delete_data();
     }
 

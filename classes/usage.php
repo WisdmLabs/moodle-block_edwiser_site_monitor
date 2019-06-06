@@ -18,13 +18,19 @@
  * Class to get Site usage
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
 
 defined('MOODLE_INTERNAL') || die;
 
+/**
+ * Get usage of site using this class.
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_edwiser_site_monitor_usage {
 
     /**
@@ -34,9 +40,23 @@ class block_edwiser_site_monitor_usage {
     public static $instance = null;
 
     /**
+     * $disabled list of disabled usage. cpu, memory for now
+     * @var array
+     */
+    public static $disabled = [];
+
+    /**
      * Private constructor for singletone class
      */
     private function __construct() {
+        if (stripos(PHP_OS, 'linux') !== false) {
+            if (shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l") == "" || empty(sys_getloadavg())) {
+                self::$disabled['cpu'] = true;
+            }
+            if (shell_exec("free") == "") {
+                self::$disabled['memory'] = true;
+            }
+        }
     }
 
     /**
@@ -61,6 +81,9 @@ class block_edwiser_site_monitor_usage {
             $load = shell_exec("wmic cpu get loadpercentage");
             $load = (int)filter_var($load, FILTER_SANITIZE_NUMBER_INT);
         } else if (stripos(PHP_OS, 'linux') !== false) {
+            if (isset(self::$disabled['cpu'])) {
+                return $load;
+            }
             $loads    = sys_getloadavg();
             $corenums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
             $load     = round($loads[0] / ($corenums + 1) * 100, 2);
@@ -85,6 +108,9 @@ class block_edwiser_site_monitor_usage {
             $free  = (int)filter_var($free, FILTER_SANITIZE_NUMBER_INT);
             $usage = round(($max - $free) / $max * 100, 2);
         } else if (stripos(PHP_OS, 'linux') !== false) {
+            if (isset(self::$disabled['memory'])) {
+                return $usage;
+            }
             $memory = shell_exec('free -k');
             if ($memory != "") {
                 $memory    = explode("\n", $memory);
@@ -111,6 +137,9 @@ class block_edwiser_site_monitor_usage {
             $max = shell_exec("wmic OS get TotalVisibleMemorySize");
             $max = (int)filter_var($max, FILTER_SANITIZE_NUMBER_INT);
         } else if (stripos(PHP_OS, 'linux') !== false) {
+            if (isset(self::$disabled['memory'])) {
+                return $max;
+            }
             $memory = shell_exec('free');
             if ($memory != "") {
                 $memory = explode("\n", $memory)[1];

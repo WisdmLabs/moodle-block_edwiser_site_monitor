@@ -9,8 +9,14 @@ aside.block-region {
 }
 
 .edwiser_site_monitor {
+    .server_live_status {
+        .usage-progress-bar {
+            height: 100%;
+        }
+    }
     .nav-tabs .nav-item .nav-link {
-        &.esm-outline, .edwiser_plugins_recommendation .esm-outline {
+        &.esm-outline,
+        .edwiser_plugins_recommendation .esm-outline {
             color: #1177d1;
             border-color: #1177d1;
         }
@@ -41,7 +47,8 @@ aside.block-region {
     .server_usage_chart {
         background: white;
     }
-    .server-plugins, .has-loader {
+    .server-plugins,
+    .has-loader {
         min-height: 4rem;
         position: relative;
     }
@@ -81,7 +88,9 @@ aside.block-region {
         }
     }
     .generaltable {
-        &.edwiser tbody tr:not(.edwiser), &.other tbody tr:not(.other), &.update tbody tr:not(.update) {
+        &.edwiser tbody tr:not(.edwiser),
+        &.other tbody tr:not(.other),
+        &.update tbody tr:not(.update) {
             display: none;
         }
         tbody td a {
@@ -172,5 +181,11 @@ aside.block-region {
         margin-right: -1.0715rem;
         margin-left: -1.0715rem;
         list-style: none;
+    }
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -5px;
+        margin-left: -5px;
     }
 }

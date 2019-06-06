@@ -18,7 +18,7 @@
  * Plugin recommendation renderable.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -32,6 +32,12 @@ use renderer_base;
 use templatable;
 use block_edwiser_site_monitor_utility as esmutility;
 
+/**
+ * Renderable for recommendation tab
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class recommendation implements renderable, templatable {
 
     /** @var $instance block instance */
@@ -40,7 +46,7 @@ class recommendation implements renderable, templatable {
     /**
      * Constructor
      *
-     * @param $instance block instance
+     * @param object $instance block instance
      */
     public function __construct($instance) {
         $this->instance = $instance;

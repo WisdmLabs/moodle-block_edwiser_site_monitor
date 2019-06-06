@@ -18,7 +18,7 @@
  * Last 24 hour usage renderable.
  *
  * @package   block_edwiser_site_monitor
- * @copyright 2019 WisdmLabs <support@wisdmlabs.com>
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author    Yogesh Shirsath
  */
@@ -32,6 +32,12 @@ use renderer_base;
 use templatable;
 use stdClass;
 
+/**
+ * Renderable for last 24 hour usage tab
+ *
+ * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class last_24_hours_usage implements renderable, templatable {
 
     /** @var stdClass block instance */

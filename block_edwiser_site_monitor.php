@@ -119,10 +119,7 @@ class block_edwiser_site_monitor extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        if (is_siteadmin()) {
-            return array('my' => true);
-        }
-        return array();
+        return array('my' => is_siteadmin());
     }
 
     /**

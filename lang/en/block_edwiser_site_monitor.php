@@ -51,7 +51,8 @@ $string['moderateusage'] = 'Moderate usage';
 $string['highusage'] = 'High usage';
 $string['yaxistitle'] = 'Usage(%)';
 $string['xaxistitle'] = 'Time';
-$string['messageprovider:notifications'] = $string['news'] = 'Edwiser News and Updates';
+$string['messageprovider:notifications'] = 'Edwiser News and Updates';
+$string['news'] = 'Edwiser News and Updates';
 
 // Privacy strings.
 $string['privacy:metadata:block_edwiser_site_monitor:tableexplanation'] = 'Stores the cpu, memory and storage usage of site.';

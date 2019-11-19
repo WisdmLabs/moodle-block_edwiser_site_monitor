@@ -119,7 +119,10 @@ class block_edwiser_site_monitor extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        return array('my' => is_siteadmin());
+        if (defined('CLI_SCRIPT')) {
+            return array('all' => true);
+        }
+        return array('my' => has_capability('moodle/site:config', context_system::instance()));
     }
 
     /**

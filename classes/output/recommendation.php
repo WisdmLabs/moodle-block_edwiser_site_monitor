@@ -80,6 +80,8 @@ class recommendation implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $CFG, $SESSION;
         $data = [];
+        $data['plugins'] = [];
+        $data['has'] = false;
         $plugins = esmutility::get_edwiser_plugin_list();
         if (empty($plugins)) {
             $data['error'] = get_string('invalidjsonfile', 'block_edwiser_site_monitor');
@@ -87,7 +89,6 @@ class recommendation implements renderable, templatable {
         }
         $theme = isset($SESSION->theme) ? $SESSION->theme : $CFG->theme;
         $columns = $theme == 'remui' ? 4 : 6;
-        $data['plugins'] = [];
         $cardclass = $this->instance->region == 'content' ? 'col-lg-' . $columns . ' col-md-6 col-12' : '';
         foreach ($plugins as $plugin) {
             if (isset($plugin->recommendation)) {

@@ -95,7 +95,7 @@ $string['memorylowerlimit_help'] = 'Lower limit of memory usage';
 $string['memoryhigherlimit_help'] = 'Higher limit of memory usage';
 $string['memorylimit_invalid'] = 'Please provide valid memory limit';
 $string['memorylimit_overlap'] = 'Please provide valid memory limit. Higher limit cannot be equal or less than lower limit';
-$string['memorycommandnotallowed'] = 'Command line <strong>df</strong> --Permission Denied.';
+$string['memorycommandnotallowed'] = 'Command line <strong>free</strong> --Permission Denied.';
 
 $string['storagelowerlimit'] = 'Storage lower limit';
 $string['storagehigherlimit'] = 'Storage higher limit';

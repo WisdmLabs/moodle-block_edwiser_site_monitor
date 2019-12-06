@@ -268,7 +268,6 @@ define([
                 var tags = $(this).parents(SELECTORS.ROOT).find('.tab-pane').removeClass('show active');
                 var target = $(this).data('container');
                 $(this).parents('.nav-item').addClass('active');
-                console.log($(this).parents(SELECTORS.ROOT).find('#' + target));
                 $(this).parents(SELECTORS.ROOT).find('#' + target).addClass('show active');
                 switch ($(this).data('container')) {
                     case "edwiser_site_monitor_view_live_status":

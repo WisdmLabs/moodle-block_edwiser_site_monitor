@@ -9,11 +9,6 @@ aside.block-region {
 }
 
 .edwiser_site_monitor {
-    .server_live_status {
-        .usage-progress-bar {
-            height: 100%;
-        }
-    }
     .nav-tabs .nav-item .nav-link {
         &.esm-outline,
         .edwiser_plugins_recommendation .esm-outline {
@@ -31,16 +26,52 @@ aside.block-region {
         border-radius: 50%;
         margin-left: 0.5rem;
     }
-    .legends {
-        float: right;
-        .legend {
+    .server_live_status {
+        position: relative;
+        padding: 10px 20px;
+        .progress-row {
+            padding: 10px 15px;
+        }
+        .progress-wrap {
+            height: 4px;
+            width: 100%;
+            .usage-progress-bar {
+                height: 100%;
+            }
+        }
+        .usage-header {
             display: inline-block;
-            margin: 0 0.2rem;
-            .color {
-                width: 1rem;
-                height: 1rem;
+            width: 20%;
+            font-size: 1.3rem;
+            i.fa {
+                margin-right: 10px;
+            }
+        }
+        .usage-details {
+            display: inline-block;
+            width: 79%;
+            .progress-label {
+                float: right;
+            }
+        }
+        .users {
+            position: relative;
+            .legends {
+                padding: 0;
+            }
+        }
+        .legends {
+            text-align: right;
+            padding-right: 15px;
+            .legend {
                 display: inline-block;
-                vertical-align: middle;
+                margin: 0 0.2rem;
+                .color {
+                    width: 1rem;
+                    height: 1rem;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
             }
         }
     }

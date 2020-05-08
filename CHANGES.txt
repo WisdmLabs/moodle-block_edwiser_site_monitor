@@ -1,6 +1,13 @@
 Change Log:
 ===========
 
+Version 2.0.0
+=============
+Feature - Brand new live usage tab design.
+Tweak - Plugin update check time.
+Tweak - Improvement in CPU usage calculation.
+Fix - Edwiser RemUI updating issue with different moodle branch.
+
 Version 1.0.4
 =============
 Fix - Fixed upgrade issue.
@@ -9,11 +16,9 @@ Fix - Changed memory usage warning message.
 
 Version 1.0.3
 =============
-
 Fix - Improved plugin updater stability.
 Fix - Tabs working in themes not based on Bootstrap.
 Fix - Showing warning to Admin for linux if unable to fetch cpu and memory usage.
-
 
 Version 1.0.2 (First release)
 =============================

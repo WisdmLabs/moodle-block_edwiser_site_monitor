@@ -147,33 +147,32 @@ class block_edwiser_site_monitor_plugins {
     }
 
     /**
-     * Does plugin support current moodle verison
-     *
-     * @param float  $version required moodle verions
-     *
-     * @return bool true if compatible with current moodle verions
-     */
-    public function is_supported_moodle_version($version) {
-        global $CFG;
-        if ($CFG->version >= $version) {
-            return true;
-        }
-        return 2;
-    }
-
-    /**
      * Checks whether current plugin version is supported
      *
      * @param stdClass $plugin installed plugin details
-     * @param stdClass $update plugin update details
+     * @param stdClass $release plugin release details
      *
      * @return bool true is supported
      */
-    public function is_supported_version($plugin, $update) {
-        if ($plugin->versiondisk >= $update->version) {
-            return false;
+    public function is_supported_version($plugin, $release) {
+        $supported = true;
+        $release = explode('.', $release);
+        $dbrelease = explode('.', $plugin->release);
+
+        if ($plugin->type == 'theme' && $plugin->name == 'remui') {
+            $supported = $dbrelease[0] == $release[0] && $dbrelease[1] == $release[1];
+            if (!$supported) {
+                return 2;
+            }
         }
-        return $this->is_supported_moodle_version($update->requires);
+
+        foreach ($release as $index => $version) {
+            if ($dbrelease[$index] < $version) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -187,46 +186,28 @@ class block_edwiser_site_monitor_plugins {
      *
      * @return array                 $plugin update options
      */
-    public function check_edwiser_plugin_update($plugininfo, $plugintype, $pluginname, $updates, $options) {
+    public function check_edwiser_plugin_update($plugininfo, $plugintype, $pluginname, $release, $options) {
 
         // There is an error with update method.
-        if (is_string($updates)) {
-            $options['msg'][] = $updates;
-            return $options;
-        }
 
-        if (is_object($updates)) {
-            $updates = array($updates);
+        if (empty($release)) {
+            return false;
         }
-
-        if (is_array($updates)) {
-            // Iterate each update details.
-            foreach (array_values($updates) as $update) {
-                if (!is_object($update) || $update->component != $plugintype . '_' . $pluginname) {
-                    continue;
-                }
-                $status = $this->is_supported_version($plugininfo[$plugintype][$pluginname], $update);
-                if ($status === false) {
-                    return false;
-                }
-                $options['version'] = $update->version;
-                if (isset($update->release)) {
-                    $options['release'] = $update->release;
-                }
-                if (isset($update->maturity)) {
-                    $options['maturity'] = $update->maturity;
-                }
-                $options['supportedmoodles'] = [(object)array(
-                    'version' => $update->requires
-                )];
-                if ($status === 2) {
-                    $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_site_monitor', $update->requires);
-                }
-                return $options;
-            }
-
+        $status = $this->is_supported_version($plugininfo[$plugintype][$pluginname], $release);
+        if ($status === false) {
+            return false;
         }
-        return false;
+        $options['version'] = $release;
+        $options['release'] = $release;
+        if ($status === 2) {
+            $ex = explode('.', $release);
+            $requires = $ex[0] . '.' . $ex[1];
+            $options['supportedmoodles'] = [(object)array(
+                'version' => $requires
+            )];
+            $options['msg'][] = get_string('requirehigherversion', 'block_edwiser_site_monitor', $requires);
+        }
+        return $options;
     }
 
     /**
@@ -259,7 +240,6 @@ class block_edwiser_site_monitor_plugins {
                 'url' => urlencode($CFG->wwwroot),
             )
         );
-
         $response = json_decode($curl);
 
         // Error while getting server response.
@@ -276,22 +256,15 @@ class block_edwiser_site_monitor_plugins {
 
         $url = $response->download_link;
 
+        $release = $response->new_version;
+
         // Unserialize and check for changelog of plugin.
         $information = unserialize($response->sections);
         if ($information) {
             $changelog = json_encode(array('changelog' => $information['changelog']));
         }
 
-        $path = $this->get_remote_plugin_zip($pluginman, $url, $component);
-        if (!$path) {
-            return array(false, '', $changelog);
-        }
-
-        $temp = make_request_directory();
-
-        $zips = $this->verify_zip($pluginman, $path, $temp, $component);
-
-        return array($zips, $url, $changelog);
+        return array($release, $url, $changelog);
     }
 
     /**
@@ -461,7 +434,6 @@ class block_edwiser_site_monitor_plugins {
                 }
             } else {
                 $box .= html_writer::start_tag('div', array('class' => 'text-danger'));
-                $box .= html_writer::tag('span', 'Errors');
                 $tag = count($updateinfo->msg) > 1 ? 'ol' : 'ul';
                 $box .= html_writer::start_tag($tag);
                 foreach ($updateinfo->msg as $msg) {
@@ -469,6 +441,9 @@ class block_edwiser_site_monitor_plugins {
                 }
                 $box .= html_writer::end_tag($tag);
                 $box .= html_writer::end_tag('div');
+                if (isset($updateinfo->update)) {
+                    $status->has = true;
+                }
             }
         }
         $box .= html_writer::end_div();
@@ -552,20 +527,18 @@ class block_edwiser_site_monitor_plugins {
                 array('class' => 'requiredby')
             );
         }
-        if (!$edwiser) {
-            $update = (object) [
-                'has' => false,
-                'html' => ''
-            ];
-            if (is_array($pluginfo->available_updates())) {
-                $update->has = true;
-                foreach ($pluginfo->available_updates() as $availableupdate) {
-                    $updateinfo = $this->plugin_update_info($pluginman, $availableupdate);
-                    $update->has &= $updateinfo->has;
-                    $update->html .= $updateinfo->html;
-                }
+        $update = (object) [
+            'has' => false,
+            'html' => ''
+        ];
+        if (is_array($pluginfo->available_updates())) {
+            $update->has = true;
+            foreach ($pluginfo->available_updates() as $availableupdate) {
+                $updateinfo = $this->plugin_update_info($pluginman, $availableupdate);
+                $update->has &= $updateinfo->has;
+                $update->html .= $updateinfo->html;
             }
-        } else {
+        } else if ($edwiser) {
             $edwiserplugin = (object) $this->get_edwiser_plugin(
                 $pluginfo->type,
                 $pluginfo->name
@@ -585,6 +558,7 @@ class block_edwiser_site_monitor_plugins {
                 $edwiser
             );
         }
+
         $plugin->class .= $update->has ? ' update' : '';
         $plugin->update = $update;
         return $plugin;

@@ -50,7 +50,7 @@ class block_edwiser_site_monitor_usage {
      */
     private function __construct() {
         if (stripos(PHP_OS, 'linux') !== false) {
-            if (shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l") == "" || empty(sys_getloadavg())) {
+            if (empty(sys_getloadavg())) {
                 self::$disabled['cpu'] = true;
             }
             if (shell_exec("free") == "") {
@@ -86,7 +86,11 @@ class block_edwiser_site_monitor_usage {
             }
             $loads    = sys_getloadavg();
             $corenums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-            $load     = round($loads[0] / ($corenums + 1) * 100, 2);
+            if (!empty($corenums)) {
+                $load     = round($loads[0] / ($corenums + 1) * 100, 2);
+            } else {
+                $load = round($loads[0] * 100, 2);
+            }
         }
         if ($load > 100) {
             return 100;

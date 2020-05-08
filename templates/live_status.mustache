@@ -41,67 +41,73 @@
     }
 }}
 <div class="server_live_status">
-    <div class="legends">
-        <div class="low-usage legend">
-            <div class="color bg-success"></div>
-            <label>{{#str}}lowusage, block_edwiser_site_monitor{{/str}}</label>
+    <div class="progress-row">
+        <div class="usage-header">
+            <label class="progress-name"><i class="fa fa-server" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_site_monitor {{/str}}</label>
         </div>
-        <div class="moderate-usage legend">
-            <div class="color bg-warning"></div>
-            <label>{{#str}}moderateusage, block_edwiser_site_monitor{{/str}}</label>
-        </div>
-        <div class="high-usage legend">
-            <div class="color bg-danger"></div>
-            <label>{{#str}}highusage, block_edwiser_site_monitor{{/str}}</label>
-        </div>
-    </div>
-    <div class="progress-row pb-4">
-        <label class="progress-name h4"><i class="fa fa-server pr-2" aria-hidden="true"></i>{{#str}} cpu, block_edwiser_site_monitor {{/str}}:</label>
-        <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
-        <span class="command-disabled">{{#disabled.cpu}}{{#str}} cpucommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.cpu}}</span>
-        <div class="progress-wrap progress">
-            <div class="usage-progress-bar progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
-        </div>
-    </div>
-    <div class="progress-row pb-4">
-        <label class="progress-name h4"><i class="fa fa-microchip pr-2" aria-hidden="true"></i>{{#str}} memory, block_edwiser_site_monitor {{/str}}:</label>
-        <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
-        <span class="command-disabled">{{#disabled.memory}}{{#str}} memorycommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.memory}}</span>
-        <div class="progress-wrap progress">
-            <div class="usage-progress-bar progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
-        </div>
-    </div>
-    <div class="progress-row pb-4">
-        <label class="progress-name h4"><i class="fa fa-hdd-o pr-2" aria-hidden="true"></i>{{#str}} storage, block_edwiser_site_monitor {{/str}}:</label>
-        <label class="progress-label" id="esm_storage_usage_label">{{storage}}% ({{storagevalues}})</label>
-        <div class="progress-wrap progress">
-            <div class="usage-progress-bar progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
-        </div>
-    </div>
-    <div class="pb-4">
-        <label class="h4"><i class="fa fa-users pr-2" aria-hidden="true"></i>{{#str}} users, block_edwiser_site_monitor {{/str}}:</label>
-        <div class="legends">
-            <div class="activeusers legend">
-                <div class="color bg-success"></div>
-                <label>{{#str}} activeusers, block_edwiser_site_monitor {{/str}}({{active}})</label>
-            </div>
-            <div class="suspendedusers legend">
-                <div class="color bg-warning"></div>
-                <label>{{#str}} suspendedusers, block_edwiser_site_monitor {{/str}}({{suspended}})</label>
-            </div>
-            <div class="deletedusers legend">
-                <div class="color bg-danger"></div>
-                <label>{{#str}} deletedusers, block_edwiser_site_monitor {{/str}}({{deleted}})</label>
+        <div class="usage-details">
+            <label class="progress-label" id="esm_cpu_usage_label">{{cpu}}%</label>
+            <span class="command-disabled">{{#disabled.cpu}}{{#str}} cpucommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.cpu}}</span>
+            <div class="progress-wrap progress">
+                <div class="usage-progress-bar progress-bar {{cpucolor}}" id="esm_cpu_usage_bar" role="progressbar" style="width: {{cpu}}%;"></div>
             </div>
         </div>
-        <div class="progress-wrap progress">
-            <div class="usage-progress-bar progress-bar bg-success" role="progressbar" id="esm_users_active_bar" style="width: {{activepercentage}}%;"></div>
-            <div class="usage-progress-bar progress-bar bg-warning" role="progressbar" id="esm_users_suspended_bar" style="width: {{suspendedpercentage}}%;"></div>
-            <div class="usage-progress-bar progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
+    </div>
+    <div class="progress-row">
+        <div class="usage-header">
+            <label class="progress-name"><i class="fa fa-microchip" aria-hidden="true"></i>{{#str}} memory, block_edwiser_site_monitor {{/str}}</label>
+        </div>
+        <div class="usage-details">
+            <label class="progress-label" id="esm_memory_usage_label">{{memory}}% ({{memoryvalues}})</label>
+            <span class="command-disabled">{{#disabled.memory}}{{#str}} memorycommandnotallowed, block_edwiser_site_monitor {{/str}}{{/disabled.memory}}</span>
+            <div class="progress-wrap progress">
+                <div class="usage-progress-bar progress-bar {{memorycolor}}" id="esm_memory_usage_bar" role="progressbar" style="width: {{memory}}%;"></div>
+            </div>
         </div>
     </div>
-    <div class="h4 pb-4">
-        <label class="h4"><i class="fa fa-user-circle pr-2" aria-hidden="true"></i>{{#str}} liveusers, block_edwiser_site_monitor {{/str}}:</label>
-        <label id="esm_live_users_label">{{liveusers}}</label>
+    <div class="progress-row">
+        <div class="usage-header">
+            <label class="progress-name"><i class="fa fa-hdd-o" aria-hidden="true"></i>{{#str}} storage, block_edwiser_site_monitor {{/str}}</label>
+        </div>
+        <div class="usage-details">
+            <label class="progress-label" id="esm_storage_usage_label">{{storage}}% ({{storagevalues}})</label>
+            <div class="progress-wrap progress">
+                <div class="usage-progress-bar progress-bar {{storagecolor}}" id="esm_storage_usage_bar" role="progressbar" style="width: {{storage}}%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="progress-row users">
+        <div class="usage-header">
+            <label><i class="fa fa-users" aria-hidden="true"></i>{{#str}} users, block_edwiser_site_monitor {{/str}}</label>
+        </div>
+        <div class="usage-details">
+            <div class="legends">
+                <div class="activeusers legend">
+                    <div class="color bg-success"></div>
+                    <label>{{#str}} activeusers, block_edwiser_site_monitor {{/str}}({{active}})</label>
+                </div>
+                <div class="suspendedusers legend">
+                    <div class="color bg-warning"></div>
+                    <label>{{#str}} suspendedusers, block_edwiser_site_monitor {{/str}}({{suspended}})</label>
+                </div>
+                <div class="deletedusers legend">
+                    <div class="color bg-danger"></div>
+                    <label>{{#str}} deletedusers, block_edwiser_site_monitor {{/str}}({{deleted}})</label>
+                </div>
+            </div>
+            <div class="progress-wrap progress">
+                <div class="usage-progress-bar progress-bar bg-success" role="progressbar" id="esm_users_active_bar" style="width: {{activepercentage}}%;"></div>
+                <div class="usage-progress-bar progress-bar bg-warning" role="progressbar" id="esm_users_suspended_bar" style="width: {{suspendedpercentage}}%;"></div>
+                <div class="usage-progress-bar progress-bar bg-danger" role="progressbar" id="esm_users_deleted_bar" style="width: {{deletedpercentage}}%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="progress-row">
+        <div class="usage-header">
+            <label><i class="fa fa-user-circle" aria-hidden="true"></i>{{#str}} liveusers, block_edwiser_site_monitor {{/str}}</label>
+        </div>
+        <div class="usage-details">
+            <label id="esm_live_users_label">{{liveusers}}</label>
+        </div>
     </div>
 </div>

@@ -61,6 +61,7 @@ class externallib extends external_api {
      * @return array
      */
     public static function get_live_status() {
+        self::validate_context(context_system::instance());
         $usage = usage::get_instance();
         return array(
             "cpu"       => $usage->get_cpu_usage(),
@@ -106,6 +107,7 @@ class externallib extends external_api {
      */
     public static function get_last_24_hours_usage($timestamp) {
         global $DB;
+        self::validate_context(context_system::instance());
         if ($timestamp == 0) {
             $timestamp = strtotime(date('d-m-Y', time()));
         }
@@ -162,6 +164,7 @@ class externallib extends external_api {
      */
     public static function get_plugins_update() {
         global $PAGE;
+        self::validate_context(context_system::instance());
         $plugins = new plugins();
         $time = time();
         return array(
@@ -215,6 +218,7 @@ class externallib extends external_api {
      * @return array             status, header and message
      */
     public static function send_contactus_email($firstname, $lastname, $email, $subject, $message) {
+        self::validate_context(context_system::instance());
         $admin = get_admin();
         $admin->email     = $email;
         $admin->firstname = $firstname;

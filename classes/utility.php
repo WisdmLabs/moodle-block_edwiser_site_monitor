@@ -56,10 +56,7 @@ class utility {
      */
     public static function edwiser_site_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
         $messagetext = html_to_text($messagehtml);
-        if ($replyto === false) {
-            return email_to_user($to, $from, $subject, $messagetext, $messagehtml);
-        }
-        return email_to_user($to, $from, $subject, $messagetext, $messagehtml, '', '', true, $replyto);
+        return email_to_user($to, $from, $subject, $messagetext, $messagehtml);
     }
 
     /**

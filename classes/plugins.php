@@ -407,6 +407,7 @@ class plugins {
         }
         if (!$edwiser) {
             $status->has = true;
+            $reason = null;
             if ($pluginman->is_remote_plugin_installable($updateinfo->component, $updateinfo->version, $reason)) {
                 $button = $OUTPUT->single_button(
                     new moodle_url(

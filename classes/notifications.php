@@ -23,6 +23,8 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die;
 
 /**
@@ -85,10 +87,10 @@ class block_edwiser_site_monitor_notifications {
     public function check() {
         global $DB;
         $admin = get_admin();
-        if (!block_edwiser_site_monitor_utility::edwiser_site_monitor_notification_allowed($admin)) {
+        if (!utility::edwiser_site_monitor_notification_allowed($admin)) {
             return false;
         }
-        $posts = block_edwiser_site_monitor_utility::get_edwiser_news();
+        $posts = utility::get_edwiser_news();
         if (empty($posts)) {
             return;
         }

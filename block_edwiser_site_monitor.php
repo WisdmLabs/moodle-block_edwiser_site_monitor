@@ -25,7 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use block_edwiser_site_monitor_usage as esmusage;
+use block_edwiser_site_monitor\usage;
+use block_edwiser_site_monitor\utility;
 
 /**
  * Edwiser Site Monitor Block
@@ -65,7 +66,7 @@ class block_edwiser_site_monitor extends block_base {
      * @return string The block HTML.
      */
     public function get_content() {
-        $usage = esmusage::get_instance();
+        $usage = usage::get_instance();
         if ($this->content !== null) {
             return $this->content;
         }

@@ -49,7 +49,6 @@ function xmldb_block_edwiser_site_monitor_install() {
         $page->set_context(context_user::instance($admin->id));
         $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index');
     }
-    block_edwiser_site_monitor_utility::update_notification_configs();
+    block_edwiser_site_monitor\utility::update_notification_configs();
     return true;
 }
-

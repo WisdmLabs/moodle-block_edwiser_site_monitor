@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2020050800;
-$plugin->requires  = 2017111301;
-$plugin->release   = '2.0.0';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'block_edwiser_site_monitor';
-$plugin->cron      = 300;
+$plugin->version   = 2020050801;                   // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2017111301;                   // Requires this Moodle version.
+$plugin->release   = '2.0.0';                      // Human-friendly version name.
+$plugin->maturity  = MATURITY_STABLE;              // This version's maturity level.
+$plugin->component = 'block_edwiser_site_monitor'; // Component of the plugin.
+$plugin->cron      = 300;                          // Period for cron to check this plugin (secs).

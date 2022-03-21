@@ -23,13 +23,20 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/utility.php');
 
-use block_edwiser_site_monitor_usage   as esmusage;
-use block_edwiser_site_monitor_plugins as esmplugins;
-use block_edwiser_site_monitor_utility as esmutility;
+use external_function_parameters;
+use external_single_structure;
+use external_value;
+use context_system;
+use external_api;
+use moodle_url;
+use stdClass;
 
 /**
  * This class implements services for block_edwiser_site_monitor
@@ -37,7 +44,7 @@ use block_edwiser_site_monitor_utility as esmutility;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_externallib extends external_api {
+class externallib extends external_api {
 
     /**
      * Describes the parameters for get blocks function
@@ -54,7 +61,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
      * @return array
      */
     public static function get_live_status() {
-        $usage = esmusage::get_instance();
+        $usage = usage::get_instance();
         return array(
             "cpu"       => $usage->get_cpu_usage(),
             "memory"    => $usage->get_memory_usage(),
@@ -155,8 +162,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
      */
     public static function get_plugins_update() {
         global $PAGE;
-        $PAGE->set_context(context_system::instance());
-        $plugins = new esmplugins();
+        $plugins = new plugins();
         $time = time();
         return array(
             'lasttimefetched' => get_string('checkforupdateslast', 'core_plugin', date('d F Y, h:i A e', $time)),
@@ -216,7 +222,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
         $support        = new stdClass;
         $support->id    = -99;
         $support->email = ESM_SUPPORT_EMAIL;
-        $status = esmutility::edwiser_site_monitor_send_email(
+        $status = utility::edwiser_site_monitor_send_email(
             $admin,
             $support,
             $subject,
@@ -230,7 +236,7 @@ class block_edwiser_site_monitor_externallib extends external_api {
         ));
         $admin->firstname = 'Edwiser';
         $admin->lastname  = '';
-        $status &= esmutility::edwiser_site_monitor_send_email(
+        $status &= utility::edwiser_site_monitor_send_email(
             $admin,
             $admin,
             $subject,

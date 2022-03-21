@@ -41,7 +41,7 @@ require_capability('moodle/site:config', $syscontext);
 $pageparams = array('installupdate' => $installupdate, 'installupdateversion' => $installupdateversion, 'sesskey' => $sesskey);
 $pageurl = new moodle_url('/blocks/edwiser_site_monitor/plugin.php', $pageparams);
 
-$edwiserpluginman = new block_edwiser_site_monitor_plugins();
+$edwiserpluginman = new block_edwiser_site_monitor\plugins();
 $update = $edwiserpluginman->prepare_edwiser_plugins_update($installupdate);
 if ($update !== true) {
     $output = $PAGE->get_renderer('core', 'admin');

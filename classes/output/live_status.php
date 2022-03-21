@@ -31,8 +31,8 @@ defined('MOODLE_INTERNAL') || die();
 use renderable;
 use templatable;
 use renderer_base;
-use block_edwiser_site_monitor_usage as esmusage;
-use block_edwiser_site_monitor_utility as esmutility;
+use block_edwiser_site_monitor\usage;
+use block_edwiser_site_monitor\utility;
 
 /**
  * Renderable for live status tab
@@ -50,7 +50,7 @@ class live_status implements renderable, templatable {
      * @return stdClass|array
      */
     public function export_for_template(renderer_base $output) {
-        $usage = esmusage::get_instance();
+        $usage = usage::get_instance();
         $data = [
             "cpu"       => $usage->get_cpu_usage(),
             "memory"    => $usage->get_memory_usage(),
@@ -58,11 +58,11 @@ class live_status implements renderable, templatable {
             "liveusers" => $usage->get_live_users(),
             "disabled"  => $usage::$disabled
         ];
-        $data["cpucolor"]        = esmutility::get_color_class_from_value($data["cpu"]);
-        $data["memorycolor"]     = esmutility::get_color_class_from_value($data["memory"]);
-        $data["storagecolor"]    = esmutility::get_color_class_from_value($data["storage"]);
-        $data["memoryvalues"]    = esmutility::get_values_ratio($data["memory"], $usage->get_total_memory());
-        $data["storagevalues"]   = esmutility::get_values_ratio($data["storage"], $usage->get_total_storage());
+        $data["cpucolor"]        = utility::get_color_class_from_value($data["cpu"]);
+        $data["memorycolor"]     = utility::get_color_class_from_value($data["memory"]);
+        $data["storagecolor"]    = utility::get_color_class_from_value($data["storage"]);
+        $data["memoryvalues"]    = utility::get_values_ratio($data["memory"], $usage->get_total_memory());
+        $data["storagevalues"]   = utility::get_values_ratio($data["storage"], $usage->get_total_storage());
         $data = array_merge($data, $usage->get_all_users());
         $output = null;
         return $data;

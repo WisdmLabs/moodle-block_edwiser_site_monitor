@@ -26,7 +26,7 @@ namespace block_edwiser_site_monitor\task;
 
 defined('MOODLE_INTERNAL') || die();
 
-use block_edwiser_site_monitor_utility as esmutility;
+use block_edwiser_site_monitor\utility;
 
 /**
  * Task to run block_edwiser_site_monitor cron.
@@ -49,7 +49,7 @@ class cron extends \core\task\scheduled_task {
      * Run edwiser_site_monitor cron.
      */
     public function execute() {
-        esmutility::edwiser_site_monitor_cron();
+        utility::edwiser_site_monitor_log_usage();
     }
 
 }

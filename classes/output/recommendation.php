@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 use renderable;
 use renderer_base;
 use templatable;
-use block_edwiser_site_monitor_utility as esmutility;
+use block_edwiser_site_monitor\utility;
 
 /**
  * Renderable for recommendation tab
@@ -82,7 +82,7 @@ class recommendation implements renderable, templatable {
         $data = [];
         $data['plugins'] = [];
         $data['has'] = false;
-        $plugins = esmutility::get_edwiser_plugin_list();
+        $plugins = utility::get_edwiser_plugin_list();
         if (empty($plugins)) {
             $data['error'] = get_string('invalidjsonfile', 'block_edwiser_site_monitor');
             return $data;

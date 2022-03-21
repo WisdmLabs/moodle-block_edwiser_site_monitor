@@ -62,6 +62,7 @@ class externallib extends external_api {
      */
     public static function get_live_status() {
         self::validate_context(context_system::instance());
+        utility::edwiser_site_monitor_log_usage();
         $usage = usage::get_instance();
         return array(
             "cpu"       => $usage->get_cpu_usage(),
@@ -108,6 +109,8 @@ class externallib extends external_api {
     public static function get_last_24_hours_usage($timestamp) {
         global $DB;
         self::validate_context(context_system::instance());
+        utility::edwiser_site_monitor_log_usage();
+
         if ($timestamp == 0) {
             $timestamp = strtotime(date('d-m-Y', time()));
         }

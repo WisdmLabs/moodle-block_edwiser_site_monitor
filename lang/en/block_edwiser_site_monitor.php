@@ -44,6 +44,7 @@ $string['suspendedusers'] = 'Suspended';
 $string['deletedusers'] = 'Deleted';
 $string['liveusers'] = 'Live users';
 $string['crontask'] = 'Edwiser Site Monitor - Collect 24 hours usage statistics';
+$string['crontaskwarning'] = 'To see 24 hours usage data you need to run cron task for every 5 minutes. Follow this <a target="_blank" href="{$a}">link</a> to setup cron.';
 $string['today'] = 'Today';
 $string['cannotshowonsidebar'] = 'Cannot show usage chart in sidebar. Please move block to content region to see usage chart.';
 $string['lowusage'] = 'Low usage';

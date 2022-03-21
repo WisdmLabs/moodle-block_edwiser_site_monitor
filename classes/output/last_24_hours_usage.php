@@ -90,6 +90,19 @@ class last_24_hours_usage implements renderable, templatable {
             }
         }
         $data->hasdates = count($data->dates) > 1;
+
+        $lastrun = $DB->get_field('task_scheduled', 'lastruntime', array(
+            'component' => 'local_edwiserreports',
+            'classname' => '\local_edwiserreports\task\site_access_data'
+        ));
+        if ($lastrun == false || $lastrun < time() - (60 * 5)) {
+            $data->error = get_string(
+                'crontaskwarning',
+                'block_edwiser_site_monitor',
+                'https://docs.moodle.org/311/en/Cron'
+            );
+        }
+
         $output = null;
         return $data;
     }

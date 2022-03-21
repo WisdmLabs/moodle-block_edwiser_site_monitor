@@ -30,6 +30,9 @@
     }
 }}
 <div class="server_last_24_hours_usage has-loader">
+    {{#error}}
+        <div class="text-center">{{{error}}}</div>
+    {{/error}}
     <div class="server_usage_chart">
         {{#hasdates}}
         <select class='form-control' id='esm_usage_date_selector'>

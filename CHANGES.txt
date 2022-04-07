@@ -1,6 +1,15 @@
 Change Log:
 ===========
 
+Version 2.1.0
+=============
+Tweak - Improved Recommended plugins UI.
+Tweak - If cron is not running frequently then show a warning on the Last 24 hours usage tab.
+Tweak - Improved plugin performance.
+Tweak - Logging system usage when live data is being fetched.
+Fix - Validating context in services to avoid fatal errors.
+Fix - Issue with Contact Us form.
+
 Version 2.0.0
 =============
 Feature - Brand new live usage tab design.

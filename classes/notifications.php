@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_notifications {
+class notifications {
 
     /**
      * Check whether post is notified before

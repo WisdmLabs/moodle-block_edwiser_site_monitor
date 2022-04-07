@@ -47,7 +47,7 @@ class news extends \core\task\scheduled_task {
      * Run edwiser_site_monitor news task.
      */
     public function execute() {
-        $notification = new \block_edwiser_site_monitor_notifications();
+        $notification = new \block_edwiser_site_monitor\notifications();
         $notification->check();
     }
 

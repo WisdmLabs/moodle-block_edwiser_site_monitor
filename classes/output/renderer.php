@@ -45,8 +45,11 @@ class renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public function render_live_status(renderable $livestatus) {
-        return $this->render_from_template('block_edwiser_site_monitor/live_status', $livestatus->export_for_template($this));
+    public function render_live_status(live_status $livestatus) {
+        return $this->render_from_template(
+            'block_edwiser_site_monitor/live_status',
+            $livestatus->export_for_template($this)
+        );
     }
 
     /**
@@ -56,7 +59,7 @@ class renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public function render_last_24_hours_usage(renderable $last24hoursusage) {
+    public function render_last_24_hours_usage(last_24_hours_usage $last24hoursusage) {
         return $this->render_from_template(
             'block_edwiser_site_monitor/last_24_hours_usage',
             $last24hoursusage->export_for_template($this)
@@ -70,7 +73,7 @@ class renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public function render_recommendation(renderable $recommendation) {
+    public function render_recommendation(recommendation $recommendation) {
         return $this->render_from_template(
             'block_edwiser_site_monitor/recommendation',
             $recommendation->export_for_template($this)
@@ -84,7 +87,10 @@ class renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public function render_contactus(renderable $contactus) {
-        return $this->render_from_template('block_edwiser_site_monitor/contactus', $contactus->export_for_template($this));
+    public function render_contactus(contactus $contactus) {
+        return $this->render_from_template(
+            'block_edwiser_site_monitor/contactus',
+            $contactus->export_for_template($this)
+        );
     }
 }

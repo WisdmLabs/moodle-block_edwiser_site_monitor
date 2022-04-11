@@ -23,6 +23,8 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die;
 
 /**
@@ -31,7 +33,7 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_usage {
+class usage {
 
     /**
      * Static $instance to implement singletone class
@@ -66,7 +68,7 @@ class block_edwiser_site_monitor_usage {
      */
     public static function get_instance() {
         if (self::$instance == null) {
-            self::$instance = new block_edwiser_site_monitor_usage();
+            self::$instance = new usage();
         }
         return self::$instance;
     }

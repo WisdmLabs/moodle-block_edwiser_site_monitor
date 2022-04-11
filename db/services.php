@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = [
     'block_edwiser_site_monitor_get_live_status' => [
-        'classname' => 'block_edwiser_site_monitor_externallib',
+        'classname' => 'block_edwiser_site_monitor\externallib',
         'methodname' => 'get_live_status',
         'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get live status of server',
@@ -36,7 +36,7 @@ $functions = [
         'ajax' => true,
     ],
     'block_edwiser_site_monitor_get_last_24_hours_usage' => [
-        'classname' => 'block_edwiser_site_monitor_externallib',
+        'classname' => 'block_edwiser_site_monitor\externallib',
         'methodname' => 'get_last_24_hours_usage',
         'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get live status of server',
@@ -45,7 +45,7 @@ $functions = [
         'ajax' => true,
     ],
     'block_edwiser_site_monitor_get_plugins_update' => [
-        'classname' => 'block_edwiser_site_monitor_externallib',
+        'classname' => 'block_edwiser_site_monitor\externallib',
         'methodname' => 'get_plugins_update',
         'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Get updates of edwiser plugins or other plugins based on parameter',
@@ -54,7 +54,7 @@ $functions = [
         'ajax' => true,
     ],
     'block_edwiser_site_monitor_send_contactus_email' => [
-        'classname' => 'block_edwiser_site_monitor_externallib',
+        'classname' => 'block_edwiser_site_monitor\externallib',
         'methodname' => 'send_contactus_email',
         'classpath' => 'blocks/edwiser_site_monitor/classes/externallib.php',
         'description' => 'Send contact us email',

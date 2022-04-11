@@ -12,8 +12,8 @@ aside.block-region {
     .nav-tabs .nav-item .nav-link {
         &.esm-outline,
         .edwiser_plugins_recommendation .esm-outline {
-            color: #1177d1;
-            border-color: #1177d1;
+            color: #1177d1 !important;
+            border: 1px solid #1177d1 !important;
         }
         &.btn-primary {
             color: white;
@@ -159,9 +159,6 @@ aside.block-region {
     }
 }
 
-.edwiser-plugin-filter {
-    margin-right: 1rem;
-}
 
 /* Recommendation grid styling */
 
@@ -195,7 +192,7 @@ aside.block-region {
                 -ms-flex: 1 1 auto;
                 flex: 1 1 auto;
                 padding: 1.429rem;
-                + .card-block {
+                +.card-block {
                     padding-top: 0;
                 }
                 .card-title {

@@ -39,8 +39,8 @@
     {{#has}}
     <ul class="recommendation-list blocks row">
         {{#plugins}}
-        <li class="recommendation-item {{cardclass}}">
-          <div class="card card-shadow">
+        <li class="recommendation-item p-3 {{cardclass}}">
+          <div class="card card-shadow h-100">
             <div class="card-header cover">
               <img class="cover-image" src="{{image}}" alt="...">
             </div>
@@ -48,8 +48,8 @@
               <h3 class="card-title">{{title}}</h3>
               <p class="card-text">{{description}}</p>
             </div>
-            <div class="card-block">
-              <a target="_blank" href="{{purchaseurl}}" class="btn esm-outline card-link">{{#str}} knowmore, block_edwiser_site_monitor {{/str}}</a>
+            <div class="px-5 pb-5">
+              <a target="_blank" href="{{purchaseurl}}" class="btn btn-warning text-white card-link">{{#str}} knowmore, block_edwiser_site_monitor {{/str}}</a>
             </div>
           </div>
         </li>

@@ -25,7 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use block_edwiser_site_monitor_usage as esmusage;
+use block_edwiser_site_monitor\usage;
+use block_edwiser_site_monitor\utility;
 
 /**
  * Edwiser Site Monitor Block
@@ -65,8 +66,7 @@ class block_edwiser_site_monitor extends block_base {
      * @return string The block HTML.
      */
     public function get_content() {
-        global $PAGE;
-        $usage = esmusage::get_instance();
+        $usage = usage::get_instance();
         if ($this->content !== null) {
             return $this->content;
         }
@@ -75,19 +75,21 @@ class block_edwiser_site_monitor extends block_base {
             return null;
         }
 
+        utility::edwiser_site_monitor_log_usage();
+
         $renderer = $this->page->get_renderer('block_edwiser_site_monitor');
 
         $refreshrate = isset($this) && isset($this->config) && isset($this->config->refreshrate) ? $this->config->refreshrate : 5;
 
         $stringmanager = get_string_manager();
         $strings = $stringmanager->load_component_strings('block_edwiser_site_monitor', 'en');
-        $PAGE->requires->strings_for_js(array_keys($strings), 'block_edwiser_site_monitor');
+        $this->page->requires->strings_for_js(array_keys($strings), 'block_edwiser_site_monitor');
 
-        $PAGE->requires->data_for_js('refreshrate', $refreshrate);
-        $PAGE->requires->data_for_js('totalmemory', $usage->get_total_memory());
-        $PAGE->requires->data_for_js('totalstorage', $usage->get_total_storage());
+        $this->page->requires->data_for_js('refreshrate', $refreshrate);
+        $this->page->requires->data_for_js('totalmemory', $usage->get_total_memory());
+        $this->page->requires->data_for_js('totalstorage', $usage->get_total_storage());
 
-        $PAGE->requires->js_call_amd('block_edwiser_site_monitor/main', 'init');
+        $this->page->requires->js_call_amd('block_edwiser_site_monitor/main', 'init');
 
         $this->content = new stdClass();
         $this->content->footer = '';

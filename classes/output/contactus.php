@@ -27,6 +27,8 @@ namespace block_edwiser_site_monitor\output;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot . '/blocks/edwiser_site_monitor/classes/utility.php');
+
 use renderable;
 use renderer_base;
 use templatable;

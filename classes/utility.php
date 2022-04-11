@@ -23,6 +23,8 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die;
 
 define('ESM_PLUGINS_LIST', "https://edwiser.org/edwiserupdates.json");
@@ -30,7 +32,9 @@ define('ESM_NEWS_LIST', "https://edwiser.org/edwisernews.json");
 define('ESM_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
 define('ESM_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
 
-use block_edwiser_site_monitor_usage as esmusage;
+use Exception;
+use stdClass;
+use context_user;
 
 /**
  * Utility functions for block_edwiser_site_monitor
@@ -38,7 +42,7 @@ use block_edwiser_site_monitor_usage as esmusage;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_utility {
+class utility {
 
     /**
      * Send email to user
@@ -52,10 +56,7 @@ class block_edwiser_site_monitor_utility {
      */
     public static function edwiser_site_monitor_send_email($from, $to, $subject, $messagehtml, $replyto = false) {
         $messagetext = html_to_text($messagehtml);
-        if ($replyto === false) {
-            return email_to_user($to, $from, $subject, $messagetext, $messagehtml);
-        }
-        return email_to_user($to, $from, $subject, $messagetext, $messagehtml, '', '', true, $replyto);
+        return email_to_user($to, $from, $subject, $messagetext, $messagehtml);
     }
 
     /**
@@ -161,9 +162,9 @@ class block_edwiser_site_monitor_utility {
      *
      * @return boolean
      */
-    public static function edwiser_site_monitor_cron() {
-        global $DB, $CFG;
-        $usage = esmusage::get_instance();
+    public static function edwiser_site_monitor_log_usage() {
+        global $DB;
+        $usage = usage::get_instance();
         $data          = new stdClass;
         $data->time    = time();
         $data->cpu     = $usage->get_cpu_usage();
@@ -176,7 +177,7 @@ class block_edwiser_site_monitor_utility {
         );
         if ($instance && $instance->configdata != '') {
             $config = unserialize(base64_decode($instance->configdata));
-            new block_edwiser_site_monitor_usage_warning($config, $data->cpu, $data->memory, $data->storage);
+            new usage_warning($config, $data->cpu, $data->memory, $data->storage);
         }
         $DB->insert_record('block_edwiser_site_monitor', $data);
         $DB->delete_records_select('block_edwiser_site_monitor', 'time < ?', array(time() - 24 * 60 * 60 * 7));

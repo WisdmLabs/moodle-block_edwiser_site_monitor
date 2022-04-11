@@ -23,6 +23,8 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die;
 
 /**
@@ -31,7 +33,7 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_notifications {
+class notifications {
 
     /**
      * Check whether post is notified before
@@ -85,10 +87,10 @@ class block_edwiser_site_monitor_notifications {
     public function check() {
         global $DB;
         $admin = get_admin();
-        if (!block_edwiser_site_monitor_utility::edwiser_site_monitor_notification_allowed($admin)) {
+        if (!utility::edwiser_site_monitor_notification_allowed($admin)) {
             return false;
         }
-        $posts = block_edwiser_site_monitor_utility::get_edwiser_news();
+        $posts = utility::get_edwiser_news();
         if (empty($posts)) {
             return;
         }

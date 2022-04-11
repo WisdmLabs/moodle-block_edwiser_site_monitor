@@ -23,16 +23,28 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/adminlib.php');
+
+use core_plugin_manager;
+use core_component;
+use html_writer;
+use moodle_url;
+use moodle_exception;
+use pix_icon;
+use stdClass;
+use curl;
+
 /**
  * This class implements services for block_edwiser_site_monitor
  *
  * @copyright  2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_plugins {
+class plugins {
 
     /** @var array edwiserplugins edwiser plugins list */
     public $edwiserplugins = [];
@@ -52,7 +64,7 @@ class block_edwiser_site_monitor_plugins {
      */
     public function prepare_edwiser_plugins_update($plug = null) {
         global $DB;
-        $plugins = block_edwiser_site_monitor_utility::get_edwiser_plugin_list();
+        $plugins = utility::get_edwiser_plugin_list();
         if (empty($plugins)) {
             return get_string('invalidjsonfile', 'block_edwiser_site_monitor');
         }
@@ -150,7 +162,7 @@ class block_edwiser_site_monitor_plugins {
      * Checks whether current plugin version is supported
      *
      * @param stdClass $plugin installed plugin details
-     * @param stdClass $release plugin release details
+     * @param string $release plugin release details
      *
      * @return bool true is supported
      */
@@ -395,6 +407,7 @@ class block_edwiser_site_monitor_plugins {
         }
         if (!$edwiser) {
             $status->has = true;
+            $reason = null;
             if ($pluginman->is_remote_plugin_installable($updateinfo->component, $updateinfo->version, $reason)) {
                 $button = $OUTPUT->single_button(
                     new moodle_url(
@@ -822,7 +835,7 @@ class block_edwiser_site_monitor_plugins {
      * @param string $temp      temporary directory path
      * @param string $name      name of zip file
      *
-     * @return bool         True is zip file is valid
+     * @return array         True is zip file is valid
      */
     public function verify_zip($pluginman, $zip, $temp, $name) {
 

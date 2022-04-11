@@ -23,9 +23,12 @@
  * @author    Yogesh Shirsath
  */
 
+namespace block_edwiser_site_monitor;
+
 defined('MOODLE_INTERNAL') || die();
 
-use block_edwiser_site_monitor_utility as esmutility;
+use stdClass;
+use context_system;
 
 /**
  * This class implements services for block_edwiser_site_monitor
@@ -33,7 +36,7 @@ use block_edwiser_site_monitor_utility as esmutility;
  * @copyright 2019 WisdmLabs <edwiser@wisdmlabs.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_edwiser_site_monitor_usage_warning {
+class usage_warning {
 
     /**
      * Check if server usage is less/more than threshold limit
@@ -210,7 +213,7 @@ class block_edwiser_site_monitor_usage_warning {
             $data
         );
         $admin = get_admin();
-        esmutility::edwiser_site_monitor_send_email(
+        utility::edwiser_site_monitor_send_email(
             $admin,
             $admin,
             get_string('usageemailsubject', 'block_edwiser_site_monitor', $COURSE->fullname),

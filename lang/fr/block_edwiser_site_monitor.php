@@ -142,3 +142,4 @@ $string['thanksmessage'] = '<div style="background-color: #efefef; -webkit-text-
 </div>';
 $string['emailsuccess'] = 'Votre message a été envoyé avec succès. Merci.';
 $string['failed'] = 'Échec';
+$string['submit'] = 'Soumettre';

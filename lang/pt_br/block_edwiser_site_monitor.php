@@ -144,3 +144,5 @@ $string['thanksmessage'] = '<div style="background-color: #efefef; -webkit-text-
 $string['emailsuccess'] = 'Sua mensagem foi enviada com sucesso. Obrigado.';
 $string['failed'] = 'Falhou';
 $string['submit'] = 'Enviar';
+
+$string['filloutthisfield'] = 'Por favor, preencha este campo.';

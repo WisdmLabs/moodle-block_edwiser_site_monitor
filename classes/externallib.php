@@ -284,7 +284,7 @@ class externallib extends external_api {
         return new external_single_structure(
             array(
                 'status' => new external_value(PARAM_BOOL, "Email send status"),
-                'header' => new external_value(PARAM_ALPHA, "Email sending status header"),
+                'header' => new external_value(PARAM_RAW, "Email sending status header"),
                 'message' => new external_value(PARAM_RAW, "Email sending status message")
             )
         );

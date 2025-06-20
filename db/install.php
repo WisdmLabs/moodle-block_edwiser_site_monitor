@@ -45,7 +45,7 @@ function xmldb_block_edwiser_site_monitor_install() {
         $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index', $systempage->id);
     }
     $admin = get_admin();
-    if ($admin != false) {
+    if (!PHPUNIT_TEST && $admin != false) {
         $page->set_context(context_user::instance($admin->id));
         $page->blocks->add_block('edwiser_site_monitor', 'content', -2, false, 'my-index');
     }

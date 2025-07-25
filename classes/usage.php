@@ -94,7 +94,7 @@ class usage {
                 $load = round($loads[0] * 100, 2);
             }
         }
-        if ($load > 100) {
+        if ($load >= 100) {
             return 100;
         }
         return $load;
@@ -126,7 +126,7 @@ class usage {
                 $usage     = round($usage / $maxmemory * 100, 2);
             }
         }
-        if ($usage > 100) {
+        if ($usage >= 100) {
             return 100;
         }
         return $usage;
@@ -180,7 +180,7 @@ class usage {
             $all   = disk_total_space($CFG->dirroot);
             $usage = round(($all - $free) / $all * 100, 2);
         }
-        if ($usage > 100) {
+        if ($usage >= 100) {
             return 100;
         }
         return $usage;

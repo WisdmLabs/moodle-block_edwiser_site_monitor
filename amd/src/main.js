@@ -16,7 +16,7 @@
 /**
  * Javascript used to save the user's tab preference.
  *
- * @package    block_edwiser_site_monitor
+ * @module    block_edwiser_site_monitor/main
  * @copyright  Wisdmlabs 2019
  * @author     Yogesh Shirsath
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,20 +25,22 @@ define([
     'jquery',
     'core/ajax',
     'core/notification',
-    'core/modal_factory',
+    'core/modal',
     'core/chartjs'
 ], function(
     $,
     ajax,
     notification,
-    ModalFactory
+    Modal,
+    Chart
 ) {
 
     var SELECTORS = {
         USAGEBAR: '.usage-progress-bar',
         LOADER: '.edwiser_site_monitor #edwiser_site_monitor_plugins .edwiser-server-monitor-loader',
         CONTATUSLOADER: '.edwiser_site_monitor #edwiser_site_monitor_contactus .edwiser-server-monitor-loader',
-        LAST24HOURSUSAGELOADER: '.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader',
+        LAST24HOURSUSAGELOADER:
+            '.edwiser_site_monitor #edwiser_site_monitor_last_24_hours_usage .edwiser-server-monitor-loader',
         ROOT: '.block_edwiser_site_monitor.block',
         SERVERPLUGINLIST: '.edwiser_site_monitor .server-plugins-list'
     };
@@ -47,10 +49,13 @@ define([
         PROGRESS_STATUS: 'progress-status'
     };
 
-    var init = function() {
+    var init = function(totalmemory, totalstorage, refreshrate) {
         var liveusage = "";
         var chart = null;
-        var fetchtingstatus = fetchtinglastusage = fetchtingplugins = sendingemail = false;
+        var fetchtingstatus = false;
+        var fetchtinglastusage = false;
+        var fetchtingplugins = false;
+        var sendingemail = false;
         $(SELECTORS.USAGEBAR).bind(EVENTS.PROGRESS_STATUS, function(event, width) {
             let allclasses = 'bg-success bg-warning bg-danger';
             let currentclass = 'bg-danger';
@@ -64,8 +69,9 @@ define([
         /**
          * Get values ratio in used and total value
          *
-         * @param  integer $percent usage value
-         * @return boolean
+         * @param {number} percent Usage value
+         * @param {number} total Total value
+         * @return {string} Formatted ratio string
          */
         function get_values_ratio(percent, total) {
             return (total * percent / 100).toFixed(2) + "G/" + total.toFixed(2) + "G";
@@ -81,12 +87,17 @@ define([
                     args: {}
                 }]);
                 promise[0].done(function(response) {
-                    $(SELECTORS.ROOT).find('#esm_cpu_usage_bar').css('width', response.cpu + '%').trigger(EVENTS.PROGRESS_STATUS, [response.cpu]);
-                    $(SELECTORS.ROOT).find('#esm_memory_usage_bar').css('width', response.memory + '%').trigger(EVENTS.PROGRESS_STATUS, [response.memory]);
-                    $(SELECTORS.ROOT).find('#esm_storage_usage_bar').css('width', response.storage + '%').trigger(EVENTS.PROGRESS_STATUS, [response.storage]);
+                    $(SELECTORS.ROOT).find('#esm_cpu_usage_bar')
+                        .css('width', response.cpu + '%').trigger(EVENTS.PROGRESS_STATUS, [response.cpu]);
+                    $(SELECTORS.ROOT).find('#esm_memory_usage_bar')
+                        .css('width', response.memory + '%').trigger(EVENTS.PROGRESS_STATUS, [response.memory]);
+                    $(SELECTORS.ROOT).find('#esm_storage_usage_bar')
+                        .css('width', response.storage + '%').trigger(EVENTS.PROGRESS_STATUS, [response.storage]);
                     $(SELECTORS.ROOT).find('#esm_cpu_usage_label').text(response.cpu + '%');
-                    $(SELECTORS.ROOT).find('#esm_memory_usage_label').text(response.memory + '% (' + get_values_ratio(response.memory, totalmemory) + ')');
-                    $(SELECTORS.ROOT).find('#esm_storage_usage_label').text(response.storage + '% (' + get_values_ratio(response.storage, totalstorage) + ')');
+                    $(SELECTORS.ROOT).find('#esm_memory_usage_label')
+                        .text(response.memory + '% (' + get_values_ratio(response.memory, totalmemory) + ')');
+                    $(SELECTORS.ROOT).find('#esm_storage_usage_label')
+                        .text(response.storage + '% (' + get_values_ratio(response.storage, totalstorage) + ')');
                     $(SELECTORS.ROOT).find('#esm_live_users_label').text(response.liveusers);
                     fetchtingstatus = false;
                 }).fail(function(ex) {
@@ -110,7 +121,7 @@ define([
                 promise[0].done(function(response) {
                     fetchtinglastusage = false;
                     $(SELECTORS.LAST24HOURSUSAGELOADER).removeClass('show');
-                    if (chart != null) {
+                    if (chart !== null) {
                         chart.data.labels = JSON.parse(response.time);
                         chart.data.datasets[0].data = JSON.parse(response.cpu);
                         chart.data.datasets[1].data = JSON.parse(response.memory);
@@ -150,49 +161,50 @@ define([
                         },
                         options: {
                             scales: {
-                                yAxes: [{
+                                y: {
                                     position: 'right',
-                                    ticks: {
-                                        beginAtZero: false
-                                    },
-                                    gridLines: {
+                                    beginAtZero: false,
+                                    grid: {
                                         display: false
                                     },
-                                    scaleLabel: {
+                                    title: {
                                         display: true,
-                                        labelString: M.util.get_string('yaxistitle', 'block_edwiser_site_monitor')
+                                        text: M.util.get_string('yaxistitle', 'block_edwiser_site_monitor')
                                     }
-                                }],
-                                xAxes: [{
-                                    gridLines: {
+                                },
+                                x: {
+                                    grid: {
                                         display: false
                                     },
-                                    scaleLabel: {
+                                    title: {
                                         display: true,
-                                        labelString: M.util.get_string('xaxistitle', 'block_edwiser_site_monitor')
+                                        text: M.util.get_string('xaxistitle', 'block_edwiser_site_monitor')
                                     }
-                                }]
+                                }
                             },
-                            tooltips: {
-                                position: 'nearest',
-                                mode: 'index',
-                                intersect: false,
-                                callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                                        if (label) {
-                                            label += ': ';
+                            plugins: {
+                                tooltip: {
+                                    position: 'nearest',
+                                    mode: 'index',
+                                    intersect: false,
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            var label = tooltipItem.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            var value = tooltipItem.parsed.y;
+                                            label += value + '%';
+                                            switch (tooltipItem.datasetIndex) {
+                                                case 1:
+                                                    label += ' (' + get_values_ratio(value, totalmemory) + ')';
+                                                    break;
+                                                case 2:
+                                                    label += ' (' + get_values_ratio(value, totalstorage) + ')';
+                                                    break;
+                                            }
+                                            return label;
                                         }
-                                        label += tooltipItem.yLabel + '%';
-                                        switch (tooltipItem.datasetIndex) {
-                                            case 1:
-                                                label += ' (' + get_values_ratio(tooltipItem.yLabel, totalmemory) + ')';
-                                                break;
-                                            case 2:
-                                                label += ' (' + get_values_ratio(tooltipItem.yLabel, totalstorage) + ')';
-                                                break;
-                                        }
-                                        return label;
                                     }
                                 }
                             }
@@ -235,15 +247,15 @@ define([
                 var promise = ajax.call(parameters);
                 promise[0].done(function(response) {
                     $(SELECTORS.CONTATUSLOADER).removeClass('show');
-                    var trigger = $('#create-modal');
-                    ModalFactory.create({
+                    Modal.create({
                         title: response.header,
                         body: response.message
-                    }, trigger).done(function(modal) {
-                        modal.header.addClass(response.status ? 'bg-success' : 'bg-danger');
-                        modal.header.children().addClass('text-white');
+                    }).then(function(modal) {
+                        modal.getRoot().find('.modal-header').addClass(response.status ? 'bg-success' : 'bg-danger');
+                        modal.getRoot().find('.modal-header').children().addClass('text-white');
                         modal.show();
-                    });
+                        return modal;
+                    }).catch(notification.exception);
                     if (response.status) {
                         $(SELECTORS.ROOT).find('#contactus_form button').prop('disabled', true);
                         $(SELECTORS.ROOT).find('#contactus_form_succes').addClass('show');
@@ -265,7 +277,7 @@ define([
             });
             $('.edwiser_site_monitor .nav-link').click(function() {
                 $(this).removeClass('active').parents('.nav-item').siblings().removeClass('active');
-                var tags = $(this).parents(SELECTORS.ROOT).find('.tab-pane').removeClass('show active');
+                $(this).parents(SELECTORS.ROOT).find('.tab-pane').removeClass('show active');
                 var target = $(this).data('container');
                 $(this).parents('.nav-item').addClass('active');
                 $(this).parents(SELECTORS.ROOT).find('#' + target).addClass('show active');
@@ -280,9 +292,10 @@ define([
                         clearInterval(liveusage);
                         break;
                     case "edwiser_site_monitor_plugins":
-                        if ($.trim($(SELECTORS.SERVERPLUGINLIST).text()) == '') {
+                        if ($.trim($(SELECTORS.SERVERPLUGINLIST).text()) === '') {
                             $(SELECTORS.ROOT).find('.edwiser_site_monitor .refresh-plugin-list').trigger('click');
                         }
+                        break;
                     case "edwiser_site_monitor_recommendation":
                     case "edwiser_site_monitor_contactus":
                         clearInterval(liveusage);
@@ -293,21 +306,23 @@ define([
                 functions.get_plugins();
             }).on('click', SELECTORS.ROOT + ' .edwiser-plugin-filter', function(event) {
                 event.preventDefault();
-                $(this).parent('.server-plugins-list').removeClass('all edwiser other update').addClass($(this).data('filter'));
-                $(SELECTORS.ROOT).find('#plugins-control-panel').removeClass('all edwiser other update').addClass($(this).data('filter'));
+                $(this).parent('.server-plugins-list')
+                    .removeClass('all edwiser other update').addClass($(this).data('filter'));
+                $(SELECTORS.ROOT).find('#plugins-control-panel')
+                    .removeClass('all edwiser other update').addClass($(this).data('filter'));
                 $(SELECTORS.ROOT).find('.edwiser-plugins-current-list').text($(this).data('heading'));
                 $(SELECTORS.ROOT).find('.edwiser-plugin-filter').removeClass('active');
                 $(this).addClass('active');
                 return;
             }).on('click', '.showchangelog', function(event) {
                 event.preventDefault();
-                var trigger = $('#create-modal');
-                ModalFactory.create({
+                Modal.create({
                     title: M.util.get_string('changelog', 'block_edwiser_site_monitor'),
                     body: $(this).data('log').changelog
-                }, trigger).done(function(modal) {
+                }).then(function(modal) {
                     modal.show();
-                });
+                    return modal;
+                }).catch(notification.exception);
                 return;
             });
             $('#contactus_form').submit(function(event) {
@@ -328,5 +343,5 @@ define([
 
     return {
         init: init
-    }
+    };
 });

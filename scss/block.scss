@@ -100,6 +100,11 @@ aside.block-region {
             overflow-y: auto;
             max-height: 30rem;
         }
+        .nav-link.edwiser-plugin-filter {
+            .badge.number-all {
+                --bs-badge-color: unset;
+            }
+        }
     }
     .has-loader .edwiser-server-monitor-loader {
         position: absolute;

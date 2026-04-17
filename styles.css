@@ -79,6 +79,8 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .serv
   .edwiser_site_monitor .server-plugins .server-plugins-list .edwiser-plugin-list {
     overflow-y: auto;
     max-height: 30rem; }
+    .edwiser_site_monitor .server-plugins .server-plugins-list .edwiser-plugin-list #plugins-control-panel {
+      width: 100%; }
   .edwiser_site_monitor .server-plugins .server-plugins-list .nav-link.edwiser-plugin-filter .badge.number-all {
     --bs-badge-color: unset; }
 

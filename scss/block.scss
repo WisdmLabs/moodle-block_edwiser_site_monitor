@@ -99,6 +99,10 @@ aside.block-region {
         .edwiser-plugin-list {
             overflow-y: auto;
             max-height: 30rem;
+
+            #plugins-control-panel {
+                width: 100%;
+            }
         }
         .nav-link.edwiser-plugin-filter {
             .badge.number-all {

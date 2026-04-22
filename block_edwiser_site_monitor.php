@@ -85,11 +85,11 @@ class block_edwiser_site_monitor extends block_base {
         $strings = $stringmanager->load_component_strings('block_edwiser_site_monitor', 'en');
         $this->page->requires->strings_for_js(array_keys($strings), 'block_edwiser_site_monitor');
 
-        $this->page->requires->data_for_js('refreshrate', $refreshrate);
-        $this->page->requires->data_for_js('totalmemory', $usage->get_total_memory());
-        $this->page->requires->data_for_js('totalstorage', $usage->get_total_storage());
-
-        $this->page->requires->js_call_amd('block_edwiser_site_monitor/main', 'init');
+        $this->page->requires->js_call_amd('block_edwiser_site_monitor/main', 'init', [
+            $usage->get_total_memory(),
+            $usage->get_total_storage(),
+            $refreshrate,
+        ]);
 
         $this->content = new stdClass();
         $this->content->footer = '';

@@ -32,7 +32,6 @@ define('ESM_NEWS_LIST', "https://edwiser.org/edwisernews.json");
 define('ESM_PRIVACY_POLICY_LINK', "https://edwiser.org/privacy-policy/");
 define('ESM_SUPPORT_EMAIL', "edwiser@wisdmlabs.com");
 
-use Exception;
 use stdClass;
 use context_user;
 
@@ -82,9 +81,9 @@ class utility {
      */
     public static function get_edwiser_plugin_list() {
         try {
-            $plugins = @file_get_contents(ESM_PLUGINS_LIST);
+            $plugins = \download_file_content(ESM_PLUGINS_LIST);
             return json_decode($plugins);
-        } catch (Exception $ex) {
+        } catch (\Throwable $ex) {
             return false;
         }
     }
@@ -96,9 +95,9 @@ class utility {
      */
     public static function get_edwiser_news() {
         try {
-            $news = @file_get_contents(ESM_NEWS_LIST);
+            $news = \download_file_content(ESM_NEWS_LIST);
             return json_decode($news);
-        } catch (Exception $ex) {
+        } catch (\Throwable $ex) {
             return false;
         }
     }

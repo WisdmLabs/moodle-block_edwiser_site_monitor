@@ -83,6 +83,8 @@ aside.block-region:not([data-blockregion="content"]) .edwiser_site_monitor .serv
       width: 100%; }
   .edwiser_site_monitor .server-plugins .server-plugins-list .nav-link.edwiser-plugin-filter .badge.number-all {
     --bs-badge-color: unset; }
+  .edwiser_site_monitor .server-plugins .server-plugins-list ul {
+    margin-bottom: 20px; }
 
 .edwiser_site_monitor .has-loader .edwiser-server-monitor-loader {
   position: absolute;

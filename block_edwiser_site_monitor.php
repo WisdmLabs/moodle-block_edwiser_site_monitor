@@ -66,6 +66,16 @@ class block_edwiser_site_monitor extends block_base {
      * @return string The block HTML.
      */
     public function get_content() {
+        static $warning_flag = false;
+        if (!\function_exists('\shell_exec')) {
+            if (!$warning_flag) {
+                $warning_flag = true;
+                \core\notification::warning(
+                    get_string('shellexecdisabled', 'block_edwiser_site_monitor')
+                );
+            }
+            return;
+        }
         $usage = usage::get_instance();
         if ($this->content !== null) {
             return $this->content;

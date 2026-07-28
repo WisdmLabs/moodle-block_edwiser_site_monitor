@@ -143,3 +143,5 @@ $string['thanksmessage'] = '<div style="background-color: #efefef; -webkit-text-
 $string['emailsuccess'] = 'Votre message a été envoyé avec succès. Merci.';
 $string['failed'] = 'Échec';
 $string['submit'] = 'Soumettre';
+
+$string['shellexecdisabled'] = 'Avertissement : La fonction PHP "shell_exec" est désactivée sur votre serveur. Ce plugin ne peut pas surveiller les performances.';

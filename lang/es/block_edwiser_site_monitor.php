@@ -145,3 +145,5 @@ $string['failed'] = 'Falló';
 $string['submit'] = 'Enviar';
 
 $string['filloutthisfield'] = 'Por favor, rellena este campo.';
+
+$string['shellexecdisabled'] = 'Advertencia: La función PHP "shell_exec" está deshabilitada en su servidor. Este plugin no puede monitorizar el rendimiento.';

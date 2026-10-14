@@ -1,6 +1,10 @@
 Change Log:
 ===========
 
+Version v2.1.4:
+============================
+Fix - Fixed the issue where the plugin update list was not displaying.
+
 Version 2.1.3
 ===========
 Feature - Added compatibility with Moodle 5.2.
